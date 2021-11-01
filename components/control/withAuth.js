@@ -4,57 +4,9 @@ import { fridgeActions } from "../../store/index";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "./initFirebase";
 import { useEffect } from "react";
-// import createReactClass from "create-react-class";
 
-// const withAuth = createReactClass({
-//   displayName: "withAuth",
-//   render: function (WrappedComponent) {
-//     return (props) => {
-//       if (typeof window !== "undefined") {
-//         const getUserId = localStorage.getItem("userId");
-//         const router = useRouter();
-
-//         if (getUserId) {
-//           const dispatch = useDispatch();
-
-//           useEffect(async () => {
-//             try {
-//               const docRef = doc(db, "users", getUserId);
-//               const docSnap = await getDoc(docRef);
-//               const getUser = docSnap.data();
-
-//               dispatch(
-//                 fridgeActions.login({
-//                   username: getUser.username,
-//                   password: getUser.password,
-//                   id: getUserId,
-//                   foodId: getUser.foodId,
-//                   totalQuantity: getUser.totalQuantity,
-//                   totalWeight: getUser.totalWeight,
-//                   food: getUser.food,
-//                 })
-//               );
-//             } catch (err) {
-//               alert("Something went wrong ! Please try again");
-//               console.error(err);
-//             }
-//           }, []);
-
-//           return <WrappedComponent {...props} />;
-//         } else if (!getUserId) {
-//           router.replace("/");
-
-//           //Difficulty connecting withAuth when !getUserId && router.asPath='/'
-//           //Workaround in Header
-
-//           return null;
-//         }
-//       }
-//       return null;
-//     };
-//   },
-// });
-function WithAuth(WrappedComponent) {
+//eslint-disable-next-line react/display-name
+function withAuth(WrappedComponent) {
   return (props) => {
     if (typeof window !== "undefined") {
       const getUserId = localStorage.getItem("userId");
@@ -100,4 +52,4 @@ function WithAuth(WrappedComponent) {
   };
 }
 
-export default WithAuth;
+export default withAuth;

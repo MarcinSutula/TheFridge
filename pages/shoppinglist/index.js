@@ -1,4 +1,4 @@
-import WithAuth from "../../components/control/WithAuth";
+import withAuth from "../../components/control/withAuth";
 import classes from "./shoppingList.module.css";
 import { useEffect, useState } from "react";
 
@@ -30,4 +30,4 @@ function ShoppingList() {
   );
 }
 
-export default WithAuth(ShoppingList);
+export default withAuth(ShoppingList);
