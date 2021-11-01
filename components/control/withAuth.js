@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 //eslint-disable-next-line react/display-name
 function withAuth(WrappedComponent) {
-  return (props) => {
+  return function Auth(props) {
     if (typeof window !== "undefined") {
       const getUserId = localStorage.getItem("userId");
       const router = useRouter();
