@@ -39,7 +39,7 @@ function TableHeadRowCells(props) {
       style={tableHeadCellStyleMUI}
     >
       <div className={classes.icon_container}>{sortIcon}</div>
-      <div>{props.column.label}</div>
+      <div>{props?.column?.label}</div>
     </TableCell>
   );
 }

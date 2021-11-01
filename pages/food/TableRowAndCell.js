@@ -176,13 +176,13 @@ function TableRowAndCell(props) {
             required
           />
         </div>
-        <div key={props.row.type}>
+        <div key={props?.row?.type}>
           <label>Type</label>
           <select
             name="typelistEditFood"
             id="typelistEditFood"
             ref={editFoodType}
-            defaultValue={props.row.type}
+            defaultValue={props?.row?.type}
             required
           >
             {TYPES.map((type) => {
@@ -194,10 +194,10 @@ function TableRowAndCell(props) {
             })}
           </select>
         </div>
-        <div key={props.row.quantity * Math.random()}>
+        <div key={props?.row?.quantity * Math.random()}>
           <label>Quantity</label>
           <input
-            defaultValue={props.row.quantity}
+            defaultValue={props?.row?.quantity}
             ref={editFoodQuantity}
             type="number"
             min="0"
@@ -206,10 +206,10 @@ function TableRowAndCell(props) {
             required
           />
         </div>
-        <div key={props.row.weight * Math.random()}>
+        <div key={props?.row?.weight * Math.random()}>
           <label>Weight(g)</label>
           <input
-            defaultValue={props.row.weight}
+            defaultValue={props?.row?.weight}
             ref={editFoodWeight}
             type="number"
             min="0"
@@ -218,11 +218,11 @@ function TableRowAndCell(props) {
             required
           />
         </div>
-        <div key={props.row.expDate * Math.random()}>
+        <div key={props?.row?.expDate * Math.random()}>
           <label>Expiration Date</label>
           <input
             type="date"
-            defaultValue={props.row.expDate}
+            defaultValue={props?.row?.expDate}
             ref={editFoodExpDate}
             required
           />
@@ -236,7 +236,7 @@ function TableRowAndCell(props) {
 
   //MUI STYLES
   const tableRowStyleMUI = {
-    backgroundColor: setBackgroundColor(props.row.type),
+    backgroundColor: setBackgroundColor(props?.row?.type),
   };
 
   const tableCellStyleMUI = (column, value) => {
