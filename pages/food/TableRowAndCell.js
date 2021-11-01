@@ -28,7 +28,6 @@ import {
 
 function TableRowAndCell(props) {
   const [showEditModal, setShowEditModal] = useState(false);
-  const [isActive, setIsActive] = useState(false);
   const editFoodName = useRef();
   const editFoodType = useRef();
   const editFoodQuantity = useRef();
@@ -37,10 +36,6 @@ function TableRowAndCell(props) {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const foundUser = users.find((user) => user.id !== null);
-
-  useEffect(() => {
-    setIsActive(true);
-  }, []);
 
   const checkExpDateStyle = (date) => {
     const formattedDate = new Date(date);
@@ -153,7 +148,6 @@ function TableRowAndCell(props) {
           foodToRemove: props.row,
         })
       );
-      setIsActive(false);
     } catch (err) {
       alert("Something went wrong ! Please try again");
       console.error(err);
@@ -250,9 +244,9 @@ function TableRowAndCell(props) {
   };
 
   return (
-    <Fade in={isActive}>
+    <Fade in={!!foundUser}>
       <TableRow tabIndex={-1} style={tableRowStyleMUI}>
-        {props.columns.map((column) => {
+        {props?.columns?.map((column) => {
           const value = props.row[column.id];
 
           return (
