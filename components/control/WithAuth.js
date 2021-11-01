@@ -5,7 +5,7 @@ import { getDoc, doc } from "firebase/firestore";
 import { db } from "./initFirebase";
 import { useEffect } from "react";
 
-//eslint-disable-next-line react/display-name
+//eslint-disable-next-line react/display-nameaaaaa
 function withAuth(WrappedComponent) {
   return (props) => {
     if (typeof window !== "undefined") {
