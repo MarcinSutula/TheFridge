@@ -59,7 +59,7 @@ function Header() {
       console.error(err);
     }
     setMounted(true);
-  }, [storageUserId]);
+  }, [storageUserId, dispatch]);
 
   ///NAVIGATION  HANDLERS
   const signupHandler = async (e) => {

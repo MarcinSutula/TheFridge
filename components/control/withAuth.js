@@ -5,7 +5,7 @@ import { getDoc, doc } from "firebase/firestore";
 import { db } from "./initFirebase";
 import { useEffect } from "react";
 
-const withAuth = (WrappedComponent) => {
+function withAuth(WrappedComponent) {
   return (props) => {
     if (typeof window !== "undefined") {
       const getUserId = localStorage.getItem("userId");
@@ -49,6 +49,6 @@ const withAuth = (WrappedComponent) => {
     }
     return null;
   };
-};
-
+}
+withAuth.displayName = "withAuth";
 export default withAuth;
