@@ -1,4 +1,4 @@
-import withAuth from "../../components/control/withAuth";
+import WithAuth from "../../components/control/withAuth";
 import classes from "./recipes.module.css";
 import { useState, useEffect } from "react";
 
@@ -30,4 +30,4 @@ function Recipes() {
   );
 }
 
-export default withAuth(Recipes);
+export default WithAuth(Recipes);

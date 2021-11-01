@@ -9,7 +9,6 @@ import {
   Modal,
   Fade,
 } from "@material-ui/core";
-import { useRouter } from "next/router";
 import { useState, useRef, useEffect } from "react";
 import { fridgeActions } from "../../store/index";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +18,7 @@ import TableRowAndCell from "./TableRowAndCell";
 import TableHeadRowCells from "./TableHeadRowCells";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../components/control/initFirebase";
-import withAuth from "../../components/control/withAuth";
+import WithAuth from "../../components/control/withAuth";
 import Spinner from "../../components/utils/Spinner";
 import { maxLengthCheck } from "../../components/utils/helpers";
 import {
@@ -313,4 +312,4 @@ function MainTable() {
   );
 }
 
-export default withAuth(MainTable);
+export default WithAuth(MainTable);
