@@ -312,4 +312,4 @@ function MainTable() {
   );
 }
 
-export default ithAuth(MainTable);
+export default withAuth(MainTable);
