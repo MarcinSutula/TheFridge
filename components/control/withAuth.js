@@ -3,20 +3,18 @@ import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "./initFirebase";
-import { useEffect } from "react";
-
 
 function withAuth(WrappedComponent) {
   return function Auth(props) {
+    const router = useRouter();
+    const dispatch = useDispatch();
+
     if (typeof window !== "undefined") {
       const getUserId = localStorage.getItem("userId");
-      const router = useRouter();
 
       if (getUserId) {
-        const dispatch = useDispatch();
-
-        useEffect(async () => {
-          try {
+        try {
+          async () => {
             const docRef = doc(db, "users", getUserId);
             const docSnap = await getDoc(docRef);
             const getUser = docSnap.data();
@@ -32,11 +30,11 @@ function withAuth(WrappedComponent) {
                 food: getUser.food,
               })
             );
-          } catch (err) {
-            alert("Something went wrong ! Please try again");
-            console.error(err);
-          }
-        }, []);
+          };
+        } catch (err) {
+          alert("Something went wrong ! Please try again");
+          console.error(err);
+        }
 
         return <WrappedComponent {...props} />;
       } else if (!getUserId) {
