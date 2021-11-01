@@ -165,10 +165,10 @@ function TableRowAndCell(props) {
   const editModal = (
     <form className={modalClasses.main} onSubmit={submitEditFoodHandler}>
       <div>
-        <div key={props.row.name}>
+        <div key={props?.row?.name}>
           <label>Name</label>
           <input
-            defaultValue={props.row.name}
+            defaultValue={props?.row?.name}
             ref={editFoodName}
             type="text"
             autoFocus={true}

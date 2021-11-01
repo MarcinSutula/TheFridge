@@ -1,17 +1,20 @@
 import { TableCell } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import classes from "./TableHeadRowCells.module.css";
-import { sortArrowDownIcon, sortArrowUpIcon } from "../../components/utils/icons";
+import {
+  sortArrowDownIcon,
+  sortArrowUpIcon,
+} from "../../components/utils/icons";
 
 function TableHeadRowCells(props) {
   const fridgeSortedField = useSelector((state) => state.sortedField);
   const fridgeSortDirection = useSelector((state) => state.sortDirection);
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== null);
+  const foundUser = users.find((user) => user?.id !== null);
 
   const sortIcon =
     foundUser?.food?.length > 0 &&
-    fridgeSortedField === props.column.id &&
+    fridgeSortedField === props?.column?.id &&
     (fridgeSortDirection === "asc" ? sortArrowDownIcon : sortArrowUpIcon);
 
   //MUI STYLES
@@ -24,15 +27,15 @@ function TableHeadRowCells(props) {
     fontWeight: 700,
     color: "#050f16d8",
     fontFamily: "Open Sans",
-    cursor: props.column.id === "action" ? "inherit" : "pointer",
-    borderTopLeftRadius: props.column.id === "id" ? "15px" : "0px",
-    borderTopRightRadius: props.column.id === "action" ? "15px" : "0px",
+    cursor: props?.column?.id === "action" ? "inherit" : "pointer",
+    borderTopLeftRadius: props?.column?.id === "id" ? "15px" : "0px",
+    borderTopRightRadius: props?.column?.id === "action" ? "15px" : "0px",
   };
 
   return (
     <TableCell
       onClick={props.sortByColumn}
-      key={props.column.id}
+      key={props?.column?.id}
       style={tableHeadCellStyleMUI}
     >
       <div className={classes.icon_container}>{sortIcon}</div>
