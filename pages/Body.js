@@ -8,6 +8,7 @@ function Body() {
   useEffect(() => {
     setMounted(true);
   }, []);
+  //DOESNT WORK IN THE SAME USEEFFECT
   useEffect(() => {
     window.scrollTo(0, 0);
   });
