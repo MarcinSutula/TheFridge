@@ -18,7 +18,7 @@ import TableRowAndCell from "./TableRowAndCell";
 import TableHeadRowCells from "./TableHeadRowCells";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../components/control/initFirebase";
-import WithAuth from "../../components/control/withAuth";
+import WithAuth from "../../components/control/WithAuth";
 import Spinner from "../../components/utils/Spinner";
 import { maxLengthCheck } from "../../components/utils/helpers";
 import {

@@ -1,4 +1,4 @@
-import WithAuth from "../../components/control/withAuth";
+import WithAuth from "../../components/control/WithAuth";
 import classes from "./shoppingList.module.css";
 import { useEffect, useState } from "react";
 

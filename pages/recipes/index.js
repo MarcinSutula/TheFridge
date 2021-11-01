@@ -1,4 +1,4 @@
-import WithAuth from "../../components/control/withAuth";
+import WithAuth from "../../components/control/WithAuth";
 import classes from "./recipes.module.css";
 import { useState, useEffect } from "react";
 
