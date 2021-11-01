@@ -1,0 +1,8 @@
+.container {
+  display: flex;
+  height: 90vh;
+  padding-bottom: 162px;
+  border-bottom: 5px solid #01c09af8;
+
+  background-color: #f3f3f3f1;
+}

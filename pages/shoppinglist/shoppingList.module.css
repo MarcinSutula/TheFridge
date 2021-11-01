@@ -1,0 +1,11 @@
+.background {
+  height: 100.4vh;
+  margin-top: -77px;
+  background: linear-gradient(rgba(0, 0, 0, 0.397), rgba(0, 0, 0, 0.185)),
+    url(../../public/bodytlowarzywalarge333.jpg), transparent;
+}
+
+.temporary {
+  padding-top: 150px;
+  padding-left: 50px;
+}

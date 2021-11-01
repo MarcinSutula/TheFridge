@@ -1,0 +1,48 @@
+.navigation {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin: 3px;
+  gap: 50px;
+  color: #ebf5fb;
+  font-weight: 700;
+  margin-right: 25px;
+}
+.navlinks {
+  display: inline-block;
+}
+
+.navlinks::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 3px;
+  background: #01c09af8;
+  transition: width 0.3s;
+}
+
+.navlinks:hover::after {
+  width: 100%;
+}
+
+.navlinks_highlight {
+  border-bottom: 3px solid #01c09af8;
+}
+
+.logout {
+  background-color: #004d3e48;
+  border-radius: 15px;
+  border: 3px solid #01c09a;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  color: #ebf5fb;
+  padding: 8px 25px;
+  transition: all 0.5s;
+  transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
+}
+
+.logout:hover,
+.logout:active {
+  transform: scale(1.15, 1.15);
+}

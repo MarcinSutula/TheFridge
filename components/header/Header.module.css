@@ -1,0 +1,6 @@
+.header {
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+}
+

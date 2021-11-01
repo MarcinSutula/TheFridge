@@ -1,0 +1,8 @@
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #ebf5fb;
+  cursor: pointer;
+  margin-left: 10px;
+}

@@ -1,0 +1,34 @@
+
+.background {
+  height: 100.4vh;
+  margin-top: -77px;
+  background: linear-gradient(rgba(0, 0, 0, 0.397), rgba(0, 0, 0, 0.185)),
+    url(../../public/bodytlowarzywalarge333.jpg), transparent;
+}
+.btn_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.food_btn {
+  outline: none;
+  background-color: #c12b2c;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  margin-left: 18px;
+  margin-bottom: 10px;
+  padding: 7px 20px;
+  color: #f8f8f8;
+  transition: all 0.5s;
+  transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
+}
+
+.btn_container button:hover,
+.btn_container button:active {
+  transform: scale(1.1, 1.1);
+}
