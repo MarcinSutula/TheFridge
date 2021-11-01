@@ -7,10 +7,9 @@ function Body() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
-  useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
+
   const scrollToColumnsHandler = () => {
     const element = document.getElementById("body_columns");
     element.scrollIntoView({
