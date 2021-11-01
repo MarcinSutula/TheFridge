@@ -22,7 +22,6 @@ function withAuth(WrappedComponent) {
             dispatch(
               fridgeActions.login({
                 username: getUser.username,
-                password: getUser.password,
                 id: getUserId,
                 foodId: getUser.foodId,
                 totalQuantity: getUser.totalQuantity,
