@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="fridge" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 148 220" enable-background="new 0 0 148 220" xml:space="preserve">
+<g>
+	<path fill="#A9C7D8" d="M8,16v196h88V8H16.0215C11.5995,8,8,11.5901,8,16z M80,56h8v104.332h-8V56z M24,116v-8V76h48v32v8v12H24
+		V116z"/>
+	<path fill="#A9C7D8" d="M131.9747,8H104v204h36V16C140,11.5901,136.4003,8,131.9747,8z M120,160.332h-8V56h8V160.332z"/>
+	<path fill="#C6DFED" d="M138.2127,1.2581C136.2947,0.4493,134.1875,0,131.9747,0l0,0H104h-8H16.0215C7.1483,0,0,7.164,0,16v204h96
+		h8h44V16C148,9.3713,143.9647,3.6877,138.2127,1.2581z M96,212H8V16c0-4.4099,3.5995-8,8.0215-8H96V212z M140,212h-36V8h27.9747
+		C136.4003,8,140,11.5901,140,16V212z"/>
+	<path fill="#618287" d="M72,76H24v32h48V76z M52,92h-8V80h8V92z"/>
+	<rect x="24" y="116" fill="#618287" width="48" height="12"/>
+	<rect x="44" y="80" fill="#2F4556" width="8" height="12"/>
+	<rect x="24" y="108" fill="#2F4556" width="48" height="8"/>
+	<rect x="80" y="56" fill="#456782" width="8" height="104.332"/>
+	<rect x="112" y="56" fill="#456782" width="8" height="104.332"/>
+</g>
+</svg>

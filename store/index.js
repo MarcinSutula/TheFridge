@@ -87,7 +87,6 @@ const fridgeSlice = createSlice({
       const foundUserFood = foundUser.food.find(
         (ele) => +ele.id === +action.payload.id
       );
-      let backgroundColor;
 
       foundUser.totalQuantity =
         foundUser.totalQuantity -
