@@ -70,7 +70,7 @@ Start development server - `npm run dev`
 
 ## Usage
 
-> Pages that should be used only if user is logged in are protected with components/control/withAuth.js, which checks if an user is logged in. If he is not, user is redirected to the main page.
+ Pages that should be used only if user is logged in are protected with components/control/withAuth.js, which checks if an user is logged in. If he is not, user is redirected to the main page.
 
 ```jsx
 function withAuth(WrappedComponent) {
@@ -117,22 +117,24 @@ const dispatch = useDispatch();
 }
 ```
 
-> components/control/initFirebase.js contains information required to connect to Firebase as well as a function which makes it easier to work with Authentication.
+ components/control/initFirebase.js contains information required to connect to Firebase as well as a function which makes it easier to work with Authentication.
 
 ```jsx
 function AuthURL(firebaseAuthAction) {
     return `${AUTH_BASIC_URL}${firebaseAuthAction}?key=${firebaseConfig.apiKey}`; }
 ```
 
-AUTH_BASIC_URL - Main page of Firebase Authentication, string
-firebaseAuthAction - a string to identify the fetch method such as `signUp` or `signInWithPassword`
-firebaseConfig - object of strings, with Firebase details required for connection
+- AUTH_BASIC_URL - Main page of Firebase Authentication, string
+- firebaseAuthAction - a string to identify the fetch method such as `signUp` or `signInWithPassword`
+- firebaseConfig - object of strings, with Firebase details required for connection
 
-> components/control/config.js contains non programmable details about column names, type of food names, configuration of max length of inputs, minimal amount of days to highlight expiration date and colors code hexes
 
-> components/utils/helpers.js contains a set of reusable functions
 
-- function returning a color out of config depending on the type
+ components/control/config.js contains non programmable details about column names, type of food names, configuration of max length of inputs, minimal amount of days to highlight expiration date and colors code hexes
+
+ components/utils/helpers.js contains a set of reusable functions
+
+ function returning a color out of config depending on the type
 
 ```jsx
 function setBackgroundColor(type) {
@@ -152,7 +154,7 @@ function setBackgroundColor(type) {
 }
  ```
 
-- function that sets a limit to max input length of inputs that are type of `number`. Takes in `maxLength` which an input element must have.
+ function that sets a limit to max input length of inputs that are type of `number`. Takes in `maxLength` which an input element must have.
 
 ```jsx
 function maxLengthCheck(e) { 
@@ -160,14 +162,14 @@ function maxLengthCheck(e) {
         e.target.value = e.target.value.slice(0, e.target.maxLength); } }
 ```
 
-- function that takes a date and creates a `new Date` object and transforms it to miliseconds
+ function that takes a date and creates a `new Date` object and transforms it to miliseconds
   ```jsx
   function sortDateHelper(date) { 
       if (!date) return ""; 
       const dateObj = new Date(date).getTime(); return dateObj; }
   ```
 
-> components/utils.Spinner.js contains reusable spinner which can take a prop `big` in order to increase its size.
+ components/utils.Spinner.js contains reusable spinner which can take a prop `big` in order to increase its size.
 
 ```jsx
 function Spinner(props) {
@@ -218,7 +220,7 @@ function Spinner(props) {
 }
 ```
 
-> pages/food/SummaryModalValues.js takes in an array of users food, transforms values into a string :
+ pages/food/SummaryModalValues.js takes in an array of users food, transforms values into a string :
 
 ```jsx
 const countTypeValues = (type) => {
@@ -251,7 +253,7 @@ and returns as an element based on `TYPES` from config
   });
 ```
 
-> pages/food/TableHeadRowCells.js returns a set of Material UI`s TableCells meant as a Head row. It contains column names from COLUMNS from config.js(given as props) and proper styling for each of them. Furthermore it contains sorting icon which based on sorting logic in Redux store shows arrow up or down, on clicked column also stored in Redux
+ pages/food/TableHeadRowCells.js returns a set of Material UI`s TableCells meant as a Head row. It contains column names from COLUMNS from config.js(given as props) and proper styling for each of them. Furthermore it contains sorting icon which based on sorting logic in Redux store shows arrow up or down, on clicked column also stored in Redux
 
 ```jsx
 function TableHeadRowCells(props) {
@@ -293,9 +295,9 @@ function TableHeadRowCells(props) {
 }
 ```
 
-> pages/food/TableRowAndCell.js returns as a row in table each element in food object of an user, which takes as prop. Other than logic for Edit and Remove food and modals, it contains:
+ pages/food/TableRowAndCell.js returns as a row in table each element in food object of an user, which takes as prop. Other than logic for Edit and Remove food and modals, it contains:
 
-- functions to transform date to proper local format and highlight it if expired/about to expire
+ functions to transform date to proper local format and highlight it if expired/about to expire
 
 ```jsx
 const checkExpDateStyle = (date) => {
@@ -323,7 +325,7 @@ const checkExpDateStyle = (date) => {
   };
 ```
 
-- edit Modal and edit handler, with editing to Firebases Firestore and pushing to Redux
+ edit Modal and edit handler, with editing to Firebases Firestore and pushing to Redux
 
 ```jsx
 const editModal = (
@@ -460,7 +462,7 @@ const submitEditFoodHandler = async (e) => {
   };
 ```
 
-- and remove handler, also with connection to Firebase and Redux
+ and remove handler, also with connection to Firebase and Redux
 
 ```jsx
 const removeFoodHandler = async (e) => {
@@ -495,7 +497,7 @@ const removeFoodHandler = async (e) => {
 
 ```
 
-- function returns a Table Row which based on column (formatted value or icon buttons for passing to shopping list, edit and remove)
+ function returns a Table Row which based on column (formatted value or icon buttons for passing to shopping list, edit and remove)
 
 ```jsx
   return (
@@ -546,7 +548,7 @@ const removeFoodHandler = async (e) => {
 }
 ```
 
->REDUX - store/index.js - contains state for :
+REDUX - store/index.js - contains state for :
 - sort field and direction, reducer: `sortByColumn`
 - users data, reducers: `login`, `logout`, `createUser`
 - users food data, reducers: `addFood`, `editFood`, `removeFood`
@@ -571,10 +573,10 @@ const removeFoodHandler = async (e) => {
 | `food.weight`         | `number`        | Weight of added food, max 9999 (from config.js)                                              |
 | `food.expDate`        | `date`          | Inputted exp date, used standard select Javascript date picker                               |
 | `food.key`            | `number`        | Used for setting keys in div elements                                                        |
-| `food.id`             | `number`        | taken from users.foodId, sets the of added food element                                      |
+| `food.id`             | `number`        | Taken from users.foodId, sets the of added food element                                      |
 
 
-- Redux contains also Middleware that helps accessing local storage for rendering, logging in and logging out(not normally available in Redux slice)
+ Redux contains also Middleware that helps accessing local storage for rendering, logging in and logging out(not normally available in Redux slice)
 
 ```jsx
 const authMiddleware =
