@@ -46,7 +46,7 @@ function MainTable() {
   const users = useSelector((state) => state.users);
   const foundUser = users.find((user) => user.id !== null);
 
-  // To get rid of error Warning: Expected server HTML to contain a matching <div> in <div>.
+  // To get rid of error Warning: Expected server HTML to contain a matching <div> in <div>..
   useEffect(() => {
     setMounted(true);
   }, []);
