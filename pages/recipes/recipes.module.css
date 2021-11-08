@@ -6,6 +6,67 @@
 }
 
 .temporary {
-  padding-top: 150px;
-  padding-left: 50px;
+  padding-top: 130px;
 }
+.temporary button {
+  border-style: none;
+  margin-left: 200px;
+  margin-top: 30px;
+  height: 40px;
+  width: 150px;
+  background-color: red;
+  cursor: pointer;
+}
+
+.grid_container {
+  display: grid;
+  height: 75vh;
+  justify-content: center;
+  grid-template-columns: 25% 25% 25%;
+  grid-template-rows: 28% 28% 28%;
+  gap: 50px;
+  text-align: center;
+  overflow-y: auto;
+}
+.grid_element {
+  background-color: green;
+  display: flex;
+}
+
+.grid_element h2{
+  max-width: 50%;
+  background-color: red;
+  margin: auto;
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.fill {
+  width: 50%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.fill img {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+/* .container ul {
+  width: 80%;
+  margin: auto;
+  list-style: none;
+  display: flex;
+  background-color: blue;
+  justify-content: space-between;
+
+  padding: 0;
+}
+
+.container ul li {
+  background-color: yellow;
+} */

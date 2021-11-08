@@ -32,6 +32,8 @@ export const TYPES = [
   "Other",
 ];
 
+// Add/edit food config 
+
 export const QUANTITY_MAX_LENGTH = 3;
 export const WEIGHT_MAX_LENGTH = 4;
 export const FOODNAME_MAX_LENGTH = 15;
@@ -39,7 +41,12 @@ export const INITIAL_ROWS_PER_PAGE = 10;
 export const SIGNUP_TIMEOUT_TIME = 1500;
 export const MINDAYS_TO_SHOW_RED_EXPDATE = 3;
 
-//Moze dodaj mozliwosc dodawania typow i kolorow tylko tutaj
+// Add/edit recipe config
+
+export const RECIPENAME_MAX_LENGTH = 25;
+export const RECIPESERVINGS_MAX_LENGTH = 1;
+export const RECIPETIME_MAX_LENGTH = 3;
+
 
 //Row background colors
 
