@@ -24,9 +24,11 @@ function withAuth(WrappedComponent) {
                 username: getUser.username,
                 id: getUserId,
                 foodId: getUser.foodId,
+                recipesId: getUser.recipesId,
                 totalQuantity: getUser.totalQuantity,
                 totalWeight: getUser.totalWeight,
                 food: getUser.food,
+                recipes: getUser.recipes,
               })
             );
           };

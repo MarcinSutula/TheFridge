@@ -48,9 +48,11 @@ function Header() {
             username: getUser.username,
             id: getUserId,
             foodId: getUser.foodId,
+            recipesId: getUser.recipesId,
             totalQuantity: getUser.totalQuantity,
             totalWeight: getUser.totalWeight,
             food: getUser.food,
+            recipes: getUser.recipes,
           })
         );
       }
@@ -69,11 +71,11 @@ function Header() {
 
     const payload = {
       username: signupInputUsername.current.value,
-      password: signupInputPassword.current.value,
       foodId: 0,
       totalQuantity: 0,
       totalWeight: 0,
       food: [],
+      recipes: [],
     };
 
     fetch(AuthURL("signUp"), {
@@ -165,6 +167,7 @@ function Header() {
                 totalQuantity: foundUser.totalQuantity,
                 totalWeight: foundUser.totalWeight,
                 food: foundUser.food,
+                recipes: foundUser.recipes,
               })
             );
 

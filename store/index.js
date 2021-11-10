@@ -31,6 +31,7 @@ const fridgeSlice = createSlice({
           username: action.payload.username,
           id: action.payload.id,
           foodId: action.payload.foodId ? action.payload.foodId : 0,
+          recipesId: action.payload.recipesId ? action.payload.recipesId : 0,
           totalQuantity: action.payload.totalQuantity
             ? action.payload.totalQuantity
             : 0,
@@ -38,6 +39,7 @@ const fridgeSlice = createSlice({
             ? action.payload.totalWeight
             : 0,
           food: action.payload.food ? action.payload.food : [],
+          recipes: action.payload.recipes ? action.payload.recipes : [],
         });
       }
     },
@@ -48,6 +50,7 @@ const fridgeSlice = createSlice({
       state.users.push({
         username: action.payload.username,
         foodId: action.payload.foodId ? action.payload.foodId : 0,
+        recipesId: action.payload.recipesId ? action.payload.recipesId : 0,
         id: null,
         totalQuantity: action.payload.totalQuantity
           ? action.payload.totalQuantity
@@ -56,6 +59,7 @@ const fridgeSlice = createSlice({
           ? action.payload.totalWeight
           : 0,
         food: action.payload.food ? action.payload.food : [],
+        recipes: action.payload.recipes ? action.payload.recipes : [],
       });
     },
 
@@ -167,6 +171,25 @@ const fridgeSlice = createSlice({
           }
         }
       });
+    },
+    //////////////////////////////////RECIPES//////
+    addRecipe(state, action) {
+      const foundUser = state.users.find(
+        (user) => user.username === action.payload.username
+      );
+
+      if (foundUser) {
+        foundUser.recipes.push({
+          name: action.payload.name,
+          servings: action.payload.servings,
+          time: action.payload.time,
+          difficulty: action.payload.difficulty,
+          url: action.payload.url,
+          ingredients: action.payload.ingredients,
+          id: action.payload.id,
+        });
+        foundUser.recipesId++;
+      }
     },
   },
 });

@@ -121,3 +121,13 @@
   display: flex;
   justify-content: center;
 }
+
+/* .addRecipe_btn {
+  display: inline;
+} */
+
+.addRecipe_btn button {
+  width: 40px;
+  border-radius: 50px;
+  margin-top: 5px;
+}

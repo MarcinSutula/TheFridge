@@ -96,6 +96,7 @@ function TableRowAndCell(props) {
 
       const payload = {
         username: foundUser.username,
+        recipesId: foundUser.recipesId,
         foodId: foundUser.foodId,
         totalWeight:
           foundUser.totalWeight -
@@ -106,6 +107,7 @@ function TableRowAndCell(props) {
           props.row.quantity +
           +editFoodQuantity.current.value,
         food: foodCopy,
+        recipes: foundUser.recipes,
       };
 
       const docRef = doc(db, "users", foundUser.id);

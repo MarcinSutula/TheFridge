@@ -71,65 +71,64 @@ function MainTable() {
     );
   };
 
-  const submitAddFoodHandler = (e) => {
+  const submitAddFoodHandler = async (e) => {
     try {
-      async () => {
-        e.preventDefault();
-        const docRef = doc(db, "users", foundUser.id);
-        const foodObj = {
-          id: foundUser.id,
-          foodId: foundUser.foodId,
-          username: foundUser.username,
-          name: addFoodName.current.value,
-          type: addFoodType.current.value,
-          quantity: addFoodQuantity.current.value,
-          weight: addFoodWeight.current.value,
-          expDate: addFoodExpDate.current.value,
-          key: foundUser.foodId,
-        };
-
-        const payload = {
-          username: foundUser.username,
-          foodId: foundUser.foodId + 1,
-          totalQuantity:
-            foundUser.totalQuantity + +addFoodQuantity.current.value,
-          totalWeight: foundUser.totalWeight + +addFoodWeight.current.value,
-          food: [
-            ...foundUser.food,
-            {
-              name: addFoodName.current.value,
-              type: addFoodType.current.value,
-              quantity: addFoodQuantity.current.value,
-              weight: addFoodWeight.current.value,
-              expDate: addFoodExpDate.current.value,
-              key: foundUser.foodId,
-              id: foundUser.foodId,
-            },
-          ],
-        };
-
-        if (
-          addFoodName.current.value.trim().length < 1 ||
-          addFoodType.current.value === "DEFAULT" ||
-          +addFoodQuantity.current.value < 0 ||
-          addFoodQuantity.current.value.trim().length < 1 ||
-          +addFoodWeight.current.value < 0 ||
-          addFoodWeight.current.value.trim().length < 1
-        ) {
-          alert("Values other than Expiration Date must not be empty");
-          return;
-        }
-
-        await setDoc(docRef, payload);
-
-        dispatch(fridgeActions.addFood(foodObj));
-        addFoodName.current.value = "";
-        addFoodType.current.value = "";
-        addFoodQuantity.current.value = "";
-        addFoodWeight.current.value = "";
-        addFoodExpDate.current.value = "";
-        setShowAddFoodModal(false);
+      e.preventDefault();
+      const docRef = doc(db, "users", foundUser.id);
+      const foodObj = {
+        id: foundUser.id,
+        foodId: foundUser.foodId,
+        username: foundUser.username,
+        name: addFoodName.current.value,
+        type: addFoodType.current.value,
+        quantity: addFoodQuantity.current.value,
+        weight: addFoodWeight.current.value,
+        expDate: addFoodExpDate.current.value,
+        key: foundUser.foodId,
       };
+
+      const payload = {
+        username: foundUser.username,
+        recipesId: foundUser.recipesId,
+        foodId: foundUser.foodId + 1,
+        totalQuantity: foundUser.totalQuantity + +addFoodQuantity.current.value,
+        totalWeight: foundUser.totalWeight + +addFoodWeight.current.value,
+        recipes: foundUser.recipes,
+        food: [
+          ...foundUser.food,
+          {
+            name: addFoodName.current.value,
+            type: addFoodType.current.value,
+            quantity: addFoodQuantity.current.value,
+            weight: addFoodWeight.current.value,
+            expDate: addFoodExpDate.current.value,
+            key: foundUser.foodId,
+            id: foundUser.foodId,
+          },
+        ],
+      };
+
+      if (
+        addFoodName.current.value.trim().length < 1 ||
+        addFoodType.current.value === "DEFAULT" ||
+        +addFoodQuantity.current.value < 0 ||
+        addFoodQuantity.current.value.trim().length < 1 ||
+        +addFoodWeight.current.value < 0 ||
+        addFoodWeight.current.value.trim().length < 1
+      ) {
+        alert("Values other than Expiration Date must not be empty");
+        return;
+      }
+
+      await setDoc(docRef, payload);
+
+      dispatch(fridgeActions.addFood(foodObj));
+      addFoodName.current.value = "";
+      addFoodType.current.value = "";
+      addFoodQuantity.current.value = "";
+      addFoodWeight.current.value = "";
+      addFoodExpDate.current.value = "";
+      setShowAddFoodModal(false);
     } catch (err) {
       alert("Something went wrong, please try again !");
       console.error(err);

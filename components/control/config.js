@@ -46,6 +46,8 @@ export const MINDAYS_TO_SHOW_RED_EXPDATE = 3;
 export const RECIPENAME_MAX_LENGTH = 25;
 export const RECIPESERVINGS_MAX_LENGTH = 1;
 export const RECIPETIME_MAX_LENGTH = 3;
+export const RECIPEINGREDIENTS_MAX_LENGTH = 15;
+export const RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS = 10;
 
 
 //Row background colors

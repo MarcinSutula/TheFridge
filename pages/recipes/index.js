@@ -1,7 +1,7 @@
 import withAuth from "../../components/control/withAuth";
 import classes from "./recipes.module.css";
 import modalClasses from "../../styles/modalClasses.module.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import RecipeLabel from "./RecipeLabel";
 import { Modal, Fade } from "@material-ui/core";
 import { maxLengthCheck } from "../../components/utils/helpers";
@@ -9,102 +9,121 @@ import {
   RECIPETIME_MAX_LENGTH,
   RECIPESERVINGS_MAX_LENGTH,
   RECIPENAME_MAX_LENGTH,
+  RECIPEINGREDIENTS_MAX_LENGTH,
+  RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS,
 } from "../../components/control/config";
-import { useRouter } from "next/router";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../components/control/initFirebase";
+import { useSelector, useDispatch } from "react-redux";
+import { fridgeActions } from "../../store/index";
+import Spinner from "../../components/utils/Spinner";
 
 function Recipes() {
   const [mounted, setMounted] = useState(false);
   const [showAddRecipeModal, setShowAddRecipeModal] = useState(false);
-  const [recipes, setRecipes] = useState([
-    {
-      name: "Carbonara",
-      id: 1,
-      servings: 1,
-      time: "20 min",
-      difficulty: "easy",
-      url: "https://ocdn.eu/pulscms-transforms/1/iysk9kpTURBXy8xYTk4NGNlODc4OTlmOWFjNWVjNjgwZDYzYjI2MmJhYy5qcGeTlQMAH80D6M0CMpMJpjRkMDk1YQaTBc0EsM0CdoGhMAE/carbonara.jpg",
-      ingredients: [
-        "250g pasta",
-        "150g bacon",
-        "100g parmigiano reggiano",
-        "salt",
-        "pepper",
-      ],
-    },
-    {
-      name: "Lasagna Bolognese",
-      id: 2,
-      difficulty: "medium",
-      time: "90 min",
-      servings: 6,
-      url: "https://wszystkoojedzeniu.pl/site/assets/files/105506/lasagna.650x0.jpeg",
-      ingredients: [
-        "250g pasta",
-        "500g mashed meat",
-        "1 carrot",
-        "1 onion",
-        "1 celery",
-        "700 ml passata",
-        "200ml red wine",
-        "1.5l milk",
-        "100g butter",
-        "100g flour",
-        "1 mozzarella",
-        "100g parmigiano reggiano",
-        "5g nutmeg",
-        "salt",
-        "pepper",
-      ],
-    },
-    {
-      name: "Spaghetti aglio e olio",
-      id: 3,
-      difficulty: "easy",
-      time: "10 min",
-      servings: 1,
-      url: "https://italia-by-natalia.pl/wp-content/uploads/2020/11/spaghetti-aglio-olio-peperoncino-klasyczne.jpg",
-      ingredients: [
-        "250g pasta",
-        "4 tb olive oil",
-        "4 garlic cloves",
-        "1 chili pepper",
-        "parsley",
-      ],
-    },
-  ]);
+  const [ingredientsInputAmount, setIngredientsInputAmount] = useState(1);
+
   const addRecipeName = useRef();
   const addRecipeServings = useRef();
   const addRecipeTime = useRef();
   const addRecipeDifficulty = useRef();
   const addRecipeImgURL = useRef();
+  const ingredientRefs = [...Array(RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS)].map(
+    () => useRef()
+  );
+  const users = useSelector((state) => state.users);
+  const foundUser = users.find((user) => user.id !== null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const submitAddRecipeHandler = (e) => {
-    e.preventDefault();
+  let recipes;
+  if (foundUser) {
+    recipes = foundUser.recipes;
+    if (!mounted) return <Spinner big={true} />;
+  } else if (!foundUser) {
+    recipes = [];
+    return <Spinner big={true} />;
+  }
 
-    setRecipes((prevState) => {
-      return [
-        ...prevState,
-        {
-          name: addRecipeName.current.value,
-          servings: addRecipeServings.current.value,
-          time: addRecipeTime.current.value,
-          difficulty: addRecipeDifficulty.current.value,
-          url: addRecipeImgURL.current.value,
-        },
-      ];
+  const addRecipeAmountOfIngredientsInputsHandler = () => {
+    return [...Array(ingredientsInputAmount)].map((ele, i) => {
+      return (
+        <div key={i}>
+          <label>Ingredient {i + 1}</label>
+          <input
+            type="text"
+            ref={ingredientRefs[i]}
+            maxLength={RECIPEINGREDIENTS_MAX_LENGTH}
+          />
+        </div>
+      );
     });
+  };
 
-    addRecipeName.current.value = "";
-    addRecipeServings.current.value = "";
-    addRecipeTime.current.value = "";
-    addRecipeDifficulty.current.value = "";
-    addRecipeImgURL.current.value = "";
+  const submitAddRecipeHandler = async (e) => {
+    e.preventDefault();
+    const docRef = doc(db, "users", foundUser.id);
+
+    const ingredientsArray = [
+      ...ingredientRefs
+        .filter(
+          (ref) =>
+            ref?.current?.value !== undefined && ref?.current?.value !== ""
+        )
+        .map((ref) => ref.current.value),
+    ];
+
+    const recipeObj = {
+      name: addRecipeName.current.value,
+      servings: addRecipeServings.current.value,
+      time: addRecipeTime.current.value,
+      difficulty: addRecipeDifficulty.current.value,
+      url: addRecipeImgURL.current.value,
+      ingredients: ingredientsArray,
+      id: foundUser.recipesId,
+    };
+
+    const payload = {
+      username: foundUser.username,
+      recipesId: foundUser.recipesId + 1,
+      foodId: foundUser.foodId,
+      totalQuantity: foundUser.totalQuantity,
+      totalWeight: foundUser.totalWeight,
+      recipes: [...foundUser.recipes, recipeObj],
+      food: foundUser.food,
+    };
+
+    if (
+      addRecipeName.current.value.trim().length < 1 ||
+      +addRecipeServings.current.value < 1 ||
+      +addRecipeTime.current.value < 0 ||
+      addRecipeDifficulty.current.value === "DEFAULT" ||
+      !ingredientRefs.find((ref) => !!ref?.current?.value)
+    ) {
+      alert(
+        "Values other than URL must not be empty. You must insert at least one ingredient"
+      );
+      return;
+    }
+
+    await setDoc(docRef, payload);
+
+    dispatch(
+      fridgeActions.addRecipe({ username: foundUser.username, ...recipeObj })
+    );
 
     setShowAddRecipeModal(false);
+    setIngredientsInputAmount(1);
+  };
+
+  const ingredientsInputAmountHandler = (e) => {
+    e.preventDefault();
+    setIngredientsInputAmount((prevState) => {
+      return prevState + (e.target.value === "+" ? 1 : -1);
+    });
   };
 
   const addRecipeModal = (
@@ -116,7 +135,6 @@ function Recipes() {
           ref={addRecipeName}
           autoFocus={true}
           maxLength={RECIPENAME_MAX_LENGTH}
-          required
         />
       </div>
       <div>
@@ -127,7 +145,6 @@ function Recipes() {
           maxLength={RECIPESERVINGS_MAX_LENGTH}
           min="1"
           onInput={maxLengthCheck}
-          required
         />
       </div>
       <div>
@@ -138,7 +155,6 @@ function Recipes() {
           maxLength={RECIPETIME_MAX_LENGTH}
           min="0"
           onInput={maxLengthCheck}
-          required
         />
       </div>
       <div>
@@ -148,7 +164,6 @@ function Recipes() {
           id="difficultylistAddRecipe"
           defaultValue={"DEFAULT"}
           ref={addRecipeDifficulty}
-          required
         >
           <option value="DEFAULT" disabled hidden>
             Choose here
@@ -160,8 +175,34 @@ function Recipes() {
       </div>
       <div>
         <label>Image URL </label>
-        <input type="text" ref={addRecipeImgURL} />
+        <input type="url" ref={addRecipeImgURL} />
       </div>
+      <div>
+        <h2>Ingredients</h2>
+        <h4>format: amount, name (i.e: 5g, salt) </h4>
+      </div>
+      {addRecipeAmountOfIngredientsInputsHandler()}
+      <div className={modalClasses.addRecipe_btn}>
+        {ingredientsInputAmount !== RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS && (
+          <button
+            type="button"
+            value="+"
+            onClick={ingredientsInputAmountHandler}
+          >
+            +
+          </button>
+        )}
+        {ingredientsInputAmount !== 1 && (
+          <button
+            type="button"
+            value="-"
+            onClick={ingredientsInputAmountHandler}
+          >
+            -
+          </button>
+        )}
+      </div>
+
       <div className={modalClasses.btn_container}>
         <button>Confirm</button>
       </div>
@@ -175,12 +216,13 @@ function Recipes() {
           <div className={classes.grid_container}>
             {recipes.map((recipe) => {
               return (
-                <RecipeLabel
-                  id={recipe.id}
-                  url={recipe.url}
-                  name={recipe.name}
-                  key={Math.random()}
-                />
+                <Fragment key={recipe.id}>
+                  <RecipeLabel
+                    id={recipe.id}
+                    url={recipe.url}
+                    name={recipe.name}
+                  />
+                </Fragment>
               );
             })}
           </div>
@@ -190,7 +232,11 @@ function Recipes() {
         </div>
         <Modal
           open={showAddRecipeModal}
-          onClose={() => setShowAddRecipeModal(false)}
+          onClose={() => {
+            console.log(foundUser);
+            setShowAddRecipeModal(false);
+            setIngredientsInputAmount(1);
+          }}
         >
           <Fade in={showAddRecipeModal}>{addRecipeModal}</Fade>
         </Modal>
