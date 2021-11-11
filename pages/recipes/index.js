@@ -64,59 +64,63 @@ function Recipes() {
   };
 
   const submitAddRecipeHandler = async (e) => {
-    e.preventDefault();
-    const docRef = doc(db, "users", foundUser.id);
+    try {
+      e.preventDefault();
+      const docRef = doc(db, "users", foundUser.id);
+      const ingredientsArray = [
+        ...ingredientRefs
+          .filter(
+            (ref) =>
+              ref?.current?.value !== undefined && ref?.current?.value !== ""
+          )
+          .map((ref) => ref.current.value),
+      ];
 
-    const ingredientsArray = [
-      ...ingredientRefs
-        .filter(
-          (ref) =>
-            ref?.current?.value !== undefined && ref?.current?.value !== ""
-        )
-        .map((ref) => ref.current.value),
-    ];
+      const recipeObj = {
+        name: addRecipeName.current.value,
+        servings: addRecipeServings.current.value,
+        time: addRecipeTime.current.value,
+        difficulty: addRecipeDifficulty.current.value,
+        url: addRecipeImgURL.current.value,
+        ingredients: ingredientsArray,
+        id: foundUser.recipesId,
+      };
 
-    const recipeObj = {
-      name: addRecipeName.current.value,
-      servings: addRecipeServings.current.value,
-      time: addRecipeTime.current.value,
-      difficulty: addRecipeDifficulty.current.value,
-      url: addRecipeImgURL.current.value,
-      ingredients: ingredientsArray,
-      id: foundUser.recipesId,
-    };
+      const payload = {
+        username: foundUser.username,
+        recipesId: foundUser.recipesId + 1,
+        foodId: foundUser.foodId,
+        totalQuantity: foundUser.totalQuantity,
+        totalWeight: foundUser.totalWeight,
+        recipes: [...foundUser.recipes, recipeObj],
+        food: foundUser.food,
+      };
 
-    const payload = {
-      username: foundUser.username,
-      recipesId: foundUser.recipesId + 1,
-      foodId: foundUser.foodId,
-      totalQuantity: foundUser.totalQuantity,
-      totalWeight: foundUser.totalWeight,
-      recipes: [...foundUser.recipes, recipeObj],
-      food: foundUser.food,
-    };
+      if (
+        addRecipeName.current.value.trim().length < 1 ||
+        +addRecipeServings.current.value < 1 ||
+        +addRecipeTime.current.value < 0 ||
+        addRecipeDifficulty.current.value === "DEFAULT" ||
+        !ingredientRefs.find((ref) => !!ref?.current?.value)
+      ) {
+        alert(
+          "Values other than URL must not be empty. You must insert at least one ingredient"
+        );
+        return;
+      }
 
-    if (
-      addRecipeName.current.value.trim().length < 1 ||
-      +addRecipeServings.current.value < 1 ||
-      +addRecipeTime.current.value < 0 ||
-      addRecipeDifficulty.current.value === "DEFAULT" ||
-      !ingredientRefs.find((ref) => !!ref?.current?.value)
-    ) {
-      alert(
-        "Values other than URL must not be empty. You must insert at least one ingredient"
+      await setDoc(docRef, payload);
+
+      dispatch(
+        fridgeActions.addRecipe({ username: foundUser.username, ...recipeObj })
       );
-      return;
+
+      setShowAddRecipeModal(false);
+      setIngredientsInputAmount(1);
+    } catch (err) {
+      alert("Something went wrong. Please try again !");
+      console.error(err);
     }
-
-    await setDoc(docRef, payload);
-
-    dispatch(
-      fridgeActions.addRecipe({ username: foundUser.username, ...recipeObj })
-    );
-
-    setShowAddRecipeModal(false);
-    setIngredientsInputAmount(1);
   };
 
   const ingredientsInputAmountHandler = (e) => {
@@ -217,18 +221,15 @@ function Recipes() {
             {recipes.map((recipe) => {
               return (
                 <Fragment key={recipe.id}>
-                  <RecipeLabel
-                    id={recipe.id}
-                    url={recipe.url}
-                    name={recipe.name}
-                  />
+                  <RecipeLabel recipe={recipe} />
                 </Fragment>
               );
             })}
-          </div>
-          <button onClick={() => setShowAddRecipeModal(true)}>
+            <button onClick={() => setShowAddRecipeModal(true)}>
             Add Recipe
           </button>
+          </div>
+          
         </div>
         <Modal
           open={showAddRecipeModal}

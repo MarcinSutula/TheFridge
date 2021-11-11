@@ -186,10 +186,30 @@ const fridgeSlice = createSlice({
           difficulty: action.payload.difficulty,
           url: action.payload.url,
           ingredients: action.payload.ingredients,
+          description: "",
           id: action.payload.id,
         });
         foundUser.recipesId++;
       }
+    },
+    addDescription(state, action) {
+      const foundUser = state.users.find(
+        (user) => user.username === action.payload.username
+      );
+      const foundRecipe = foundUser.recipes.find(
+        (recipe) => recipe.id === +action.payload.recipeId
+      );
+
+      foundRecipe.description = action.payload.description;
+    },
+    removeDescription(state, action) {
+      const foundUser = state.users.find(
+        (user) => user.username === action.payload.username
+      );
+      const foundRecipe = foundUser.recipes.find(
+        (recipe) => recipe.id === +action.payload.recipeId
+      );
+      foundRecipe.description = "";
     },
   },
 });

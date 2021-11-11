@@ -8,3 +8,148 @@
 .temporary {
   padding-top: 130px;
 }
+
+.container {
+  background-color: blue;
+  width: 60%;
+  margin: auto;
+  display: flex;
+}
+
+.fill {
+  max-height: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  height: auto;
+  width: 50%;
+}
+
+.fill img {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.short_desc {
+  background-color: green;
+  width: 50%;
+}
+
+.short_desc h1 {
+  text-align: center;
+  font-size: 36px;
+  overflow-wrap: break-word;
+  margin: 20px;
+}
+.short_desc li {
+  list-style: none;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px;
+}
+
+.short_desc ul {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  /* grid-template-rows: 28% 28% 28%; */
+}
+.short_desc_btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 40px;
+}
+
+.short_desc_btn button {
+  border-style: none;
+  margin: 20px;
+  height: 40px;
+  width: 150px;
+  background-color: red;
+  cursor: pointer;
+}
+
+.add_desc button {
+  border-style: none;
+  position: relative;
+  left: 46%;
+  margin-top: 30px;
+  height: 40px;
+  width: 150px;
+  background-color: red;
+  cursor: pointer;
+}
+
+.long_desc_input {
+  background-color: blue;
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.long_desc_input textarea {
+  height: 325px;
+  width: 90%;
+  font-size: 16px;
+  outline: none;
+  resize: none;
+}
+
+.long_desc_input_btn {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.long_desc_input_btn button {
+  border-style: none;
+
+  margin: 20px;
+  height: 40px;
+  width: 150px;
+  background-color: red;
+  cursor: pointer;
+}
+
+.long_desc_text {
+  background-color: blue;
+  width: 60%;
+  margin: auto;
+  display: block;
+  justify-content: left;
+  /* white-space: pre;
+  overflow-y: auto; */
+  overflow-wrap: break-word;
+  overflow-y:auto;
+  max-height: 350px;
+}
+
+.long_desc_text text {
+  font-size: 22px;
+  background-color: green;
+  max-width: 100%;
+  /* white-space: pre;
+  overflow-y: auto; */
+  overflow-wrap: break-word;
+}
+
+.long_desc_text_btn {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.long_desc_text_btn button {
+  border-style: none;
+
+  margin: 20px;
+  height: 40px;
+  width: 150px;
+  background-color: red;
+  cursor: pointer;
+}

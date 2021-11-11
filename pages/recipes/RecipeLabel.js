@@ -7,17 +7,27 @@ function RecipeLabel(props) {
 
   return (
     <div
-      key={props.id}
+      key={props.recipe.id}
       className={classes.grid_element}
       onClick={() => {
-        router.push(`/recipes/${props.id}`);
+        router.push(`/recipes/${props.recipe.id}`);
       }}
     >
-      <div className={classes.fill} key={props.id}>
-        <img src={props.url ? props.url : "altrecipeimg.jpg"} alt="Recipe Image" />
+      <div className={classes.fill} key={props.recipe.id}>
+        <img
+          src={props.recipe.url ? props.recipe.url : "altrecipeimg.jpg"}
+          alt="Recipe Image"
+        />
       </div>
-
-      <h2>{props.name}</h2>
+      <div className={classes.short_desc}>
+        <h1>{props.recipe.name}</h1>
+        <ul>
+          <li>🍴 &nbsp; {props.recipe.servings} </li>
+          <li>⏲ {props.recipe.time} min</li>
+          <li>👌 &nbsp; {props.recipe.difficulty}</li>
+        </ul>
+        {/* <p>{foundRecipe.ingredients}</p> */}
+      </div>
     </div>
   );
 }
