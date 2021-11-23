@@ -7,7 +7,8 @@ function ShoppingList() {
   useEffect(() => {
     setMounted(true);
   }, []);
-  
+
+
   return (
     mounted && (
       <div className={classes.background}>

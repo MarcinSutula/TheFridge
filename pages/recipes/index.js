@@ -39,6 +39,7 @@ function Recipes() {
     setMounted(true);
   }, []);
 
+  
   let recipes;
   if (foundUser) {
     recipes = foundUser.recipes;
@@ -84,6 +85,7 @@ function Recipes() {
         url: addRecipeImgURL.current.value,
         ingredients: ingredientsArray,
         id: foundUser.recipesId,
+        description: '',
       };
 
       const payload = {
@@ -226,10 +228,9 @@ function Recipes() {
               );
             })}
             <button onClick={() => setShowAddRecipeModal(true)}>
-            Add Recipe
-          </button>
+              Add Recipe
+            </button>
           </div>
-          
         </div>
         <Modal
           open={showAddRecipeModal}
