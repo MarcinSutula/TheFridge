@@ -8,7 +8,6 @@ function ShoppingList() {
     setMounted(true);
   }, []);
 
-
   return (
     mounted && (
       <div className={classes.background}>

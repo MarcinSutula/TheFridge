@@ -49,33 +49,20 @@ function Recipes() {
     return <Spinner big={true} />;
   }
 
-  const addRecipeAmountOfIngredientsInputsHandler = () => {
-    return [...Array(ingredientsInputAmount)].map((ele, i) => {
-      return (
-        <div key={i}>
-          <label>Ingredient {i + 1}</label>
-          <input
-            type="text"
-            ref={ingredientRefs[i]}
-            maxLength={RECIPEINGREDIENTS_MAX_LENGTH}
-          />
-        </div>
-      );
-    });
-  };
+  
 
   const submitAddRecipeHandler = async (e) => {
     try {
       e.preventDefault();
       const docRef = doc(db, "users", foundUser.id);
-      const ingredientsArray = [
-        ...ingredientRefs
+      const ingredientsArray = 
+        ingredientRefs
           .filter(
             (ref) =>
               ref?.current?.value !== undefined && ref?.current?.value !== ""
           )
-          .map((ref) => ref.current.value),
-      ];
+          .map((ref) => ref.current.value)
+      
 
       const recipeObj = {
         name: addRecipeName.current.value,
@@ -141,6 +128,7 @@ function Recipes() {
           ref={addRecipeName}
           autoFocus={true}
           maxLength={RECIPENAME_MAX_LENGTH}
+          required
         />
       </div>
       <div>
@@ -151,6 +139,7 @@ function Recipes() {
           maxLength={RECIPESERVINGS_MAX_LENGTH}
           min="1"
           onInput={maxLengthCheck}
+          required
         />
       </div>
       <div>
@@ -161,6 +150,7 @@ function Recipes() {
           maxLength={RECIPETIME_MAX_LENGTH}
           min="0"
           onInput={maxLengthCheck}
+          required
         />
       </div>
       <div>
@@ -170,6 +160,7 @@ function Recipes() {
           id="difficultylistAddRecipe"
           defaultValue={"DEFAULT"}
           ref={addRecipeDifficulty}
+          required
         >
           <option value="DEFAULT" disabled hidden>
             Choose here
@@ -187,7 +178,18 @@ function Recipes() {
         <h2>Ingredients</h2>
         <h4>format: amount, name (i.e: 5g, salt) </h4>
       </div>
-      {addRecipeAmountOfIngredientsInputsHandler()}
+      {[...Array(ingredientsInputAmount)].map((ele, i) => {
+      return (
+        <div key={i}>
+          <label>Ingredient {i + 1}</label>
+          <input
+            type="text"
+            ref={ingredientRefs[i]}
+            maxLength={RECIPEINGREDIENTS_MAX_LENGTH}
+          />
+        </div>
+      );
+    })}
       <div className={modalClasses.addRecipe_btn}>
         {ingredientsInputAmount !== RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS && (
           <button

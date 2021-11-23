@@ -125,7 +125,6 @@ function TableRowAndCell(props) {
       console.error(err);
     }
   };
-
   const removeFoodHandler = async (e) => {
     e.preventDefault();
 
