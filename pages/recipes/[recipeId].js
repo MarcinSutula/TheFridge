@@ -14,6 +14,8 @@ import {
   RECIPENAME_MAX_LENGTH,
   RECIPEINGREDIENTS_MAX_LENGTH,
   RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS,
+  RECIPEDESCRIPTION_MAX_LENGTH,
+  RECIPEINGREDIENTS_REGEX,
 } from "../../components/control/config";
 import { maxLengthCheck } from "../../components/utils/helpers";
 
@@ -43,6 +45,8 @@ function RecipeDetails() {
   const recipeDescription = foundRecipe?.description;
   const recipeIngredients = foundRecipe?.ingredients;
 
+  // const pattern = new RegExp ('\d{1,5}\w{1,2},\w{0,25}')
+  const pattern = new RegExp("[0-9]");
   useEffect(() => {
     if (recipeDescription) {
       setShowDescription(true);
@@ -74,10 +78,6 @@ function RecipeDetails() {
     try {
       e.preventDefault();
 
-      // if (!addDescription.current.value) {
-      //   setShowDescriptionInput(false)
-      //   return;
-      // }
       const docRef = doc(db, "users", foundUser.id);
       const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
 
@@ -188,6 +188,23 @@ function RecipeDetails() {
       const foundCopyRecipe = recipesCopy.find(
         (recipe) => recipe.id === +recipeId
       );
+      if (
+        editRecipeName.current.value.trim().length < 1 ||
+        +editRecipeServings.current.value < 1 ||
+        +editRecipeTime.current.value < 0 ||
+        editRecipeDifficulty.current.value === "DEFAULT" ||
+        !ingredientRefs.find((ref) => !!ref?.current?.value)
+      ) {
+        alert(
+          "Values other than URL must not be empty. You must insert at least one ingredient"
+        );
+        return;
+      } else if (
+        ingredientsArray.find((ing) => !ing.match(RECIPEINGREDIENTS_REGEX))
+      ) {
+        alert("Ingredients must be kept in format: amount,name");
+        return;
+      }
 
       foundCopyRecipe.name = editRecipeName.current.value;
       foundCopyRecipe.servings = editRecipeServings.current.value;
@@ -205,25 +222,13 @@ function RecipeDetails() {
         recipes: recipesCopy,
         food: foundUser.food,
       };
-      if (
-        editRecipeName.current.value.trim().length < 1 ||
-        +editRecipeServings.current.value < 1 ||
-        +editRecipeTime.current.value < 0 ||
-        editRecipeDifficulty.current.value === "DEFAULT" ||
-        !ingredientRefs.find((ref) => !!ref?.current?.value)
-      ) {
-        alert(
-          "Values other than URL must not be empty. You must insert at least one ingredient"
-        );
-        return;
-      }
 
       await setDoc(docRef, payload);
 
       dispatch(
         fridgeActions.editRecipe({
           username: foundUser.username,
-          ...foundCopyRecipe
+          ...foundCopyRecipe,
         })
       );
 
@@ -294,7 +299,7 @@ function RecipeDetails() {
       </div>
       <div>
         <h2>Ingredients</h2>
-        <h4>format: amount, name (i.e: 5g, salt) </h4>
+        <h4>format: amount,name (i.e: 5g,salt)</h4>
       </div>
       {[...Array(ingredientsInputAmount)].map((recipe, i) => {
         return (
@@ -329,46 +334,11 @@ function RecipeDetails() {
           </button>
         )}
       </div>
-
       <div className={modalClasses.btn_container}>
         <button>Confirm</button>
       </div>
     </form>
   );
-
-  // const editIngredientsModal = (
-  //   <form
-  //     className={modalClasses.main}
-  //     onSubmit={submitEditIngredientsHandler}
-  //     key={ingredientsInputAmount}
-  //   >
-  //     {[...Array(ingredientsInputAmount)].map((recipe, i) => {
-  //       return (
-  //         <div key={i}>
-  //           <label>Ingredient {i + 1}</label>
-  //           <input
-  //             type="text"
-  //             ref={ingredientRefs[i]}
-  //             maxLength={RECIPEINGREDIENTS_MAX_LENGTH}
-  //             defaultValue={recipeIngredients[i]}
-  //           />
-  //         </div>
-  //       );
-  //     })}
-
-  //     {ingredientsInputAmount !== RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS && (
-  //       <button type="button" value="+" onClick={ingredientsInputAmountHandler}>
-  //         +
-  //       </button>
-  //     )}
-  //     {ingredientsInputAmount !== 1 && (
-  //       <button type="button" value="-" onClick={ingredientsInputAmountHandler}>
-  //         -
-  //       </button>
-  //     )}
-  //     <button>Confirm</button>
-  //   </form>
-  // );
 
   return (
     mounted && (
@@ -411,6 +381,7 @@ function RecipeDetails() {
               >
                 <textarea
                   type="text"
+                  maxLength={RECIPEDESCRIPTION_MAX_LENGTH}
                   ref={addDescription}
                   autoFocus={true}
                   defaultValue={recipeDescription ? recipeDescription : ""}

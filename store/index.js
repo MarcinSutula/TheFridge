@@ -192,6 +192,22 @@ const fridgeSlice = createSlice({
         foundUser.recipesId++;
       }
     },
+    editRecipe(state, action) {
+      const foundUser = state.users.find(
+        (user) => user.username === action.payload.username
+      );
+      const foundRecipe = foundUser.recipes.find(
+        (recipe) => recipe.id === +action.payload.id
+      );
+      if (foundUser) {
+        foundRecipe.name = action.payload.name;
+        foundRecipe.servings = action.payload.servings;
+        foundRecipe.time = action.payload.time;
+        foundRecipe.difficulty = action.payload.difficulty;
+        foundRecipe.url = action.payload.url;
+        foundRecipe.ingredients = action.payload.ingredients;
+      }
+    },
     addDescription(state, action) {
       const foundUser = state.users.find(
         (user) => user.username === action.payload.username
@@ -210,25 +226,6 @@ const fridgeSlice = createSlice({
         (recipe) => recipe.id === +action.payload.recipeId
       );
       foundRecipe.description = "";
-    },
-
-    ////////////INGREDIENTS/////////////////
-
-    editRecipe(state, action) {
-      const foundUser = state.users.find(
-        (user) => user.username === action.payload.username
-      );
-      const foundRecipe = foundUser.recipes.find(
-        (recipe) => recipe.id === +action.payload.id
-      );
-      if (foundUser) {
-        foundRecipe.name = action.payload.name;
-        foundRecipe.servings = action.payload.servings;
-        foundRecipe.time = action.payload.time;
-        foundRecipe.difficulty = action.payload.difficulty;
-        foundRecipe.url = action.payload.url;
-        foundRecipe.ingredients = action.payload.ingredients;
-      }
     },
   },
 });

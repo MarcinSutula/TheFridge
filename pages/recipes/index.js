@@ -11,6 +11,7 @@ import {
   RECIPENAME_MAX_LENGTH,
   RECIPEINGREDIENTS_MAX_LENGTH,
   RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS,
+  RECIPEINGREDIENTS_REGEX
 } from "../../components/control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../components/control/initFirebase";
@@ -39,7 +40,6 @@ function Recipes() {
     setMounted(true);
   }, []);
 
-  
   let recipes;
   if (foundUser) {
     recipes = foundUser.recipes;
@@ -49,41 +49,16 @@ function Recipes() {
     return <Spinner big={true} />;
   }
 
-  
-
   const submitAddRecipeHandler = async (e) => {
     try {
       e.preventDefault();
       const docRef = doc(db, "users", foundUser.id);
-      const ingredientsArray = 
-        ingredientRefs
-          .filter(
-            (ref) =>
-              ref?.current?.value !== undefined && ref?.current?.value !== ""
-          )
-          .map((ref) => ref.current.value)
-      
-
-      const recipeObj = {
-        name: addRecipeName.current.value,
-        servings: addRecipeServings.current.value,
-        time: addRecipeTime.current.value,
-        difficulty: addRecipeDifficulty.current.value,
-        url: addRecipeImgURL.current.value,
-        ingredients: ingredientsArray,
-        id: foundUser.recipesId,
-        description: '',
-      };
-
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId + 1,
-        foodId: foundUser.foodId,
-        totalQuantity: foundUser.totalQuantity,
-        totalWeight: foundUser.totalWeight,
-        recipes: [...foundUser.recipes, recipeObj],
-        food: foundUser.food,
-      };
+      const ingredientsArray = ingredientRefs
+        .filter(
+          (ref) =>
+            ref?.current?.value !== undefined && ref?.current?.value !== ""
+        )
+        .map((ref) => ref.current.value);
 
       if (
         addRecipeName.current.value.trim().length < 1 ||
@@ -96,7 +71,33 @@ function Recipes() {
           "Values other than URL must not be empty. You must insert at least one ingredient"
         );
         return;
+      } else if (
+        ingredientsArray.find((ing) => !ing.match(RECIPEINGREDIENTS_REGEX))
+      ) {
+        alert("Ingredients must be kept in format: amount,name");
+        return;
       }
+
+      const recipeObj = {
+        name: addRecipeName.current.value,
+        servings: addRecipeServings.current.value,
+        time: addRecipeTime.current.value,
+        difficulty: addRecipeDifficulty.current.value,
+        url: addRecipeImgURL.current.value,
+        ingredients: ingredientsArray,
+        id: foundUser.recipesId,
+        description: "",
+      };
+
+      const payload = {
+        username: foundUser.username,
+        recipesId: foundUser.recipesId + 1,
+        foodId: foundUser.foodId,
+        totalQuantity: foundUser.totalQuantity,
+        totalWeight: foundUser.totalWeight,
+        recipes: [...foundUser.recipes, recipeObj],
+        food: foundUser.food,
+      };
 
       await setDoc(docRef, payload);
 
@@ -176,20 +177,20 @@ function Recipes() {
       </div>
       <div>
         <h2>Ingredients</h2>
-        <h4>format: amount, name (i.e: 5g, salt) </h4>
+        <h4>format: amount,name (i.e: 5g,salt) </h4>
       </div>
       {[...Array(ingredientsInputAmount)].map((ele, i) => {
-      return (
-        <div key={i}>
-          <label>Ingredient {i + 1}</label>
-          <input
-            type="text"
-            ref={ingredientRefs[i]}
-            maxLength={RECIPEINGREDIENTS_MAX_LENGTH}
-          />
-        </div>
-      );
-    })}
+        return (
+          <div key={i}>
+            <label>Ingredient {i + 1}</label>
+            <input
+              type="text"
+              ref={ingredientRefs[i]}
+              maxLength={RECIPEINGREDIENTS_MAX_LENGTH}
+            />
+          </div>
+        );
+      })}
       <div className={modalClasses.addRecipe_btn}>
         {ingredientsInputAmount !== RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS && (
           <button
@@ -237,7 +238,6 @@ function Recipes() {
         <Modal
           open={showAddRecipeModal}
           onClose={() => {
-            console.log(foundUser);
             setShowAddRecipeModal(false);
             setIngredientsInputAmount(1);
           }}
