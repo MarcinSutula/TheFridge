@@ -20,7 +20,10 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../components/control/initFirebase";
 import withAuth from "../../components/control/withAuth";
 import Spinner from "../../components/utils/Spinner";
-import { maxLengthCheck } from "../../components/utils/helpers";
+import {
+  maxLengthCheck,
+  getNumberFromStr,
+} from "../../components/utils/helpers";
 import {
   COLUMNS,
   QUANTITY_MAX_LENGTH,
@@ -28,6 +31,7 @@ import {
   FOODNAME_MAX_LENGTH,
   INITIAL_ROWS_PER_PAGE,
   TYPES,
+  WEIGHT_REGEX,
 } from "../../components/control/config";
 import SummaryModalValues from "./SummaryModalValues";
 
@@ -92,7 +96,8 @@ function MainTable() {
         recipesId: foundUser.recipesId,
         foodId: foundUser.foodId + 1,
         totalQuantity: foundUser.totalQuantity + +addFoodQuantity.current.value,
-        totalWeight: foundUser.totalWeight + +addFoodWeight.current.value,
+        totalWeight:
+          foundUser.totalWeight + getNumberFromStr(addFoodWeight.current.value),
         recipes: foundUser.recipes,
         food: [
           ...foundUser.food,
@@ -112,11 +117,12 @@ function MainTable() {
         addFoodName.current.value.trim().length < 1 ||
         addFoodType.current.value === "DEFAULT" ||
         +addFoodQuantity.current.value < 0 ||
-        addFoodQuantity.current.value.trim().length < 1 ||
-        +addFoodWeight.current.value < 0 ||
-        addFoodWeight.current.value.trim().length < 1
+        addFoodQuantity.current.value.trim().length < 1
       ) {
         alert("Values other than Expiration Date must not be empty");
+        return;
+      } else if (!foodObj.weight.match(WEIGHT_REGEX)) {
+        alert("Weight must be inserted as: amount,measure   i.e: 100ml,water");
         return;
       }
 
@@ -154,6 +160,7 @@ function MainTable() {
           ref={addFoodName}
           autoFocus={true}
           maxLength={FOODNAME_MAX_LENGTH}
+          required
         />
       </div>
       <div>
@@ -163,6 +170,7 @@ function MainTable() {
           id="typelistAddFood"
           defaultValue={"DEFAULT"}
           ref={addFoodType}
+          required
         >
           <option value="DEFAULT" disabled hidden>
             Choose here
@@ -184,16 +192,17 @@ function MainTable() {
           maxLength={QUANTITY_MAX_LENGTH}
           min="0"
           onInput={maxLengthCheck}
+          required
         />
       </div>
       <div>
-        <label>Weight </label>
+        <label>Weight</label>
         <input
-          type="number"
+          type="text"
           ref={addFoodWeight}
-          min="0"
           maxLength={WEIGHT_MAX_LENGTH}
-          onInput={maxLengthCheck}
+          placeholder="100ml, 50g, 5ts, 2kg etc."
+          required
         />
       </div>
       <div>

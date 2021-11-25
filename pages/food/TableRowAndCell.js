@@ -15,15 +15,18 @@ import {
   COLOR_VALID,
   TYPES,
   MINDAYS_TO_SHOW_RED_EXPDATE,
+  WEIGHT_REGEX,
 } from "../../components/control/config";
 import {
   maxLengthCheck,
   setBackgroundColor,
+  getNumberFromStr,
 } from "../../components/utils/helpers";
 import {
   EditFoodIcon,
   AddtoListIcon,
   RemoveFoodIcon,
+  
 } from "../../components/utils/icons";
 
 function TableRowAndCell(props) {
@@ -100,8 +103,8 @@ function TableRowAndCell(props) {
         foodId: foundUser.foodId,
         totalWeight:
           foundUser.totalWeight -
-          props.row.weight +
-          +editFoodWeight.current.value,
+          getNumberFromStr(props.row.weight) +
+          getNumberFromStr(editFoodWeight.current.value),
         totalQuantity:
           foundUser.totalQuantity -
           props.row.quantity +
@@ -109,6 +112,19 @@ function TableRowAndCell(props) {
         food: foodCopy,
         recipes: foundUser.recipes,
       };
+
+      if (
+        editFoodName.current.value.trim().length < 1 ||
+        editFoodType.current.value === "DEFAULT" ||
+        +editFoodQuantity.current.value < 0 ||
+        editFoodQuantity.current.value.trim().length < 1
+      ) {
+        alert("Values other than Expiration Date must not be empty");
+        return;
+      } else if (!foodCopy[foundUserFoodIndex].weight.match(WEIGHT_REGEX)) {
+        alert("Weight must be inserted as: amount,measure   i.e: 100ml,water");
+        return;
+      }
 
       const docRef = doc(db, "users", foundUser.id);
       await setDoc(docRef, payload);
@@ -135,7 +151,9 @@ function TableRowAndCell(props) {
       const payload = {
         username: foundUser.username,
         foodId: foundUser.foodId,
-        totalWeight: foundUser.totalWeight - props.row.weight,
+        recipesId: foundUser.recipesId,
+        recipes: foundUser.recipes,
+        totalWeight: foundUser.totalWeight - getNumberFromStr(props.row.weight),
         totalQuantity: foundUser.totalQuantity - props.row.quantity,
         food: foodFiltered,
       };
@@ -201,15 +219,14 @@ function TableRowAndCell(props) {
             required
           />
         </div>
-        <div key={props?.row?.weight * Math.random()}>
-          <label>Weight(g)</label>
+        <div key={props?.row?.weight}>
+          <label>Weight</label>
           <input
             defaultValue={props?.row?.weight}
             ref={editFoodWeight}
-            type="number"
-            min="0"
+            type="text"
             maxLength={WEIGHT_MAX_LENGTH}
-            onInput={maxLengthCheck}
+            placeholder="100ml, 50g, 5ts, 2kg etc."
             required
           />
         </div>
@@ -219,7 +236,6 @@ function TableRowAndCell(props) {
             type="date"
             defaultValue={props?.row?.expDate}
             ref={editFoodExpDate}
-            required
           />
         </div>
       </div>

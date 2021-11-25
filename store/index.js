@@ -1,6 +1,6 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { COLUMNS } from "../components/control/config";
-import { sortDateHelper } from "../components/utils/helpers";
+import { sortDateHelper, getNumberFromStr } from "../components/utils/helpers";
 
 const invertDirection = {
   asc: "desc",
@@ -81,7 +81,7 @@ const fridgeSlice = createSlice({
         });
         foundUser.foodId++;
         foundUser.totalQuantity += +action.payload.quantity;
-        foundUser.totalWeight += +action.payload.weight;
+        foundUser.totalWeight += getNumberFromStr(action.payload.weight);
       }
     },
     editFood(state, action) {
@@ -97,7 +97,9 @@ const fridgeSlice = createSlice({
         foundUserFood.quantity +
         +action.payload.quantity;
       foundUser.totalWeight =
-        foundUser.totalWeight - foundUserFood.weight + +action.payload.weight;
+        foundUser.totalWeight -
+        getNumberFromStr(foundUserFood.weight) +
+        getNumberFromStr(action.payload.weight);
 
       if (foundUser) {
         foundUserFood.name = action.payload.name;
@@ -115,7 +117,9 @@ const fridgeSlice = createSlice({
         return item.key !== action.payload.foodToRemove.key;
       });
       foundUser.totalQuantity -= +action.payload.foodToRemove.quantity;
-      foundUser.totalWeight -= +action.payload.foodToRemove.weight;
+      foundUser.totalWeight -= getNumberFromStr(
+        action.payload.foodToRemove.weight
+      );
     },
     sortByColumn(state, action) {
       const clickedColumn = COLUMNS.find(
@@ -137,12 +141,32 @@ const fridgeSlice = createSlice({
 
       foundUser.food.sort((a, b) => {
         if (
-          state.sortedField === "quantity" ||
-          state.sortedField === "weight"
+          state.sortedField === "quantity"
+          
         ) {
-          if (+a[state.sortedField] > +b[state.sortedField]) {
+          if (
+            +a[state.sortedField] >
+            +b[state.sortedField]
+          ) {
             return state.sortDirection === "asc" ? 1 : -1;
-          } else if (+a[state.sortedField] < +b[state.sortedField]) {
+          } else if (
+            +a[state.sortedField] <
+            +b[state.sortedField]
+          ) {
+            return state.sortDirection === "asc" ? -1 : 1;
+          } else {
+            return 0;
+          }
+        } else if (state.sortedField === "weight") {
+          if (
+            getNumberFromStr(a[state.sortedField]) >
+            getNumberFromStr(b[state.sortedField])
+          ) {
+            return state.sortDirection === "asc" ? 1 : -1;
+          } else if (
+            getNumberFromStr(a[state.sortedField]) <
+            getNumberFromStr(b[state.sortedField])
+          ) {
             return state.sortDirection === "asc" ? -1 : 1;
           } else {
             return 0;
@@ -208,14 +232,14 @@ const fridgeSlice = createSlice({
         foundRecipe.ingredients = action.payload.ingredients;
       }
     },
-    removeRecipe(state,action){
+    removeRecipe(state, action) {
       const foundUser = state.users.find(
         (user) => user.username === action.payload.username
       );
 
-      foundUser.recipes = foundUser.recipes.filter((recipe)=>{
-        return recipe.id !== +action.payload.recipeId
-      })
+      foundUser.recipes = foundUser.recipes.filter((recipe) => {
+        return recipe.id !== +action.payload.recipeId;
+      });
     },
     addDescription(state, action) {
       const foundUser = state.users.find(

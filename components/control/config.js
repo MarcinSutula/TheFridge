@@ -9,7 +9,7 @@ export const COLUMNS = [
   },
   {
     id: "weight",
-    label: "Weight(g)",
+    label: "Weight",
     numeric: "true",
   },
   {
@@ -35,12 +35,12 @@ export const TYPES = [
 // Add/edit food config 
 
 export const QUANTITY_MAX_LENGTH = 3;
-export const WEIGHT_MAX_LENGTH = 4;
+export const WEIGHT_MAX_LENGTH = 7;
 export const FOODNAME_MAX_LENGTH = 15;
 export const INITIAL_ROWS_PER_PAGE = 10;
 export const SIGNUP_TIMEOUT_TIME = 1500;
 export const MINDAYS_TO_SHOW_RED_EXPDATE = 3;
-
+export const WEIGHT_REGEX = /^\d{1,4}[mlkgcstTq]{1,2}$/
 // Add/edit recipe config
 
 export const RECIPENAME_MAX_LENGTH = 15;
@@ -49,7 +49,7 @@ export const RECIPETIME_MAX_LENGTH = 3;
 export const RECIPEINGREDIENTS_MAX_LENGTH = 17;
 export const RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS = 10;
 export const RECIPEDESCRIPTION_MAX_LENGTH = 5000;
-export const RECIPEINGREDIENTS_REGEX = /^\d{1,4}[mlkgcstT]{1,2}?,[a-zA-Z]{1}[a-zA-Z ]{1,25}[a-zA-Z]{1}$/
+export const RECIPEINGREDIENTS_REGEX = /^\d{1,4}[mlkgcstTq]{1,2}?,[a-zA-Z]{1}[a-zA-Z ]{1,25}[a-zA-Z]{1}$/
 
 
 //Row background colors

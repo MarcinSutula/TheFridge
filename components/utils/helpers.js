@@ -42,3 +42,10 @@ export function sortDateHelper(date) {
   const dateObj = new Date(date).getTime();
   return dateObj;
 }
+
+//For correctly counting weight (i.e separates 100 from ml)
+export function getNumberFromStr(str) {
+  const toStr = str.toString()
+  const num = +toStr.match(/\d+/)[0];
+  return num;
+}

@@ -26,7 +26,6 @@ function RecipeLabel(props) {
           <li>⏲ {props.recipe.time} min</li>
           <li>👌 &nbsp; {props.recipe.difficulty}</li>
         </ul>
-        {/* <p>{foundRecipe.ingredients}</p> */}
       </div>
     </div>
   );

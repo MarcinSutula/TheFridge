@@ -71,6 +71,13 @@ function RecipeDetails() {
       )
     );
 
+  const ingredientStyleHandler = (ing)=>{
+
+    console.log(ing.split(','));
+
+    return {color:'blue'}
+  }
+
   ///////////////////// DESCRIPTION HANDLERS ////////////////
 
   const addDescriptionHandler = async (e) => {
@@ -407,7 +414,7 @@ function RecipeDetails() {
               <h1>{foundRecipe.name}</h1>
               <ul>
                 {foundRecipe.ingredients.map((ing) => {
-                  return <li key={Math.random()} style={{color: 'red'}}>✔ {ing}</li>;
+                  return <li key={Math.random()} style={ingredientStyleHandler(ing)}>✔ {ing}</li>;
                 })}
               </ul>
               <div className={classes.short_desc_btn}>

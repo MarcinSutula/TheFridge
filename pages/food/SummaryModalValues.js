@@ -12,10 +12,10 @@ function SummaryModalValues(props) {
     
     filteredArr?.forEach((arr) => {
       quantity += +arr.quantity;
-      weight += +arr.weight;
+      weight += +arr.weight.match(/\d+/)[0];
     });
 
-    return `Quantity: ${quantity}, Weight(g): ${weight}`;
+    return `Quantity: ${quantity}, Weight: ${weight}`;
   };
 
   return TYPES.map((type) => {
