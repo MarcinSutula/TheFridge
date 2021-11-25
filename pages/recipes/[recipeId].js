@@ -243,7 +243,7 @@ function RecipeDetails() {
   const removeRecipeHandler = async (e) => {
     try {
       e.preventDefault();
-      router.push("/index", "/recipes");
+      
       const docRef = doc(db, "users", foundUser.id);
 
       const filteredRecipes = foundUser.recipes.filter(
@@ -258,6 +258,7 @@ function RecipeDetails() {
         recipes: filteredRecipes,
         food: foundUser.food,
       };
+      
       await setDoc(docRef, payload);
       
       dispatch(
@@ -266,7 +267,7 @@ function RecipeDetails() {
           recipeId: foundRecipe.id,
         })
       );
-
+      router.replace("/recipes");
       setShowRemoveRecipeModal(false);
     } catch (err) {
       alert("Something went wrong ! Please try again");
@@ -406,7 +407,7 @@ function RecipeDetails() {
               <h1>{foundRecipe.name}</h1>
               <ul>
                 {foundRecipe.ingredients.map((ing) => {
-                  return <li key={Math.random()}>✔ {ing}</li>;
+                  return <li key={Math.random()} style={{color: 'red'}}>✔ {ing}</li>;
                 })}
               </ul>
               <div className={classes.short_desc_btn}>

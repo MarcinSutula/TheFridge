@@ -112,7 +112,7 @@ const fridgeSlice = createSlice({
         (user) => user.username === action.payload.username
       );
       foundUser.food = foundUser.food.filter((item) => {
-        return item.key != action.payload.foodToRemove.key;
+        return item.key !== action.payload.foodToRemove.key;
       });
       foundUser.totalQuantity -= +action.payload.foodToRemove.quantity;
       foundUser.totalWeight -= +action.payload.foodToRemove.weight;
@@ -214,7 +214,7 @@ const fridgeSlice = createSlice({
       );
 
       foundUser.recipes = foundUser.recipes.filter((recipe)=>{
-        recipe.id !== action.payload.recipeId
+        return recipe.id !== +action.payload.recipeId
       })
     },
     addDescription(state, action) {
