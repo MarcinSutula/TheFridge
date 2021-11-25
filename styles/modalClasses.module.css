@@ -131,3 +131,14 @@
   border-radius: 50px;
   margin-top: 5px;
 }
+
+.yesno_btn{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+
+}
+
+.yesno_btn button {
+  width: 115px;
+}

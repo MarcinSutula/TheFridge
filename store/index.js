@@ -208,6 +208,15 @@ const fridgeSlice = createSlice({
         foundRecipe.ingredients = action.payload.ingredients;
       }
     },
+    removeRecipe(state,action){
+      const foundUser = state.users.find(
+        (user) => user.username === action.payload.username
+      );
+
+      foundUser.recipes = foundUser.recipes.filter((recipe)=>{
+        recipe.id !== action.payload.recipeId
+      })
+    },
     addDescription(state, action) {
       const foundUser = state.users.find(
         (user) => user.username === action.payload.username

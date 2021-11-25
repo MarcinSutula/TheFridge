@@ -24,6 +24,7 @@ function RecipeDetails() {
   const [showDescriptionInput, setShowDescriptionInput] = useState(false);
   const [showDescription, setShowDescription] = useState(false);
   const [showEditRecipeModal, setShowEditRecipeModal] = useState(false);
+  const [showRemoveRecipeModal, setShowRemoveRecipeModal] = useState(false);
   const [ingredientsInputAmount, setIngredientsInputAmount] = useState(1);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -45,8 +46,6 @@ function RecipeDetails() {
   const recipeDescription = foundRecipe?.description;
   const recipeIngredients = foundRecipe?.ingredients;
 
-  // const pattern = new RegExp ('\d{1,5}\w{1,2},\w{0,25}')
-  const pattern = new RegExp("[0-9]");
   useEffect(() => {
     if (recipeDescription) {
       setShowDescription(true);
@@ -165,7 +164,7 @@ function RecipeDetails() {
     }
   };
 
-  ////////////////EDIT RECIPE HANDLERS//////////////
+  ////////////////RECIPE HANDLERS//////////////
   const ingredientsInputAmountHandler = (e) => {
     e.preventDefault();
 
@@ -206,6 +205,8 @@ function RecipeDetails() {
         return;
       }
 
+      
+
       foundCopyRecipe.name = editRecipeName.current.value;
       foundCopyRecipe.servings = editRecipeServings.current.value;
       foundCopyRecipe.time = editRecipeTime.current.value;
@@ -215,7 +216,7 @@ function RecipeDetails() {
 
       const payload = {
         username: foundUser.username,
-        recipesId: foundUser.recipesId + 1,
+        recipesId: foundUser.recipesId,
         foodId: foundUser.foodId,
         totalQuantity: foundUser.totalQuantity,
         totalWeight: foundUser.totalWeight,
@@ -233,6 +234,40 @@ function RecipeDetails() {
       );
 
       setShowEditRecipeModal(false);
+    } catch (err) {
+      alert("Something went wrong ! Please try again");
+      console.error(err);
+    }
+  };
+
+  const removeRecipeHandler = async (e) => {
+    try {
+      e.preventDefault();
+      router.push("/index", "/recipes");
+      const docRef = doc(db, "users", foundUser.id);
+
+      const filteredRecipes = foundUser.recipes.filter(
+        (recipe) => recipe.id !== foundRecipe.id
+      );
+      const payload = {
+        username: foundUser.username,
+        recipesId: foundUser.recipesId,
+        foodId: foundUser.foodId,
+        totalQuantity: foundUser.totalQuantity,
+        totalWeight: foundUser.totalWeight,
+        recipes: filteredRecipes,
+        food: foundUser.food,
+      };
+      await setDoc(docRef, payload);
+      
+      dispatch(
+        fridgeActions.removeRecipe({
+          username: foundUser.username,
+          recipeId: foundRecipe.id,
+        })
+      );
+
+      setShowRemoveRecipeModal(false);
     } catch (err) {
       alert("Something went wrong ! Please try again");
       console.error(err);
@@ -340,13 +375,32 @@ function RecipeDetails() {
     </form>
   );
 
+  const removeRecipeModal = (
+    <div className={modalClasses.main}>
+      <h2>Are you sure you want to remove the recipe ?</h2>
+      <div className={modalClasses.yesno_btn}>
+        <button onClick={removeRecipeHandler}>Yes</button>
+        <button
+          onClick={() => {
+            setShowRemoveRecipeModal(false);
+          }}
+        >
+          No
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     mounted && (
       <div className={classes.background}>
         <div className={classes.temporary}>
           <div className={classes.container}>
-            <div className={classes.fill}>
-              <img src={foundRecipe.url} alt="Recipe Detail Image" />
+            <div className={classes.fill} key={foundRecipe.id}>
+              <img
+                src={foundRecipe.url ? foundRecipe.url : "/altrecipeimg.jpg"}
+                alt="Recipe Details Image"
+              />
             </div>
             <div className={classes.short_desc}>
               <h1>{foundRecipe.name}</h1>
@@ -362,6 +416,13 @@ function RecipeDetails() {
                   }}
                 >
                   Edit
+                </button>
+                <button
+                  onClick={() => {
+                    setShowRemoveRecipeModal(true);
+                  }}
+                >
+                  Remove
                 </button>
               </div>
             </div>
@@ -414,6 +475,14 @@ function RecipeDetails() {
           }}
         >
           <Fade in={showEditRecipeModal}>{editRecipeModal}</Fade>
+        </Modal>
+        <Modal
+          open={showRemoveRecipeModal}
+          onClose={() => {
+            setShowRemoveRecipeModal(false);
+          }}
+        >
+          <Fade in={showRemoveRecipeModal}>{removeRecipeModal}</Fade>
         </Modal>
       </div>
     )

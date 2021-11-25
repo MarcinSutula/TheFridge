@@ -15,7 +15,7 @@ function RecipeLabel(props) {
     >
       <div className={classes.fill} key={props.recipe.id}>
         <img
-          src={props.recipe.url ? props.recipe.url : "altrecipeimg.jpg"}
+          src={props.recipe.url ? props.recipe.url : "/altrecipeimg.jpg"}
           alt="Recipe Image"
         />
       </div>
