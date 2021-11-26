@@ -18,6 +18,7 @@ import {
   RECIPEINGREDIENTS_REGEX,
 } from "../../components/control/config";
 import { maxLengthCheck } from "../../components/utils/helpers";
+import Ingredient from "./Ingredient";
 
 function RecipeDetails() {
   const [mounted, setMounted] = useState(false);
@@ -70,13 +71,6 @@ function RecipeDetails() {
         </div>
       )
     );
-
-  const ingredientStyleHandler = (ing)=>{
-
-    console.log(ing.split(','));
-
-    return {color:'blue'}
-  }
 
   ///////////////////// DESCRIPTION HANDLERS ////////////////
 
@@ -212,8 +206,6 @@ function RecipeDetails() {
         return;
       }
 
-      
-
       foundCopyRecipe.name = editRecipeName.current.value;
       foundCopyRecipe.servings = editRecipeServings.current.value;
       foundCopyRecipe.time = editRecipeTime.current.value;
@@ -250,7 +242,7 @@ function RecipeDetails() {
   const removeRecipeHandler = async (e) => {
     try {
       e.preventDefault();
-      
+
       const docRef = doc(db, "users", foundUser.id);
 
       const filteredRecipes = foundUser.recipes.filter(
@@ -265,9 +257,9 @@ function RecipeDetails() {
         recipes: filteredRecipes,
         food: foundUser.food,
       };
-      
+
       await setDoc(docRef, payload);
-      
+
       dispatch(
         fridgeActions.removeRecipe({
           username: foundUser.username,
@@ -414,7 +406,7 @@ function RecipeDetails() {
               <h1>{foundRecipe.name}</h1>
               <ul>
                 {foundRecipe.ingredients.map((ing) => {
-                  return <li key={Math.random()} style={ingredientStyleHandler(ing)}>✔ {ing}</li>;
+                  return <Ingredient key={Math.random()} ing={ing} recipeId={recipeId} />;
                 })}
               </ul>
               <div className={classes.short_desc_btn}>
@@ -432,7 +424,9 @@ function RecipeDetails() {
                 >
                   Remove
                 </button>
+                
               </div>
+              <a>Add missing ingredients to shopping list</a>
             </div>
           </div>
           {!showDescriptionInput && !showDescription && (
