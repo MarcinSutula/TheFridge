@@ -19,6 +19,7 @@ import {
 } from "../../components/control/config";
 import { maxLengthCheck } from "../../components/utils/helpers";
 import Ingredient from "./Ingredient";
+import { AddtoListIcon } from "../../components/utils/icons";
 
 function RecipeDetails() {
   const [mounted, setMounted] = useState(false);
@@ -403,10 +404,23 @@ function RecipeDetails() {
               />
             </div>
             <div className={classes.short_desc}>
-              <h1>{foundRecipe.name}</h1>
-              <ul>
+              <div className={classes.name_container}>
+                <div className={classes.name}>
+                <h1>{foundRecipe.name}</h1>
+                </div>
+                <div className={classes.add_to_list}>
+                <AddtoListIcon/>
+                </div>
+              </div>
+              <ul className={classes.ingredient_list}>
                 {foundRecipe.ingredients.map((ing) => {
-                  return <Ingredient key={Math.random()} ing={ing} recipeId={recipeId} />;
+                  return (
+                    <Ingredient
+                      key={Math.random()}
+                      ing={ing}
+                      recipeId={recipeId}
+                    />
+                  );
                 })}
               </ul>
               <div className={classes.short_desc_btn}>
@@ -424,9 +438,7 @@ function RecipeDetails() {
                 >
                   Remove
                 </button>
-                
               </div>
-              <a>Add missing ingredients to shopping list</a>
             </div>
           </div>
           {!showDescriptionInput && !showDescription && (

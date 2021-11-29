@@ -23,7 +23,7 @@ function RecipeLabel(props) {
         <h1>{props.recipe.name}</h1>
         <ul>
           <li>🍴 &nbsp; {props.recipe.servings} </li>
-          <li>⏲ {props.recipe.time} min</li>
+          <li>⏰ {props.recipe.time} min</li>
           <li>👌 &nbsp; {props.recipe.difficulty}</li>
         </ul>
       </div>

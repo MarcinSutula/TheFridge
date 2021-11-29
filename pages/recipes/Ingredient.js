@@ -24,12 +24,15 @@ function Ingredient(props) {
       (ele) => strCorrector(ele.name) === strCorrector(ingName)
     );
 
-    if (matchedFood) {
-      getNumberFromStr(ingAmount) > getNumberFromStr(matchedFood.weight)
-        ? (ingColor = "blue")
-        : (ingColor = "black");
+    if (
+      matchedFood &&
+      getNumberFromStr(ingAmount) <= getNumberFromStr(matchedFood.weight)
+    ) {
+      ingColor = "#050f16d8";
+      //black
     } else {
-      ingColor = "red";
+      ingColor = "#e16464";
+      //red
     }
 
     return { color: ingColor };

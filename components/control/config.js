@@ -49,7 +49,7 @@ export const RECIPETIME_MAX_LENGTH = 3;
 export const RECIPEINGREDIENTS_MAX_LENGTH = 17;
 export const RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS = 10;
 export const RECIPEDESCRIPTION_MAX_LENGTH = 5000;
-export const RECIPEINGREDIENTS_REGEX = /^\d{1,4}[mlkgcstTq]{1,2}?,[a-zA-Z]{1}[a-zA-Z ]{1,25}[a-zA-Z]{1}$/
+export const RECIPEINGREDIENTS_REGEX = /^\d{1,4}[mlkgpcstTq]{1,2}?,[a-zA-Z]{1}[a-zA-Z ]{1,25}[a-zA-Z]{1}$/
 
 
 //Row background colors
