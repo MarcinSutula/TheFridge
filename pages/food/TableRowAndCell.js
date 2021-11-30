@@ -38,7 +38,7 @@ function TableRowAndCell(props) {
   const editFoodExpDate = useRef();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== null);
+  const foundUser = users.find((user) => user.id !== '');
 
   const checkExpDateStyle = (date) => {
     const formattedDate = new Date(date);

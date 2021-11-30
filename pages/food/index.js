@@ -48,7 +48,7 @@ function MainTable() {
   const addFoodExpDate = useRef();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== null);
+  const foundUser = users.find((user) => user.id !== '');
 
   // To get rid of error Warning: Expected server HTML to contain a matching <div> in <div>..
   useEffect(() => {
@@ -64,13 +64,14 @@ function MainTable() {
     return <Spinner big={true} />;
   }
 
-  const sortByColumn = (e) => {
-    const clickedColumn = e.target.innerText;
+  const sortByColumnHandler = (e) => {
+    const clickedColumn = e.target.id;
+    
 
     dispatch(
       fridgeActions.sortByColumn({
         username: foundUser.username,
-        columnName: clickedColumn,
+        columnId: clickedColumn,
       })
     );
   };
@@ -258,7 +259,7 @@ function MainTable() {
                   <TableRow>
                     {COLUMNS.map((column) => (
                       <TableHeadRowCells
-                        sortByColumn={sortByColumn}
+                        sortByColumnHandler={sortByColumnHandler}
                         column={column}
                         key={column.id}
                       />

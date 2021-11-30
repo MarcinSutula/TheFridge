@@ -260,7 +260,7 @@ function TableHeadRowCells(props) {
   const fridgeSortedField = useSelector((state) => state.sortedField);
   const fridgeSortDirection = useSelector((state) => state.sortDirection);
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user?.id !== null);
+  const foundUser = users.find((user) => user?.id !== '');
 
   const sortIcon =
     foundUser?.food?.length > 0 &&

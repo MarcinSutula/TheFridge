@@ -16,7 +16,7 @@ import NavlinksLoggedIn from "./NavlinksLoggedIn";
 
 function Header() {
   const [mounted, setMounted] = useState(false);
-  const [storageUserId, setStorageUserId] = useState(null);
+  const [storageUserId, setStorageUserId] = useState();
   const [showSigninModal, setShowSigninModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== null);
+  const foundUser = users.find((user) => user.id !== "");
 
   ///PRECHECK & RENDER (trouble connecting with withAuth)
   useEffect(async () => {
@@ -207,7 +207,7 @@ function Header() {
   const logoutHandler = () => {
     dispatch(fridgeActions.logout());
     localStorage.removeItem("userId");
-    setStorageUserId(null);
+    setStorageUserId("");
     router.replace("/");
   };
 

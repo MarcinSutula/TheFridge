@@ -33,7 +33,7 @@ function Recipes() {
     () => useRef()
   );
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== null);
+  const foundUser = users.find((user) => user.id !== '');
   const dispatch = useDispatch();
 
   useEffect(() => {

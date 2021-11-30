@@ -41,7 +41,7 @@ function RecipeDetails() {
   );
   const recipeId = router.query.recipeId;
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== null);
+  const foundUser = users.find((user) => user.id !== '');
   const foundRecipe = foundUser?.recipes.find(
     (recipe) => recipe.id === +recipeId
   );

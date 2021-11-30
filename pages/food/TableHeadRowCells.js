@@ -10,7 +10,7 @@ function TableHeadRowCells(props) {
   const fridgeSortedField = useSelector((state) => state.sortedField);
   const fridgeSortDirection = useSelector((state) => state.sortDirection);
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user?.id !== null);
+  const foundUser = users.find((user) => user?.id !== '');
 
   const sortIcon =
     foundUser?.food?.length > 0 &&
@@ -34,12 +34,13 @@ function TableHeadRowCells(props) {
 
   return (
     <TableCell
-      onClick={props.sortByColumn}
+      onClick={props.sortByColumnHandler}
       key={props?.column?.id}
       style={tableHeadCellStyleMUI}
+      
     >
-      <div className={classes.icon_container}>{sortIcon}</div>
-      <div>{props?.column?.label}</div>
+      <div className={classes.icon_container} >{sortIcon}</div>
+      <div id={props?.column?.id}>{props?.column?.label}</div>
     </TableCell>
   );
 }

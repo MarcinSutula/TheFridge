@@ -8,7 +8,7 @@
 .temporary {
   padding-top: 130px;
 }
-.temporary ::-webkit-scrollbar {
+.long_desc_text::-webkit-scrollbar {
   display: none;
 }
 .container {

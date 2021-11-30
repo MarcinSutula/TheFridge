@@ -5,7 +5,7 @@ import { getNumberFromStr } from "../../components/utils/helpers";
 
 function Ingredient(props) {
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== null);
+  const foundUser = users.find((user) => user.id !== '');
   const foundRecipe = foundUser?.recipes.find(
     (recipe) => recipe.id === +props.recipeId
   );
