@@ -1,24 +1,17 @@
-import { TableCell, TableRow, Modal, Fade } from "@material-ui/core";
-import { useState, useRef, useEffect } from "react";
+import { TableCell, TableRow, Fade } from "@material-ui/core";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
-import modalClasses from "../../styles/modalClasses.module.css";
 import classes from "./TableRowAndCell.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../components/control/initFirebase";
 import {
-  QUANTITY_MAX_LENGTH,
-  WEIGHT_MAX_LENGTH,
-  FOODNAME_MAX_LENGTH,
   COLOR_EXPIRED,
   COLOR_ABOUT_TO_EXPIRE,
   COLOR_VALID,
-  TYPES,
   MINDAYS_TO_SHOW_RED_EXPDATE,
-  WEIGHT_REGEX,
 } from "../../components/control/config";
 import {
-  maxLengthCheck,
   setBackgroundColor,
   getNumberFromStr,
 } from "../../components/utils/helpers";
@@ -26,19 +19,14 @@ import {
   EditFoodIcon,
   AddtoListIcon,
   RemoveFoodIcon,
-  
 } from "../../components/utils/icons";
+import EditFoodModal from "../../components/modals/food/EditFoodModal";
 
 function TableRowAndCell(props) {
-  const [showEditModal, setShowEditModal] = useState(false);
-  const editFoodName = useRef();
-  const editFoodType = useRef();
-  const editFoodQuantity = useRef();
-  const editFoodWeight = useRef();
-  const editFoodExpDate = useRef();
+  const [showEditFoodModal, setShowEditFoodModal] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== '');
+  const foundUser = users.find((user) => user.id !== "");
 
   const checkExpDateStyle = (date) => {
     const formattedDate = new Date(date);
@@ -64,83 +52,6 @@ function TableRowAndCell(props) {
     return dateObj.toLocaleDateString();
   };
 
-  //HANDLERS
-
-  const submitEditFoodHandler = async (e) => {
-    e.preventDefault();
-
-    try {
-      const foodObj = {
-        username: foundUser.username,
-        id: props.row.id,
-        foodId: foundUser.foodId,
-        name: editFoodName.current.value,
-        type: editFoodType.current.value,
-        quantity: editFoodQuantity.current.value,
-        weight: editFoodWeight.current.value,
-        expDate: editFoodExpDate.current.value,
-        key: props.row.key,
-      };
-
-      const foodCopy = [...foundUser.food];
-      const foundUserFoodIndex = foodCopy.findIndex(
-        (ele) => +ele.id === +props.row.id
-      );
-
-      foodCopy[foundUserFoodIndex] = {
-        name: editFoodName.current.value,
-        type: editFoodType.current.value,
-        quantity: editFoodQuantity.current.value,
-        weight: editFoodWeight.current.value,
-        expDate: editFoodExpDate.current.value,
-        id: props.row.id,
-        key: props.row.key,
-      };
-
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId,
-        foodId: foundUser.foodId,
-        totalWeight:
-          foundUser.totalWeight -
-          getNumberFromStr(props.row.weight) +
-          getNumberFromStr(editFoodWeight.current.value),
-        totalQuantity:
-          foundUser.totalQuantity -
-          props.row.quantity +
-          +editFoodQuantity.current.value,
-        food: foodCopy,
-        recipes: foundUser.recipes,
-      };
-
-      if (
-        editFoodName.current.value.trim().length < 1 ||
-        editFoodType.current.value === "DEFAULT" ||
-        +editFoodQuantity.current.value < 0 ||
-        editFoodQuantity.current.value.trim().length < 1
-      ) {
-        alert("Values other than Expiration Date must not be empty");
-        return;
-      } else if (!foodCopy[foundUserFoodIndex].weight.match(WEIGHT_REGEX)) {
-        alert("Weight must be inserted as: amount,measure   i.e: 100ml,water");
-        return;
-      }
-
-      const docRef = doc(db, "users", foundUser.id);
-      await setDoc(docRef, payload);
-      dispatch(fridgeActions.editFood(foodObj));
-
-      editFoodName.current.value = "";
-      editFoodType.current.value = "";
-      editFoodQuantity.current.value = "";
-      editFoodWeight.current.value = "";
-      editFoodExpDate.current.value = "";
-      setShowEditModal(false);
-    } catch (err) {
-      alert("Something went wrong ! Please try again");
-      console.error(err);
-    }
-  };
   const removeFoodHandler = async (e) => {
     e.preventDefault();
 
@@ -173,79 +84,6 @@ function TableRowAndCell(props) {
     }
   };
 
-  ///MODALS (DO NOT CREATE THEM AS ANOTHER COMPONENT)
-
-  const editModal = (
-    <form className={modalClasses.main} onSubmit={submitEditFoodHandler}>
-      <div>
-        <div key={props?.row?.name}>
-          <label>Name</label>
-          <input
-            defaultValue={props?.row?.name}
-            ref={editFoodName}
-            type="text"
-            autoFocus={true}
-            maxLength={FOODNAME_MAX_LENGTH}
-            required
-          />
-        </div>
-        <div key={props?.row?.type}>
-          <label>Type</label>
-          <select
-            name="typelistEditFood"
-            id="typelistEditFood"
-            ref={editFoodType}
-            defaultValue={props?.row?.type}
-            required
-          >
-            {TYPES.map((type) => {
-              return (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div key={props?.row?.quantity * Math.random()}>
-          <label>Quantity</label>
-          <input
-            defaultValue={props?.row?.quantity}
-            ref={editFoodQuantity}
-            type="number"
-            min="0"
-            maxLength={QUANTITY_MAX_LENGTH}
-            onInput={maxLengthCheck}
-            required
-          />
-        </div>
-        <div key={props?.row?.weight}>
-          <label>Weight</label>
-          <input
-            defaultValue={props?.row?.weight}
-            ref={editFoodWeight}
-            type="text"
-            maxLength={WEIGHT_MAX_LENGTH}
-            placeholder="100ml, 50g, 5ts, 2kg etc."
-            required
-          />
-        </div>
-        <div key={props?.row?.expDate * Math.random()}>
-          <label>Expiration Date</label>
-          <input
-            type="date"
-            defaultValue={props?.row?.expDate}
-            ref={editFoodExpDate}
-          />
-        </div>
-      </div>
-      <div className={modalClasses.btn_container}>
-        <button>Confirm</button>
-      </div>
-    </form>
-  );
-
-  //MUI STYLES
   const tableRowStyleMUI = {
     backgroundColor: setBackgroundColor(props?.row?.type),
   };
@@ -284,7 +122,7 @@ function TableRowAndCell(props) {
                     </div>
                     <div className={classes.icon}>
                       <EditFoodIcon
-                        editModalOpen={() => setShowEditModal(true)}
+                        editFoodModalOpen={() => setShowEditFoodModal(true)}
                       />
                     </div>
                     <div className={classes.icon}>
@@ -299,9 +137,11 @@ function TableRowAndCell(props) {
             </TableCell>
           );
         })}
-        <Modal open={showEditModal} onClose={() => setShowEditModal(false)}>
-          <Fade in={showEditModal}>{editModal}</Fade>
-        </Modal>
+        <EditFoodModal
+          showEditFoodModal={showEditFoodModal}
+          setShowEditFoodModal={setShowEditFoodModal}
+          row={props.row}
+        />
       </TableRow>
     </Fade>
   );
