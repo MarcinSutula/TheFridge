@@ -29,6 +29,11 @@ function AddRecipeModal(props) {
   const foundUser = users.find((user) => user.id !== "");
   const dispatch = useDispatch();
 
+  const addRecipeModalOnCloseHandler = () => {
+    props.setShowAddRecipeModal(false);
+    setIngredientsInputAmount(1);
+  };
+
   const ingredientsInputAmountHandler = (e) => {
     e.preventDefault();
     setIngredientsInputAmount((prevState) => {
@@ -201,10 +206,7 @@ function AddRecipeModal(props) {
   return (
     <Modal
       open={props.showAddRecipeModal}
-      onClose={() => {
-        props.setShowAddRecipeModal(false);
-        setIngredientsInputAmount(1);
-      }}
+      onClose={addRecipeModalOnCloseHandler}
     >
       <Fade in={props.showAddRecipeModal}>{addRecipeModal}</Fade>
     </Modal>
