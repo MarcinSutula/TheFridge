@@ -12,8 +12,6 @@ function Ingredient(props) {
   const ingredientStyleHandler = () => {
     const [ingAmount, ingName] = props.ing.split(",");
     let ingColor;
-    // console.log(foundUser.food[0].weight, foundUser.food[0].name);
-    // console.log(ingAmount, ingName);
 
     const strCorrector = (str) => {
       const strCorrected = str.trim().toLowerCase();

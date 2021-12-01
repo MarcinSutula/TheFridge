@@ -60,6 +60,6 @@ export function findUser(state, action) {
 
 export function findRecipe(foundUser, action) {
   return foundUser?.recipes.find(
-    (recipe) => recipe.id === +action.payload.recipeId
+    (recipe) => recipe.id === +action.payload.id
   );
 }
