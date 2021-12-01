@@ -1,5 +1,9 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { getNumberFromStr, maxLengthCheck } from "../../utils/helpers";
+import {
+  getNumberFromStr,
+  maxLengthCheck,
+  findUser,
+} from "../../utils/helpers";
 import {
   QUANTITY_MAX_LENGTH,
   WEIGHT_MAX_LENGTH,
@@ -9,20 +13,19 @@ import {
 } from "../../control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useRef } from "react";
 import { Modal, Fade } from "@material-ui/core";
 
 function EditFoodModal(props) {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
   const editFoodName = useRef();
   const editFoodType = useRef();
   const editFoodQuantity = useRef();
   const editFoodWeight = useRef();
   const editFoodExpDate = useRef();
+  const foundUser = findUser();
 
   const editFoodModalOnCloseHandler = () => {
     props.setShowEditFoodModal(false);

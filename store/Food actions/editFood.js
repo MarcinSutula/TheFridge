@@ -1,8 +1,8 @@
 import { getNumberFromStr } from "../../components/utils/helpers";
-import { findUser } from "../../components/utils/helpers";
+import { findUserRdx } from "../../components/utils/helpers";
 
 export function editFood(state, action) {
-  const foundUser = findUser(state, action);
+  const foundUser = findUserRdx(state, action);
   const foundUserFood = foundUser.food.find(
     (ele) => +ele.id === +action.payload.id
   );

@@ -1,6 +1,6 @@
 import { TableCell, TableRow, Fade } from "@material-ui/core";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./TableRowAndCell.module.css";
 import { doc, setDoc } from "firebase/firestore";
@@ -14,6 +14,7 @@ import {
 import {
   setBackgroundColor,
   getNumberFromStr,
+  findUser,
 } from "../../components/utils/helpers";
 import {
   EditFoodIcon,
@@ -25,8 +26,7 @@ import EditFoodModal from "../../components/modals/food/EditFoodModal";
 function TableRowAndCell(props) {
   const [showEditFoodModal, setShowEditFoodModal] = useState(false);
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
+  const foundUser = findUser();
 
   const checkExpDateStyle = (date) => {
     const formattedDate = new Date(date);

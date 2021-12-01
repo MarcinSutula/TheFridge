@@ -2,15 +2,14 @@ import withAuth from "../../components/control/withAuth";
 import classes from "./recipes.module.css";
 import { useState, useEffect, Fragment } from "react";
 import RecipeLabel from "./RecipeLabel";
-import { useSelector } from "react-redux";
 import Spinner from "../../components/utils/Spinner";
 import AddRecipeModal from "../../components/modals/recipes/AddRecipeModal";
+import { findUser } from "../../components/utils/helpers";
 
 function Recipes() {
   const [mounted, setMounted] = useState(false);
   const [showAddRecipeModal, setShowAddRecipeModal] = useState(false);
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
+  const foundUser = findUser();
 
   useEffect(() => {
     setMounted(true);

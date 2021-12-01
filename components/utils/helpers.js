@@ -6,6 +6,7 @@ import {
   DRINKS_COLOR,
   OTHER_COLOR,
 } from "../control/config";
+import { useSelector } from "react-redux";
 
 export function welcomeName(username) {
   if (!username) return;
@@ -50,16 +51,27 @@ export function getNumberFromStr(str) {
   return num;
 }
 
-//For user matching in store
+//For getting the logged in user
 
-export function findUser(state, action) {
+export function findUser() {
+  const users = useSelector((state) => state.users);
+  return users?.find((user) => user.id !== "");
+}
+
+//For getting the matched recipe
+
+export function findRecipe(recipeId) {
+  return findUser()?.recipes.find((recipe) => recipe.id === +recipeId);
+}
+
+//For getting the user from store
+
+export function findUserRdx(state, action) {
   return state.users.find((user) => user.username === action.payload.username);
 }
 
-//For recipe matching in store
+//For getting the recipe from store
 
-export function findRecipe(foundUser, action) {
-  return foundUser?.recipes.find(
-    (recipe) => recipe.id === +action.payload.id
-  );
+export function findRecipeRdx(foundUser, action) {
+  return foundUser?.recipes.find((recipe) => recipe.id === +action.payload.id);
 }

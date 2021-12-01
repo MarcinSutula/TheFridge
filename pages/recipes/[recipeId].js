@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import withAuth from "../../components/control/withAuth";
 import { useState, useEffect, useRef, Fragment } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./recipeDetails.module.css";
 import { doc, setDoc } from "firebase/firestore";
@@ -11,6 +11,7 @@ import Ingredient from "./Ingredient";
 import { AddtoListIcon } from "../../components/utils/icons";
 import EditRecipeModal from "../../components/modals/recipes/EditRecipeModal";
 import RemoveRecipeModal from "../../components/modals/recipes/RemoveRecipeModal";
+import { findUser, findRecipe } from "../../components/utils/helpers";
 
 function RecipeDetails() {
   const [mounted, setMounted] = useState(false);
@@ -22,11 +23,8 @@ function RecipeDetails() {
   const addDescription = useRef();
   const dispatch = useDispatch();
   const recipeId = router.query.recipeId;
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
-  const foundRecipe = foundUser?.recipes.find(
-    (recipe) => recipe.id === +recipeId
-  );
+  const foundUser = findUser();
+  const foundRecipe = findRecipe(recipeId);
   const recipeDescription = foundRecipe?.description;
 
   useEffect(() => {
@@ -75,7 +73,7 @@ function RecipeDetails() {
       dispatch(
         fridgeActions.addDescription({
           username: foundUser.username,
-          recipeId: foundRecipe.id,
+          id: foundRecipe.id,
           description: foundCopyRecipe.description,
         })
       );
@@ -130,7 +128,7 @@ function RecipeDetails() {
       dispatch(
         fridgeActions.removeDescription({
           username: foundUser.username,
-          recipeId: foundRecipe.id,
+          id: foundRecipe.id,
         })
       );
     } catch (err) {

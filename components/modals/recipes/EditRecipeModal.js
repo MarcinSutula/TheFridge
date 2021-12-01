@@ -1,5 +1,5 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { maxLengthCheck } from "../../utils/helpers";
+import { maxLengthCheck, findUser, findRecipe } from "../../utils/helpers";
 import {
   RECIPEINGREDIENTS_REGEX,
   RECIPENAME_MAX_LENGTH,
@@ -10,7 +10,7 @@ import {
 } from "../../control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useRef, useState } from "react";
 import { Modal, Fade } from "@material-ui/core";
@@ -25,11 +25,8 @@ function EditRecipeModal(props) {
     () => useRef()
   );
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
-  const foundRecipe = foundUser?.recipes.find(
-    (recipe) => recipe.id === +props.recipeId
-  );
+  const foundUser = findUser();
+  const foundRecipe = findRecipe(props.recipeId);
   const recipeIngredients = foundRecipe?.ingredients;
   const [ingredientsInputAmount, setIngredientsInputAmount] = useState(
     recipeIngredients.length
@@ -74,7 +71,9 @@ function EditRecipeModal(props) {
       } else if (
         ingredientsArray.find((ing) => !ing.match(RECIPEINGREDIENTS_REGEX))
       ) {
-        alert("Ingredients must be kept in format: amount,name");
+        alert(
+          "Ingredients must be kept in format: amount,name. Measure (g,kg,ml,l,ts,T etc.) must be inserted next to amount."
+        );
         return;
       }
 

@@ -1,8 +1,8 @@
 import { getNumberFromStr } from "../../components/utils/helpers";
-import { findUser } from "../../components/utils/helpers";
+import { findUserRdx } from "../../components/utils/helpers";
 
 export function addFood(state, action) {
-  const foundUser = findUser(state, action);
+  const foundUser = findUserRdx(state, action);
 
   if (!foundUser) return;
   foundUser.food.push({

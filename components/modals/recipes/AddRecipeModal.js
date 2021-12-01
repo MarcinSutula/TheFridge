@@ -1,5 +1,5 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { maxLengthCheck } from "../../utils/helpers";
+import { maxLengthCheck, findUser } from "../../utils/helpers";
 import {
   RECIPEINGREDIENTS_REGEX,
   RECIPENAME_MAX_LENGTH,
@@ -10,7 +10,7 @@ import {
 } from "../../control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useRef, useState } from "react";
 import { Modal, Fade } from "@material-ui/core";
@@ -25,8 +25,7 @@ function AddRecipeModal(props) {
   const ingredientRefs = [...Array(RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS)].map(
     () => useRef()
   );
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
+  const foundUser = findUser();
   const dispatch = useDispatch();
 
   const addRecipeModalOnCloseHandler = () => {
@@ -66,7 +65,9 @@ function AddRecipeModal(props) {
       } else if (
         ingredientsArray.find((ing) => !ing.match(RECIPEINGREDIENTS_REGEX))
       ) {
-        alert("Ingredients must be kept in format: amount,name");
+        alert(
+          "Ingredients must be kept in format: amount,name. Measure (g,kg,ml,l,ts,T etc.) must be inserted next to amount."
+        );
         return;
       }
 

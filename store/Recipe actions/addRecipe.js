@@ -1,7 +1,7 @@
-import { findUser } from "../../components/utils/helpers";
+import { findUserRdx } from "../../components/utils/helpers";
 
 export function addRecipe(state, action) {
-  const foundUser = findUser(state, action);
+  const foundUser = findUserRdx(state, action);
 
   if (!foundUser) return;
   foundUser.recipes.push({

@@ -9,13 +9,13 @@ import {
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { fridgeActions } from "../../store/index";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import classes from "./food.module.css";
 import TableRowAndCell from "./TableRowAndCell";
 import TableHeadRowCells from "./TableHeadRowCells";
 import withAuth from "../../components/control/withAuth";
 import Spinner from "../../components/utils/Spinner";
-
+import { findUser } from "../../components/utils/helpers";
 import {
   COLUMNS,
   INITIAL_ROWS_PER_PAGE,
@@ -23,19 +23,15 @@ import {
 import AddFoodModal from "../../components/modals/food/addFoodModal";
 import SummaryModal from "../../components/modals/food/SummaryModal";
 
-
 function MainTable() {
   const [mounted, setMounted] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(INITIAL_ROWS_PER_PAGE);
   const [showAddFoodModal, setShowAddFoodModal] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
-
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
+  const foundUser = findUser();
 
-  // To get rid of error Warning: Expected server HTML to contain a matching <div> in <div>..
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -60,7 +56,6 @@ function MainTable() {
     );
   };
 
-  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -69,8 +64,6 @@ function MainTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
-  
 
   const paperStyleMUI = {
     position: "absolute",

@@ -11,6 +11,7 @@ import NavlinksLoggedOff from "./NavlinksLoggedOff";
 import NavlinksLoggedIn from "./NavlinksLoggedIn";
 import SignInModal from "../modals/header/SignInModal";
 import SignUpModal from "../modals/header/SignUpModal";
+import { findUser } from "../utils/helpers";
 
 function Header() {
   const [mounted, setMounted] = useState(false);
@@ -19,8 +20,7 @@ function Header() {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
+  const foundUser = findUser();
 
   useEffect(async () => {
     try {

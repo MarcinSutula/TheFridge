@@ -1,11 +1,10 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { useSelector } from "react-redux";
 import SummaryModalValues from "../../../pages/food/SummaryModalValues";
 import { Modal, Fade } from "@material-ui/core";
+import { findUser } from "../../utils/helpers";
 
 function SummaryModal(props) {
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
+  const foundUser = findUser();
 
   const summaryModalOnCloseHandler = () => {
     props.setShowSummaryModal(false);

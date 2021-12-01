@@ -3,7 +3,7 @@ import {
   sortDateHelper,
 } from "../../components/utils/helpers";
 import { COLUMNS } from "../../components/control/config";
-import { findUser } from "../../components/utils/helpers";
+import { findUserRdx } from "../../components/utils/helpers";
 const invertDirection = {
   asc: "desc",
   desc: "asc",
@@ -17,7 +17,7 @@ export function sortByColumn(state, action) {
   if (!clickedColumn?.id || clickedColumn?.id === "action") {
     return;
   }
-  const foundUser = findUser(state, action);
+  const foundUser = findUserRdx(state, action);
   if (!foundUser) return;
   
   state.sortDirection =

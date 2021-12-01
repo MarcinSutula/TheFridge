@@ -38,7 +38,7 @@ function SignInModal(props) {
           try {
             const docRef = doc(db, "users", data.localId);
             const docSnap = await getDoc(docRef);
-            const foundUser = docSnap.data();
+            const userData = docSnap.data();
             localStorage.setItem("userId", data.localId);
             props.setStorageUserId(data.localId);
 
@@ -46,11 +46,11 @@ function SignInModal(props) {
               fridgeActions.login({
                 username: signInInputUsername.current.value,
                 id: data.localId,
-                foodId: foundUser.foodId,
-                totalQuantity: foundUser.totalQuantity,
-                totalWeight: foundUser.totalWeight,
-                food: foundUser.food,
-                recipes: foundUser.recipes,
+                foodId: userData.foodId,
+                totalQuantity: userData.totalQuantity,
+                totalWeight: userData.totalWeight,
+                food: userData.food,
+                recipes: userData.recipes,
               })
             );
 

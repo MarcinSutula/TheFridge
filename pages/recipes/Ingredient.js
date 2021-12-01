@@ -1,14 +1,8 @@
-import { useSelector, useDispatch } from "react-redux";
-import { fridgeActions } from "../../store/index";
-import { Fragment } from "react";
-import { getNumberFromStr } from "../../components/utils/helpers";
+import { getNumberFromStr, findUser } from "../../components/utils/helpers";
 
 function Ingredient(props) {
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== '');
-  const foundRecipe = foundUser?.recipes.find(
-    (recipe) => recipe.id === +props.recipeId
-  );
+  const foundUser = findUser();
+
   const ingredientStyleHandler = () => {
     const [ingAmount, ingName] = props.ing.split(",");
     let ingColor;

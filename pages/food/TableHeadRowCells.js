@@ -5,12 +5,12 @@ import {
   sortArrowDownIcon,
   sortArrowUpIcon,
 } from "../../components/utils/icons";
+import { findUser } from "../../components/utils/helpers";
 
 function TableHeadRowCells(props) {
   const fridgeSortedField = useSelector((state) => state.sortedField);
   const fridgeSortDirection = useSelector((state) => state.sortDirection);
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user?.id !== '');
+  const foundUser = findUser();
 
   const sortIcon =
     foundUser?.food?.length > 0 &&
@@ -37,9 +37,8 @@ function TableHeadRowCells(props) {
       onClick={props.sortByColumnHandler}
       key={props?.column?.id}
       style={tableHeadCellStyleMUI}
-      
     >
-      <div className={classes.icon_container} >{sortIcon}</div>
+      <div className={classes.icon_container}>{sortIcon}</div>
       <div id={props?.column?.id}>{props?.column?.label}</div>
     </TableCell>
   );

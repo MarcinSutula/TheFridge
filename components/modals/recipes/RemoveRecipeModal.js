@@ -1,20 +1,18 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
 import { useRouter } from "next/router";
+import { findUser, findRecipe } from "../../utils/helpers";
 
 function RemoveRecipeModal(props) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const foundUser = users.find((user) => user.id !== "");
-  const foundRecipe = foundUser?.recipes.find(
-    (recipe) => recipe.id === +props.recipeId
-  );
-
+  const foundUser = findUser();
+  const foundRecipe = findRecipe(props.recipeId);
+  
   const removeRecipeModalOnCloseHandler = () => {
     props.setShowRemoveRecipeModal(false);
   };
