@@ -46,14 +46,12 @@ function AddRecipeModal(props) {
   const submitAddRecipeHandler = async (e) => {
     try {
       e.preventDefault();
-      const docRef = doc(db, "users", foundUser.id);
       const ingredientsArray = ingredientRefs
         .filter(
           (ref) =>
             ref?.current?.value !== undefined && ref?.current?.value !== ""
         )
         .map((ref) => ref.current.value);
-
       if (
         addRecipeName.current.value.trim().length < 1 ||
         +addRecipeServings.current.value < 1 ||
@@ -69,6 +67,7 @@ function AddRecipeModal(props) {
         alert(ALERT_ING_FORMAT);
         return;
       }
+      const docRef = doc(db, "users", foundUser.id);
 
       const recipeObj = {
         name: addRecipeName.current.value,

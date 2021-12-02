@@ -48,18 +48,13 @@ function EditRecipeModal(props) {
   const submitEditRecipeHandler = async (e) => {
     try {
       e.preventDefault();
-      const docRef = doc(db, "users", foundUser.id);
+
       const ingredientsArray = ingredientRefs
         .filter(
           (ref) =>
             ref?.current?.value !== undefined && ref?.current?.value !== ""
         )
         .map((ref) => ref.current.value);
-      const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
-      const foundCopyRecipe = recipesCopy.find(
-        (recipe) => recipe.id === +props.recipeId
-      );
-
       if (
         editRecipeName.current.value.trim().length < 1 ||
         +editRecipeServings.current.value < 1 ||
@@ -75,6 +70,11 @@ function EditRecipeModal(props) {
         alert(ALERT_ING_FORMAT);
         return;
       }
+      const docRef = doc(db, "users", foundUser.id);
+      const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
+      const foundCopyRecipe = recipesCopy.find(
+        (recipe) => recipe.id === +props.recipeId
+      );
 
       foundCopyRecipe.name = editRecipeName.current.value;
       foundCopyRecipe.servings = editRecipeServings.current.value;

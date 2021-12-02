@@ -16,6 +16,7 @@ import {
   WEIGHT_REGEX,
   ALERT_FOOD_EMPTY,
   ALERT_WEIGHT_FORMAT,
+  ALERT_OTHER,
 } from "../../control/config";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -36,6 +37,19 @@ function AddFoodModal(props) {
   const submitAddFoodHandler = async (e) => {
     try {
       e.preventDefault();
+      if (
+        addFoodName.current.value.trim().length < 1 ||
+        addFoodType.current.value === "DEFAULT" ||
+        +addFoodQuantity.current.value < 0 ||
+        addFoodQuantity.current.value.trim().length < 1
+      ) {
+        alert(ALERT_FOOD_EMPTY);
+        return;
+      } else if (!addFoodWeight.current.value.match(WEIGHT_REGEX)) {
+        alert(ALERT_WEIGHT_FORMAT);
+        return;
+      }
+
       const docRef = doc(db, "users", foundUser.id);
       const foodObj = {
         id: foundUser.id,
@@ -70,19 +84,6 @@ function AddFoodModal(props) {
           },
         ],
       };
-
-      if (
-        addFoodName.current.value.trim().length < 1 ||
-        addFoodType.current.value === "DEFAULT" ||
-        +addFoodQuantity.current.value < 0 ||
-        addFoodQuantity.current.value.trim().length < 1
-      ) {
-        alert(ALERT_FOOD_EMPTY);
-        return;
-      } else if (!foodObj.weight.match(WEIGHT_REGEX)) {
-        alert(ALERT_WEIGHT_FORMAT);
-        return;
-      }
 
       await setDoc(docRef, payload);
 

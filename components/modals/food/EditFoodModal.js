@@ -35,9 +35,20 @@ function EditFoodModal(props) {
   };
 
   const submitEditFoodHandler = async (e) => {
-    e.preventDefault();
-
     try {
+      e.preventDefault();
+      if (
+        editFoodName.current.value.trim().length < 1 ||
+        editFoodType.current.value === "DEFAULT" ||
+        +editFoodQuantity.current.value < 0 ||
+        editFoodQuantity.current.value.trim().length < 1
+      ) {
+        alert(ALERT_FOOD_EMPTY);
+        return;
+      } else if (!editFoodWeight.current.value.match(WEIGHT_REGEX)) {
+        alert(ALERT_WEIGHT_FORMAT);
+        return;
+      }
       const foodObj = {
         username: foundUser.username,
         id: props.row.id,
@@ -80,19 +91,6 @@ function EditFoodModal(props) {
         food: foodCopy,
         recipes: foundUser.recipes,
       };
-
-      if (
-        editFoodName.current.value.trim().length < 1 ||
-        editFoodType.current.value === "DEFAULT" ||
-        +editFoodQuantity.current.value < 0 ||
-        editFoodQuantity.current.value.trim().length < 1
-      ) {
-        alert(ALERT_FOOD_EMPTY);
-        return;
-      } else if (!foodCopy[foundUserFoodIndex].weight.match(WEIGHT_REGEX)) {
-        alert(ALERT_WEIGHT_FORMAT);
-        return;
-      }
 
       const docRef = doc(db, "users", foundUser.id);
       await setDoc(docRef, payload);

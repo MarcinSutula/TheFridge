@@ -17,29 +17,20 @@ export function welcomeName(username) {
 }
 
 export function setBackgroundColor(type) {
-  let color;
-
   switch (type) {
     case "Protein":
-      color = PROTEIN_COLOR;
-      break;
+      return PROTEIN_COLOR;
     case "Dairy":
-      color = DAIRY_COLOR;
-      break;
+      return DAIRY_COLOR;
     case "Vegetables":
-      color = VEGETABLES_COLOR;
-      break;
+      return VEGETABLES_COLOR;
     case "Fruits":
-      color = FRUITS_COLOR;
-      break;
+      return FRUITS_COLOR;
     case "Drinks":
-      color = DRINKS_COLOR;
-      break;
+      return DRINKS_COLOR;
     case "Other":
-      color = OTHER_COLOR;
-      break;
+      return OTHER_COLOR;
   }
-  return color;
 }
 //Limiting max characters in number inputs (Weight and Quantity) according to given maxLength prop
 export function maxLengthCheck(e) {

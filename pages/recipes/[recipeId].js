@@ -1,20 +1,13 @@
 import { useRouter } from "next/router";
 import withAuth from "../../components/control/withAuth";
-import { useState, useEffect, useRef, Fragment } from "react";
-import { useDispatch } from "react-redux";
-import { fridgeActions } from "../../store/index";
+import { useState, useEffect } from "react";
 import classes from "./recipeDetails.module.css";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../components/control/initFirebase";
-import {
-  RECIPEDESCRIPTION_MAX_LENGTH,
-  ALERT_OTHER,
-} from "../../components/control/config";
-import Ingredient from "./Ingredient";
-import { AddtoListIcon } from "../../components/utils/icons";
 import EditRecipeModal from "../../components/modals/recipes/EditRecipeModal";
 import RemoveRecipeModal from "../../components/modals/recipes/RemoveRecipeModal";
-import { findUser, findRecipe } from "../../components/utils/helpers";
+import Description from "./Description";
+import { findRecipe } from "../../components/utils/helpers";
+import DescriptionInput from "./DescriptionInput";
+import ImgAndIngredients from "./ImgAndIngredients";
 
 function RecipeDetails() {
   const [mounted, setMounted] = useState(false);
@@ -23,10 +16,7 @@ function RecipeDetails() {
   const [showEditRecipeModal, setShowEditRecipeModal] = useState(false);
   const [showRemoveRecipeModal, setShowRemoveRecipeModal] = useState(false);
   const router = useRouter();
-  const addDescription = useRef();
-  const dispatch = useDispatch();
   const recipeId = router.query.recipeId;
-  const foundUser = findUser();
   const foundRecipe = findRecipe(recipeId);
   const recipeDescription = foundRecipe?.description;
 
@@ -49,147 +39,14 @@ function RecipeDetails() {
       )
     );
 
-  const addDescriptionHandler = async (e) => {
-    try {
-      e.preventDefault();
-
-      const docRef = doc(db, "users", foundUser.id);
-      const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
-
-      const foundCopyRecipe = recipesCopy.find(
-        (recipe) => recipe.id === +recipeId
-      );
-      foundCopyRecipe.description = addDescription.current.value;
-
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId,
-        foodId: foundUser.foodId,
-        totalQuantity: foundUser.totalQuantity,
-        totalWeight: foundUser.totalWeight,
-        recipes: recipesCopy,
-        food: foundUser.food,
-      };
-
-      await setDoc(docRef, payload);
-
-      dispatch(
-        fridgeActions.addDescription({
-          username: foundUser.username,
-          id: foundRecipe.id,
-          description: foundCopyRecipe.description,
-        })
-      );
-      setShowDescriptionInput(false);
-      foundCopyRecipe.description
-        ? setShowDescription(true)
-        : setShowDescription(false);
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
-  };
-
-  const cancelDescriptionHandler = () => {
-    setShowDescriptionInput(false);
-    foundRecipe.description
-      ? setShowDescription(true)
-      : setShowDescription(false);
-  };
-
-  const editDescriptionHandler = () => {
-    setShowDescriptionInput(true);
-    setShowDescription(false);
-  };
-
-  const removeDescriptionHandler = async (e) => {
-    try {
-      e.preventDefault();
-
-      const docRef = doc(db, "users", foundUser.id);
-      const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
-
-      const foundCopyRecipe = recipesCopy.find(
-        (recipe) => recipe.id === +recipeId
-      );
-      foundCopyRecipe.description = "";
-
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId,
-        foodId: foundUser.foodId,
-        totalQuantity: foundUser.totalQuantity,
-        totalWeight: foundUser.totalWeight,
-        recipes: recipesCopy,
-        food: foundUser.food,
-      };
-
-      await setDoc(docRef, payload);
-
-      setShowDescription(false);
-
-      dispatch(
-        fridgeActions.removeDescription({
-          username: foundUser.username,
-          id: foundRecipe.id,
-        })
-      );
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
-  };
-
-
   return (
     mounted && (
       <div className={classes.background}>
         <div className={classes.temporary}>
-          <div className={classes.container}>
-            <div className={classes.fill} key={foundRecipe.id}>
-              <img
-                src={foundRecipe.url ? foundRecipe.url : "/altrecipeimg.jpg"}
-                alt="Recipe Details Image"
-              />
-            </div>
-            <div className={classes.short_desc}>
-              <div className={classes.name_container}>
-                <div className={classes.name}>
-                  <h1>{foundRecipe.name}</h1>
-                </div>
-                <div className={classes.add_to_list}>
-                  <AddtoListIcon />
-                </div>
-              </div>
-              <ul className={classes.ingredient_list}>
-                {foundRecipe.ingredients.map((ing) => {
-                  return (
-                    <Ingredient
-                      key={Math.random()}
-                      ing={ing}
-                      recipeId={recipeId}
-                    />
-                  );
-                })}
-              </ul>
-              <div className={classes.short_desc_btn}>
-                <button
-                  onClick={() => {
-                    setShowEditRecipeModal(true);
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    setShowRemoveRecipeModal(true);
-                  }}
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          </div>
+          <ImgAndIngredients
+            setShowEditRecipeModal={setShowEditRecipeModal}
+            setShowRemoveRecipeModal={setShowRemoveRecipeModal}
+          />
           {!showDescriptionInput && !showDescription && (
             <div className={classes.add_desc}>
               <button onClick={() => setShowDescriptionInput(true)}>
@@ -198,37 +55,16 @@ function RecipeDetails() {
             </div>
           )}
           {showDescriptionInput && !showDescription && (
-            <Fragment>
-              <div
-                className={classes.long_desc_input}
-                key={recipeDescription ? recipeDescription : ""}
-              >
-                <textarea
-                  type="text"
-                  maxLength={RECIPEDESCRIPTION_MAX_LENGTH}
-                  ref={addDescription}
-                  autoFocus={true}
-                  defaultValue={recipeDescription ? recipeDescription : ""}
-                />
-              </div>
-              <div className={classes.long_desc_input_btn}>
-                <button onClick={addDescriptionHandler}>Confirm</button>
-                <button type="button" onClick={cancelDescriptionHandler}>
-                  Cancel
-                </button>
-              </div>
-            </Fragment>
+            <DescriptionInput
+              setShowDescription={setShowDescription}
+              setShowDescriptionInput={setShowDescriptionInput}
+            />
           )}
           {!showDescriptionInput && showDescription && (
-            <Fragment>
-              <div className={classes.long_desc_text}>
-                <text>{foundRecipe.description}</text>
-              </div>
-              <div className={classes.long_desc_text_btn}>
-                <button onClick={editDescriptionHandler}>Edit</button>
-                <button onClick={removeDescriptionHandler}>Remove</button>
-              </div>
-            </Fragment>
+            <Description
+              setShowDescription={setShowDescription}
+              setShowDescriptionInput={setShowDescriptionInput}
+            />
           )}
         </div>
         <EditRecipeModal
