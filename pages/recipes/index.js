@@ -19,7 +19,7 @@ function Recipes() {
   if (foundUser) {
     recipes = foundUser.recipes;
     if (!mounted) return <Spinner big={true} />;
-  } else if (!foundUser) {
+  } else {
     recipes = [];
     return <Spinner big={true} />;
   }

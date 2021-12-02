@@ -6,7 +6,10 @@ import { fridgeActions } from "../../store/index";
 import classes from "./recipeDetails.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../components/control/initFirebase";
-import { RECIPEDESCRIPTION_MAX_LENGTH } from "../../components/control/config";
+import {
+  RECIPEDESCRIPTION_MAX_LENGTH,
+  ALERT_OTHER,
+} from "../../components/control/config";
 import Ingredient from "./Ingredient";
 import { AddtoListIcon } from "../../components/utils/icons";
 import EditRecipeModal from "../../components/modals/recipes/EditRecipeModal";
@@ -82,7 +85,7 @@ function RecipeDetails() {
         ? setShowDescription(true)
         : setShowDescription(false);
     } catch (err) {
-      alert("Something went wrong ! Please try again");
+      alert(ALERT_OTHER);
       console.error(err);
     }
   };
@@ -132,12 +135,11 @@ function RecipeDetails() {
         })
       );
     } catch (err) {
-      alert("Something went wrong ! Please try again");
+      alert(ALERT_OTHER);
       console.error(err);
     }
   };
 
-  ////////////////RECIPE HANDLERS//////////////
 
   return (
     mounted && (

@@ -1,6 +1,7 @@
 import {
   getNumberFromStr,
   sortDateHelper,
+  strTrimToLwrCase,
 } from "../../components/utils/helpers";
 import { COLUMNS } from "../../components/control/config";
 import { findUserRdx } from "../../components/utils/helpers";
@@ -19,7 +20,7 @@ export function sortByColumn(state, action) {
   }
   const foundUser = findUserRdx(state, action);
   if (!foundUser) return;
-  
+
   state.sortDirection =
     state.sortedField === clickedColumn.id
       ? invertDirection[state.sortDirection]
@@ -27,50 +28,57 @@ export function sortByColumn(state, action) {
   state.sortedField = clickedColumn.id;
 
   foundUser.food.sort((a, b) => {
-    if (state.sortedField === "quantity") {
-      if (+a[state.sortedField] > +b[state.sortedField]) {
-        return state.sortDirection === "asc" ? 1 : -1;
-      } else if (+a[state.sortedField] < +b[state.sortedField]) {
-        return state.sortDirection === "asc" ? -1 : 1;
-      } else {
-        return 0;
-      }
-    } else if (state.sortedField === "weight") {
-      if (
-        getNumberFromStr(a[state.sortedField]) >
-        getNumberFromStr(b[state.sortedField])
-      ) {
-        return state.sortDirection === "asc" ? 1 : -1;
-      } else if (
-        getNumberFromStr(a[state.sortedField]) <
-        getNumberFromStr(b[state.sortedField])
-      ) {
-        return state.sortDirection === "asc" ? -1 : 1;
-      } else {
-        return 0;
-      }
-    } else if (state.sortedField === "expDate") {
-      if (
-        sortDateHelper(a[state.sortedField]) >
-        sortDateHelper(b[state.sortedField])
-      ) {
-        return state.sortDirection === "asc" ? 1 : -1;
-      } else if (
-        sortDateHelper(a[state.sortedField]) <
-        sortDateHelper(b[state.sortedField])
-      ) {
-        return state.sortDirection === "asc" ? -1 : 1;
-      } else {
-        return 0;
-      }
-    } else {
-      if (a[state.sortedField] > b[state.sortedField]) {
-        return state.sortDirection === "asc" ? 1 : -1;
-      } else if (a[state.sortedField] < b[state.sortedField]) {
-        return state.sortDirection === "asc" ? -1 : 1;
-      } else {
-        return 0;
-      }
+    switch (state.sortedField) {
+      case "quantity":
+        if (+a[state.sortedField] > +b[state.sortedField]) {
+          return state.sortDirection === "asc" ? 1 : -1;
+        } else if (+a[state.sortedField] < +b[state.sortedField]) {
+          return state.sortDirection === "asc" ? -1 : 1;
+        } else {
+          return 0;
+        }
+      case "weight":
+        if (
+          getNumberFromStr(a[state.sortedField]) >
+          getNumberFromStr(b[state.sortedField])
+        ) {
+          return state.sortDirection === "asc" ? 1 : -1;
+        } else if (
+          getNumberFromStr(a[state.sortedField]) <
+          getNumberFromStr(b[state.sortedField])
+        ) {
+          return state.sortDirection === "asc" ? -1 : 1;
+        } else {
+          return 0;
+        }
+      case "expDate":
+        if (
+          sortDateHelper(a[state.sortedField]) >
+          sortDateHelper(b[state.sortedField])
+        ) {
+          return state.sortDirection === "asc" ? 1 : -1;
+        } else if (
+          sortDateHelper(a[state.sortedField]) <
+          sortDateHelper(b[state.sortedField])
+        ) {
+          return state.sortDirection === "asc" ? -1 : 1;
+        } else {
+          return 0;
+        }
+      default:
+        if (
+          strTrimToLwrCase(a[state.sortedField]) >
+          strTrimToLwrCase(b[state.sortedField])
+        ) {
+          return state.sortDirection === "asc" ? 1 : -1;
+        } else if (
+          strTrimToLwrCase(a[state.sortedField]) <
+          strTrimToLwrCase(b[state.sortedField])
+        ) {
+          return state.sortDirection === "asc" ? -1 : 1;
+        } else {
+          return 0;
+        }
     }
   });
 }

@@ -7,6 +7,12 @@ import Spinner from "../../utils/Spinner";
 import { AuthURL, db } from "../../control/initFirebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useState, useRef, Fragment } from "react";
+import {
+  ALERT_AUTH_FAIL,
+  ALERT_EMAIL_NOTFOUND,
+  ALERT_INVALID_PASSWORD,
+  ALERT_USER_DISABLED,
+} from "../../control/config";
 
 function SignInModal(props) {
   const router = useRouter();
@@ -62,25 +68,30 @@ function SignInModal(props) {
 
             router.push("/food");
           } catch (err) {
-            alert("Authentication failed ! Please try again");
+            alert(ALERT_AUTH_FAIL);
             console.error(err);
           }
         });
       } else {
         return res.json().then((data) => {
           setIsLoading(false);
-          if (data.error.message === "EMAIL_NOT_FOUND") {
-            signInInputUsername.current.focus();
-            alert("E-mail not found");
-          } else if (data.error.message === "INVALID_PASSWORD") {
-            signInInputPassword.current.focus();
-            alert("Invalid password");
-          } else if (data.error.message === "USER_DISABLED") {
-            signInInputUsername.current.focus();
-            alert("This user has been disabled");
-          } else {
-            signInInputUsername.current.focus();
-            alert("Authentication failed");
+          switch (data.error.message) {
+            case "EMAIL_NOT_FOUND":
+              signInInputUsername.current.focus();
+              alert(ALERT_EMAIL_NOTFOUND);
+              break;
+            case "INVALID_PASSWORD":
+              signInInputPassword.current.focus();
+              alert(ALERT_INVALID_PASSWORD);
+              break;
+            case "USER_DISABLED":
+              signInInputUsername.current.focus();
+              alert(ALERT_USER_DISABLED);
+              break;
+            default:
+              signInInputUsername.current.focus();
+              alert(ALERT_AUTH_FAIL);
+              break;
           }
         });
       }

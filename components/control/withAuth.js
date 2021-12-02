@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "./initFirebase";
+import { ALERT_OTHER } from "./config";
 
 function withAuth(WrappedComponent) {
   return function Auth(props) {
@@ -33,7 +34,7 @@ function withAuth(WrappedComponent) {
             );
           };
         } catch (err) {
-          alert("Something went wrong ! Please try again");
+          alert(ALERT_OTHER);
           console.error(err);
         }
 

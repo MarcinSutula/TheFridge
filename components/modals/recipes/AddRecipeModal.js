@@ -7,6 +7,9 @@ import {
   RECIPETIME_MAX_LENGTH,
   RECIPEINGREDIENTS_MAX_LENGTH,
   RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS,
+  ALERT_OTHER,
+  ALERT_ING_FORMAT,
+  ALERT_ING_URL_EMPTY,
 } from "../../control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
@@ -58,16 +61,12 @@ function AddRecipeModal(props) {
         addRecipeDifficulty.current.value === "DEFAULT" ||
         !ingredientRefs.find((ref) => !!ref?.current?.value)
       ) {
-        alert(
-          "Values other than URL must not be empty. You must insert at least one ingredient"
-        );
+        alert(ALERT_ING_URL_EMPTY);
         return;
       } else if (
         ingredientsArray.find((ing) => !ing.match(RECIPEINGREDIENTS_REGEX))
       ) {
-        alert(
-          "Ingredients must be kept in format: amount,name. Measure (g,kg,ml,l,ts,T etc.) must be inserted next to amount."
-        );
+        alert(ALERT_ING_FORMAT);
         return;
       }
 
@@ -101,7 +100,7 @@ function AddRecipeModal(props) {
       props.setShowAddRecipeModal(false);
       setIngredientsInputAmount(1);
     } catch (err) {
-      alert("Something went wrong. Please try again !");
+      alert(ALERT_OTHER);
       console.error(err);
     }
   };

@@ -14,6 +14,8 @@ import {
   FOODNAME_MAX_LENGTH,
   TYPES,
   WEIGHT_REGEX,
+  ALERT_FOOD_EMPTY,
+  ALERT_WEIGHT_FORMAT,
 } from "../../control/config";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
@@ -75,10 +77,10 @@ function AddFoodModal(props) {
         +addFoodQuantity.current.value < 0 ||
         addFoodQuantity.current.value.trim().length < 1
       ) {
-        alert("Values other than Expiration Date must not be empty");
+        alert(ALERT_FOOD_EMPTY);
         return;
       } else if (!foodObj.weight.match(WEIGHT_REGEX)) {
-        alert("Weight must be inserted as: amount,measure   i.e: 100ml,water");
+        alert(ALERT_WEIGHT_FORMAT);
         return;
       }
 
@@ -92,7 +94,7 @@ function AddFoodModal(props) {
       addFoodExpDate.current.value = "";
       props.setShowAddFoodModal(false);
     } catch (err) {
-      alert("Something went wrong, please try again !");
+      alert(ALERT_OTHER);
       console.error(err);
     }
   };

@@ -40,7 +40,7 @@ function MainTable() {
   if (foundUser) {
     rows = foundUser.food;
     if (!mounted) return <Spinner big={true} />;
-  } else if (!foundUser) {
+  } else {
     rows = [];
     return <Spinner big={true} />;
   }

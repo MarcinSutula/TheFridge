@@ -1,7 +1,7 @@
 import { db } from "../control/initFirebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Fragment, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import { useRouter } from "next/router";
 import classes from "./Header.module.css";
@@ -12,6 +12,7 @@ import NavlinksLoggedIn from "./NavlinksLoggedIn";
 import SignInModal from "../modals/header/SignInModal";
 import SignUpModal from "../modals/header/SignUpModal";
 import { findUser } from "../utils/helpers";
+import { ALERT_OTHER } from "../control/config";
 
 function Header() {
   const [mounted, setMounted] = useState(false);
@@ -48,7 +49,7 @@ function Header() {
         );
       }
     } catch (err) {
-      alert("Something went wrong ! Please try again");
+      alert(ALERT_OTHER);
       console.error(err);
     }
     setMounted(true);

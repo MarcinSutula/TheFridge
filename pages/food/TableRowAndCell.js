@@ -10,6 +10,7 @@ import {
   COLOR_ABOUT_TO_EXPIRE,
   COLOR_VALID,
   MINDAYS_TO_SHOW_RED_EXPDATE,
+  ALERT_OTHER,
 } from "../../components/control/config";
 import {
   setBackgroundColor,
@@ -33,17 +34,20 @@ function TableRowAndCell(props) {
     const now = new Date();
     const dayInMs = 86400000;
     const daysToExpire = (formattedDate - now) / dayInMs;
+    let expDateStyle;
 
     if (daysToExpire < 0) {
-      return [COLOR_EXPIRED, "700"];
+      expDateStyle = [COLOR_EXPIRED, "700"];
     } else if (
       daysToExpire >= 0 &&
       daysToExpire <= MINDAYS_TO_SHOW_RED_EXPDATE
     ) {
-      return [COLOR_ABOUT_TO_EXPIRE, "700"];
+      expDateStyle = [COLOR_ABOUT_TO_EXPIRE, "700"];
     } else {
-      return [COLOR_VALID, "500"];
+      expDateStyle = [COLOR_VALID, "500"];
     }
+
+    return expDateStyle;
   };
 
   const showCorrectDate = (date) => {
@@ -79,7 +83,7 @@ function TableRowAndCell(props) {
         })
       );
     } catch (err) {
-      alert("Something went wrong ! Please try again");
+      alert(ALERT_OTHER);
       console.error(err);
     }
   };

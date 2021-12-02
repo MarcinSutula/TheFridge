@@ -6,13 +6,14 @@ import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { findUser, findRecipe } from "../../utils/helpers";
+import { ALERT_OTHER } from "../../control/config";
 
 function RemoveRecipeModal(props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const foundUser = findUser();
   const foundRecipe = findRecipe(props.recipeId);
-  
+
   const removeRecipeModalOnCloseHandler = () => {
     props.setShowRemoveRecipeModal(false);
   };
@@ -47,7 +48,7 @@ function RemoveRecipeModal(props) {
       router.replace("/recipes");
       props.setShowRemoveRecipeModal(false);
     } catch (err) {
-      alert("Something went wrong ! Please try again");
+      alert(ALERT_OTHER);
       console.error(err);
     }
   };

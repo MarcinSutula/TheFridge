@@ -6,10 +6,15 @@ import Spinner from "../../utils/Spinner";
 import { AuthURL, db } from "../../control/initFirebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useState, useRef } from "react";
-import {SIGNUP_TIMEOUT_TIME} from '../../control/config'
+import {
+  ALERT_AUTH_FAIL,
+  ALERT_EMAIL_EXISTS,
+  ALERT_EMAIL_INVALID,
+  ALERT_WEAK_PASSWORD,
+  SIGNUP_TIMEOUT_TIME,
+} from "../../control/config";
 
 function SignUpModal(props) {
-  
   const dispatch = useDispatch();
   const signUpInputUsername = useRef();
   const signUpInputPassword = useRef();
@@ -61,27 +66,30 @@ function SignUpModal(props) {
               setShowSuccessMsg(false);
             }, SIGNUP_TIMEOUT_TIME);
           } catch (err) {
-            alert("Authentication failed ! Please try again");
+            alert(ALERT_AUTH_FAIL);
             console.error(err);
           }
         });
       } else {
         return res.json().then((data) => {
           setIsLoading(false);
-          if (data.error.message === "EMAIL_EXISTS") {
-            signUpInputUsername.current.focus();
-            alert(
-              "This e-mail has already been registered. Please choose another one"
-            );
-          } else if (data.error.message.includes("WEAK_PASSWORD")) {
-            signUpInputPassword.current.focus();
-            alert("Password must contain at least 6 characters");
-          } else if (data.error.message === "INVALID_EMAIL") {
-            signUpInputUsername.current.focus();
-            alert("Invalid e-mail");
-          } else {
-            signUpInputUsername.current.focus();
-            alert("Authentication failed");
+          switch (data.error.message) {
+            case "EMAIL_EXISTS":
+              signUpInputUsername.current.focus();
+              alert(ALERT_EMAIL_EXISTS);
+              break;
+            case "WEAK_PASSWORD : Password should be at least 6 characters":
+              signUpInputPassword.current.focus();
+              alert(ALERT_WEAK_PASSWORD);
+              break;
+            case "INVALID_EMAIL":
+              signUpInputUsername.current.focus();
+              alert(ALERT_EMAIL_INVALID);
+              break;
+            default:
+              signUpInputUsername.current.focus();
+              alert(ALERT_AUTH_FAIL);
+              break;
           }
         });
       }

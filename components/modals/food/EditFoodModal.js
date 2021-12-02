@@ -10,6 +10,9 @@ import {
   FOODNAME_MAX_LENGTH,
   TYPES,
   WEIGHT_REGEX,
+  ALERT_OTHER,
+  ALERT_FOOD_EMPTY,
+  ALERT_WEIGHT_FORMAT,
 } from "../../control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
@@ -84,10 +87,10 @@ function EditFoodModal(props) {
         +editFoodQuantity.current.value < 0 ||
         editFoodQuantity.current.value.trim().length < 1
       ) {
-        alert("Values other than Expiration Date must not be empty");
+        alert(ALERT_FOOD_EMPTY);
         return;
       } else if (!foodCopy[foundUserFoodIndex].weight.match(WEIGHT_REGEX)) {
-        alert("Weight must be inserted as: amount,measure   i.e: 100ml,water");
+        alert(ALERT_WEIGHT_FORMAT);
         return;
       }
 
@@ -102,7 +105,7 @@ function EditFoodModal(props) {
       editFoodExpDate.current.value = "";
       props.setShowEditFoodModal(false);
     } catch (err) {
-      alert("Something went wrong ! Please try again");
+      alert(ALERT_OTHER);
       console.error(err);
     }
   };

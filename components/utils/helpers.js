@@ -17,19 +17,29 @@ export function welcomeName(username) {
 }
 
 export function setBackgroundColor(type) {
-  if (type === "Protein") {
-    return PROTEIN_COLOR;
-  } else if (type === "Dairy") {
-    return DAIRY_COLOR;
-  } else if (type === "Vegetables") {
-    return VEGETABLES_COLOR;
-  } else if (type === "Fruits") {
-    return FRUITS_COLOR;
-  } else if (type === "Drinks") {
-    return DRINKS_COLOR;
-  } else if (type === "Other") {
-    return OTHER_COLOR;
+  let color;
+
+  switch (type) {
+    case "Protein":
+      color = PROTEIN_COLOR;
+      break;
+    case "Dairy":
+      color = DAIRY_COLOR;
+      break;
+    case "Vegetables":
+      color = VEGETABLES_COLOR;
+      break;
+    case "Fruits":
+      color = FRUITS_COLOR;
+      break;
+    case "Drinks":
+      color = DRINKS_COLOR;
+      break;
+    case "Other":
+      color = OTHER_COLOR;
+      break;
   }
+  return color;
 }
 //Limiting max characters in number inputs (Weight and Quantity) according to given maxLength prop
 export function maxLengthCheck(e) {
@@ -50,6 +60,13 @@ export function getNumberFromStr(str) {
   const num = +toStr.match(/\d+/)[0];
   return num;
 }
+
+//For standarazing string in table sorting
+
+export const strTrimToLwrCase = (str) => {
+  if (typeof str !== "string") return str;
+  return str.trim().toLowerCase();
+};
 
 //For getting the logged in user
 
