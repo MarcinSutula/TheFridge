@@ -68,6 +68,16 @@ export const strTrimToLwrCase = (str) => {
   return str.trim().toLowerCase();
 };
 
+//For dynamic returns in sorting
+
+export const sortingReturn = (sortDirection, reverse = false) => {
+  if (!reverse) {
+    return sortDirection === "asc" ? 1 : -1;
+  } else {
+    return sortDirection === "asc" ? -1 : 1;
+  }
+};
+
 //For getting the logged in user
 
 export function findUser() {

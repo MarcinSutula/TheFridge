@@ -4,7 +4,7 @@ import {
   strTrimToLwrCase,
 } from "../../components/utils/helpers";
 import { COLUMNS } from "../../components/control/config";
-import { findUserRdx } from "../../components/utils/helpers";
+import { findUserRdx, sortingReturn } from "../../components/utils/helpers";
 const invertDirection = {
   asc: "desc",
   desc: "asc",
@@ -31,9 +31,9 @@ export function sortByColumn(state, action) {
     switch (state.sortedField) {
       case "quantity":
         if (+a[state.sortedField] > +b[state.sortedField]) {
-          return state.sortDirection === "asc" ? 1 : -1;
+          return sortingReturn(state.sortDirection);
         } else if (+a[state.sortedField] < +b[state.sortedField]) {
-          return state.sortDirection === "asc" ? -1 : 1;
+          return sortingReturn(state.sortDirection, true);
         } else {
           return 0;
         }
@@ -42,12 +42,12 @@ export function sortByColumn(state, action) {
           getNumberFromStr(a[state.sortedField]) >
           getNumberFromStr(b[state.sortedField])
         ) {
-          return state.sortDirection === "asc" ? 1 : -1;
+          return sortingReturn(state.sortDirection);
         } else if (
           getNumberFromStr(a[state.sortedField]) <
           getNumberFromStr(b[state.sortedField])
         ) {
-          return state.sortDirection === "asc" ? -1 : 1;
+          return sortingReturn(state.sortDirection, true);
         } else {
           return 0;
         }
@@ -56,12 +56,12 @@ export function sortByColumn(state, action) {
           sortDateHelper(a[state.sortedField]) >
           sortDateHelper(b[state.sortedField])
         ) {
-          return state.sortDirection === "asc" ? 1 : -1;
+          return sortingReturn(state.sortDirection);
         } else if (
           sortDateHelper(a[state.sortedField]) <
           sortDateHelper(b[state.sortedField])
         ) {
-          return state.sortDirection === "asc" ? -1 : 1;
+          return sortingReturn(state.sortDirection, true);
         } else {
           return 0;
         }
@@ -70,12 +70,12 @@ export function sortByColumn(state, action) {
           strTrimToLwrCase(a[state.sortedField]) >
           strTrimToLwrCase(b[state.sortedField])
         ) {
-          return state.sortDirection === "asc" ? 1 : -1;
+          return sortingReturn(state.sortDirection);
         } else if (
           strTrimToLwrCase(a[state.sortedField]) <
           strTrimToLwrCase(b[state.sortedField])
         ) {
-          return state.sortDirection === "asc" ? -1 : 1;
+          return sortingReturn(state.sortDirection, true);
         } else {
           return 0;
         }
