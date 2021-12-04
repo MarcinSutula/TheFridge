@@ -132,13 +132,23 @@
   margin-top: 5px;
 }
 
-.yesno_btn{
+.yesno_btn {
   display: flex;
   justify-content: center;
   gap: 15px;
-
 }
 
 .yesno_btn button {
   width: 115px;
+}
+
+.error p {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  color: #c12b2c;
+  
+  
 }

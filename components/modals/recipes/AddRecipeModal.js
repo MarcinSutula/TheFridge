@@ -1,80 +1,67 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { maxLengthCheck, findUser } from "../../utils/helpers";
-import {
-  RECIPEINGREDIENTS_REGEX,
-  RECIPENAME_MAX_LENGTH,
-  RECIPESERVINGS_MAX_LENGTH,
-  RECIPETIME_MAX_LENGTH,
-  RECIPEINGREDIENTS_MAX_LENGTH,
-  RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS,
-  ALERT_OTHER,
-  ALERT_ING_FORMAT,
-  ALERT_ING_URL_EMPTY,
-} from "../../control/config";
+import { findUser } from "../../utils/helpers";
+import { ALERT_OTHER } from "../../control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
-import { useRef, useState } from "react";
+import { useEffect } from "react";
 import { Modal, Fade } from "@material-ui/core";
+import { useForm, useFieldArray } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { recipeValidationSchema } from "../../control/validationSchema";
+import InputError from "../../InputError";
+import IngredientInputs from "./IngredientInputs";
 
 function AddRecipeModal(props) {
-  const [ingredientsInputAmount, setIngredientsInputAmount] = useState(1);
-  const addRecipeName = useRef();
-  const addRecipeServings = useRef();
-  const addRecipeTime = useRef();
-  const addRecipeDifficulty = useRef();
-  const addRecipeImgURL = useRef();
-  const ingredientRefs = [...Array(RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS)].map(
-    () => useRef()
-  );
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(recipeValidationSchema),
+  });
+  const { fields, append, remove } = useFieldArray({
+    name: "ingredients",
+    control,
+  });
+  const numberOfIngredients = watch("numberOfIngredients");
   const foundUser = findUser();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const newVal = parseInt(numberOfIngredients || 0);
+    const oldVal = fields.length;
+    if (newVal > oldVal) {
+      for (let i = oldVal; i < newVal; i++) {
+        append({ ingName: "" });
+      }
+    } else {
+      for (let i = oldVal; i > newVal; i--) {
+        remove(i - 1);
+      }
+    }
+  }, [numberOfIngredients]);
+
   const addRecipeModalOnCloseHandler = () => {
     props.setShowAddRecipeModal(false);
-    setIngredientsInputAmount(1);
+    reset();
   };
 
-  const ingredientsInputAmountHandler = (e) => {
-    e.preventDefault();
-    setIngredientsInputAmount((prevState) => {
-      return prevState + (e.target.value === "+" ? 1 : -1);
-    });
-  };
-
-  const submitAddRecipeHandler = async (e) => {
+  const submitAddRecipeHandler = async (data) => {
     try {
-      e.preventDefault();
-      const ingredientsArray = ingredientRefs
-        .filter(
-          (ref) =>
-            ref?.current?.value !== undefined && ref?.current?.value !== ""
-        )
-        .map((ref) => ref.current.value);
-      if (
-        addRecipeName.current.value.trim().length < 1 ||
-        +addRecipeServings.current.value < 1 ||
-        +addRecipeTime.current.value < 0 ||
-        addRecipeDifficulty.current.value === "DEFAULT" ||
-        !ingredientRefs.find((ref) => !!ref?.current?.value)
-      ) {
-        alert(ALERT_ING_URL_EMPTY);
-        return;
-      } else if (
-        ingredientsArray.find((ing) => !ing.match(RECIPEINGREDIENTS_REGEX))
-      ) {
-        alert(ALERT_ING_FORMAT);
-        return;
-      }
       const docRef = doc(db, "users", foundUser.id);
+      const ingredientsArray = data.ingredients.map((ing) => ing.ingName);
 
       const recipeObj = {
-        name: addRecipeName.current.value,
-        servings: addRecipeServings.current.value,
-        time: addRecipeTime.current.value,
-        difficulty: addRecipeDifficulty.current.value,
-        url: addRecipeImgURL.current.value,
+        name: data.recipeName,
+        servings: data.recipeServings,
+        time: data.recipeTime,
+        difficulty: data.recipeDifficulty,
+        url: data.recipeImgURL,
         ingredients: ingredientsArray,
         id: foundUser.recipesId,
         description: "",
@@ -97,7 +84,7 @@ function AddRecipeModal(props) {
       );
 
       props.setShowAddRecipeModal(false);
-      setIngredientsInputAmount(1);
+      reset();
     } catch (err) {
       alert(ALERT_OTHER);
       console.error(err);
@@ -105,48 +92,34 @@ function AddRecipeModal(props) {
   };
 
   const addRecipeModal = (
-    <form className={modalClasses.main} onSubmit={submitAddRecipeHandler}>
+    <form
+      className={modalClasses.main}
+      onSubmit={handleSubmit(submitAddRecipeHandler)}
+    >
       <div>
         <label>Name </label>
-        <input
-          type="text"
-          ref={addRecipeName}
-          autoFocus={true}
-          maxLength={RECIPENAME_MAX_LENGTH}
-          required
-        />
+        <input {...register("recipeName")} />
+        {errors.recipeName && (
+          <InputError errorMessage={errors.recipeName?.message} />
+        )}
       </div>
       <div>
         <label>Servings </label>
-        <input
-          type="number"
-          ref={addRecipeServings}
-          maxLength={RECIPESERVINGS_MAX_LENGTH}
-          min="1"
-          onInput={maxLengthCheck}
-          required
-        />
+        <input {...register("recipeServings")} type="number" min="1" />
+        {errors.recipeServings && (
+          <InputError errorMessage={errors.recipeServings?.message} />
+        )}
       </div>
       <div>
         <label>Time(min) </label>
-        <input
-          type="number"
-          ref={addRecipeTime}
-          maxLength={RECIPETIME_MAX_LENGTH}
-          min="0"
-          onInput={maxLengthCheck}
-          required
-        />
+        <input {...register("recipeTime")} type="number" min="0" />
+        {errors.recipeTime && (
+          <InputError errorMessage={errors.recipeTime?.message} />
+        )}
       </div>
       <div>
         <label>Difficulty </label>
-        <select
-          name="difficultylistAddRecipe"
-          id="difficultylistAddRecipe"
-          defaultValue={"DEFAULT"}
-          ref={addRecipeDifficulty}
-          required
-        >
+        <select {...register("recipeDifficulty")} defaultValue={"DEFAULT"}>
           <option value="DEFAULT" disabled hidden>
             Choose here
           </option>
@@ -154,54 +127,20 @@ function AddRecipeModal(props) {
           <option>medium</option>
           <option>hard</option>
         </select>
+        {errors.recipeDifficulty && (
+          <InputError errorMessage={errors.recipeDifficulty?.message} />
+        )}
       </div>
       <div>
         <label>Image URL </label>
-        <input type="url" ref={addRecipeImgURL} />
+        <input type="url" {...register("recipeImgURL")} />
       </div>
-      <div>
-        <h2>Ingredients</h2>
-        <h4>format: amount,name (i.e: 5g,salt) </h4>
-      </div>
-      {[...Array(ingredientsInputAmount)].map((ele, i) => {
-        return (
-          <div key={i}>
-            <label>Ingredient {i + 1}</label>
-            <input
-              type="text"
-              ref={ingredientRefs[i]}
-              maxLength={RECIPEINGREDIENTS_MAX_LENGTH}
-            />
-          </div>
-        );
-      })}
-      <div className={modalClasses.addRecipe_btn}>
-        {ingredientsInputAmount !== RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS && (
-          <button
-            type="button"
-            value="+"
-            onClick={ingredientsInputAmountHandler}
-          >
-            +
-          </button>
-        )}
-        {ingredientsInputAmount !== 1 && (
-          <button
-            type="button"
-            value="-"
-            onClick={ingredientsInputAmountHandler}
-          >
-            -
-          </button>
-        )}
-      </div>
-
+      <IngredientInputs register={register} errors={errors} fields={fields} />
       <div className={modalClasses.btn_container}>
         <button>Confirm</button>
       </div>
     </form>
   );
-
   return (
     <Modal
       open={props.showAddRecipeModal}

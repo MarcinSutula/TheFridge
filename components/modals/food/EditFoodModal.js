@@ -1,63 +1,63 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import {
-  getNumberFromStr,
-  maxLengthCheck,
-  findUser,
-} from "../../utils/helpers";
-import {
-  QUANTITY_MAX_LENGTH,
-  WEIGHT_MAX_LENGTH,
-  FOODNAME_MAX_LENGTH,
-  TYPES,
-  WEIGHT_REGEX,
-  ALERT_OTHER,
-  ALERT_FOOD_EMPTY,
-  ALERT_WEIGHT_FORMAT,
-} from "../../control/config";
+import { useEffect } from "react";
+import { getNumberFromStr, findUser } from "../../utils/helpers";
+import { TYPES, ALERT_OTHER } from "../../control/config";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
-import { useRef } from "react";
 import { Modal, Fade } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { foodValidationSchema } from "../../control/validationSchema";
+import InputError from "../../InputError";
 
 function EditFoodModal(props) {
+  const defaultValues = {
+    foodName: props.row.name,
+    foodType: props.row.type,
+    foodQuantity: props.row.quantity,
+    foodWeight: props.row.weight,
+    foodExpDate: props.row.expDate,
+  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(foodValidationSchema), defaultValues });
   const dispatch = useDispatch();
-  const editFoodName = useRef();
-  const editFoodType = useRef();
-  const editFoodQuantity = useRef();
-  const editFoodWeight = useRef();
-  const editFoodExpDate = useRef();
   const foundUser = findUser();
+  const usersFood = foundUser.food;
+
+  useEffect(() => {
+    if (props.row) {
+      reset({
+        foodName: props.row.name,
+        foodType: props.row.type,
+        foodQuantity: props.row.quantity,
+        foodWeight: props.row.weight,
+        foodExpDate: props.row.expDate,
+      });
+    }
+  }, [props.row]);
 
   const editFoodModalOnCloseHandler = () => {
     props.setShowEditFoodModal(false);
+    reset();
   };
 
-  const submitEditFoodHandler = async (e) => {
+  const submitEditFoodHandler = async (data) => {
     try {
-      e.preventDefault();
-      if (
-        editFoodName.current.value.trim().length < 1 ||
-        editFoodType.current.value === "DEFAULT" ||
-        +editFoodQuantity.current.value < 0 ||
-        editFoodQuantity.current.value.trim().length < 1
-      ) {
-        alert(ALERT_FOOD_EMPTY);
-        return;
-      } else if (!editFoodWeight.current.value.match(WEIGHT_REGEX)) {
-        alert(ALERT_WEIGHT_FORMAT);
-        return;
-      }
       const foodObj = {
         username: foundUser.username,
         id: props.row.id,
         foodId: foundUser.foodId,
-        name: editFoodName.current.value,
-        type: editFoodType.current.value,
-        quantity: editFoodQuantity.current.value,
-        weight: editFoodWeight.current.value,
-        expDate: editFoodExpDate.current.value,
+        name: data.foodName,
+        type: data.foodType,
+        quantity: data.foodQuantity,
+        weight: data.foodWeight,
+        expDate: data.foodExpDate,
         key: props.row.key,
       };
 
@@ -67,11 +67,11 @@ function EditFoodModal(props) {
       );
 
       foodCopy[foundUserFoodIndex] = {
-        name: editFoodName.current.value,
-        type: editFoodType.current.value,
-        quantity: editFoodQuantity.current.value,
-        weight: editFoodWeight.current.value,
-        expDate: editFoodExpDate.current.value,
+        name: data.foodName,
+        type: data.foodType,
+        quantity: data.foodQuantity,
+        weight: data.foodWeight,
+        expDate: data.foodExpDate,
         id: props.row.id,
         key: props.row.key,
       };
@@ -83,11 +83,9 @@ function EditFoodModal(props) {
         totalWeight:
           foundUser.totalWeight -
           getNumberFromStr(props.row.weight) +
-          getNumberFromStr(editFoodWeight.current.value),
+          getNumberFromStr(data.foodWeight),
         totalQuantity:
-          foundUser.totalQuantity -
-          props.row.quantity +
-          +editFoodQuantity.current.value,
+          foundUser.totalQuantity - props.row.quantity + +data.foodQuantity,
         food: foodCopy,
         recipes: foundUser.recipes,
       };
@@ -95,41 +93,29 @@ function EditFoodModal(props) {
       const docRef = doc(db, "users", foundUser.id);
       await setDoc(docRef, payload);
       dispatch(fridgeActions.editFood(foodObj));
-
-      editFoodName.current.value = "";
-      editFoodType.current.value = "";
-      editFoodQuantity.current.value = "";
-      editFoodWeight.current.value = "";
-      editFoodExpDate.current.value = "";
       props.setShowEditFoodModal(false);
+      reset();
     } catch (err) {
       alert(ALERT_OTHER);
       console.error(err);
     }
   };
   const editFoodModal = (
-    <form className={modalClasses.main} onSubmit={submitEditFoodHandler}>
+    <form
+      className={modalClasses.main}
+      onSubmit={handleSubmit(submitEditFoodHandler)}
+    >
       <div>
-        <div key={props?.row?.name}>
+        <div>
           <label>Name</label>
-          <input
-            defaultValue={props?.row?.name}
-            ref={editFoodName}
-            type="text"
-            autoFocus={true}
-            maxLength={FOODNAME_MAX_LENGTH}
-            required
-          />
+          <input {...register("foodName")} />
+          {errors.foodName && (
+            <InputError errorMessage={errors.foodName?.message} />
+          )}
         </div>
-        <div key={props?.row?.type}>
+        <div>
           <label>Type</label>
-          <select
-            name="typelistEditFood"
-            id="typelistEditFood"
-            ref={editFoodType}
-            defaultValue={props?.row?.type}
-            required
-          >
+          <select {...register("foodType")}>
             {TYPES.map((type) => {
               return (
                 <option key={type} value={type}>
@@ -138,37 +124,30 @@ function EditFoodModal(props) {
               );
             })}
           </select>
+          {errors.foodType && (
+            <InputError errorMessage={errors.foodType?.message} />
+          )}
         </div>
-        <div key={props?.row?.quantity * Math.random()}>
+        <div>
           <label>Quantity</label>
-          <input
-            defaultValue={props?.row?.quantity}
-            ref={editFoodQuantity}
-            type="number"
-            min="0"
-            maxLength={QUANTITY_MAX_LENGTH}
-            onInput={maxLengthCheck}
-            required
-          />
+          <input type="number" min="0" {...register("foodQuantity")} />
+          {errors.foodQuantity && (
+            <InputError errorMessage={errors.foodQuantity?.message} />
+          )}
         </div>
-        <div key={props?.row?.weight}>
+        <div>
           <label>Weight</label>
           <input
-            defaultValue={props?.row?.weight}
-            ref={editFoodWeight}
-            type="text"
-            maxLength={WEIGHT_MAX_LENGTH}
+            {...register("foodWeight")}
             placeholder="100ml, 50g, 5ts, 2kg etc."
-            required
           />
+          {errors.foodWeight && (
+            <InputError errorMessage={errors.foodWeight?.message} />
+          )}
         </div>
-        <div key={props?.row?.expDate * Math.random()}>
+        <div>
           <label>Expiration Date</label>
-          <input
-            type="date"
-            defaultValue={props?.row?.expDate}
-            ref={editFoodExpDate}
-          />
+          <input type="date" {...register("foodExpDate")} />
         </div>
       </div>
       <div className={modalClasses.btn_container}>

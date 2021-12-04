@@ -46,7 +46,7 @@ export const WEIGHT_REGEX = /^\d{1,4}[mlkgcstTq]{1,2}$/;
 export const RECIPENAME_MAX_LENGTH = 15;
 export const RECIPESERVINGS_MAX_LENGTH = 1;
 export const RECIPETIME_MAX_LENGTH = 3;
-export const RECIPEINGREDIENTS_MAX_LENGTH = 17;
+export const RECIPEINGREDIENTS_MAX_LENGTH = 15;
 export const RECIPEINGREDIENTS_MAX_AMOUNT_OF_INPUTS = 10;
 export const RECIPEDESCRIPTION_MAX_LENGTH = 5000;
 export const RECIPEINGREDIENTS_REGEX =
@@ -71,19 +71,26 @@ export const COLOR_VALID = "#050f16d8"; //standard black
 
 export const ALERT_OTHER = "Something went wrong ! Please try again";
 export const ALERT_ING_FORMAT =
-  "Ingredients must be kept in format: amount,name. Measure (g,kg,ml,l,ts,T etc.) must be inserted next to amount.";
+  "Ingredients must be kept in format: amount,name. Measure must be inserted next to amount.";
 export const ALERT_ING_URL_EMPTY =
   "Values other than URL must not be empty. You must insert at least one ingredient";
-export const ALERT_FOOD_EMPTY =
-  "Values other than Expiration Date must not be empty";
-export const ALERT_WEIGHT_FORMAT =
-  "Weight must be inserted as: amount,measure i.e: 100ml,water. Measure (g,kg,ml,l,ts,T etc.) must be inserted next to amount.";
+export const ERROR_FOOD_EMPTY = "This cannot be empty";
+export const ERROR_WEIGHT_FORMAT =
+  "Weight must be inserted with measure. I.e: 100g, 50ml";
+export const ERROR_QUANTITY_LENGTH = "Quantity cannot be greater than 999";
+export const ERROR_FOODNAME_LENGTH = "Name cannot be longer than 15 characters";
+export const ERROR_RECIPENAME_LENGTH =
+  "Name cannot be longer than 15 characters";
 export const ALERT_AUTH_FAIL = "Authentication failed ! Please try again";
 export const ALERT_EMAIL_NOTFOUND = "E-mail not found";
-export const ALERT_EMAIL_INVALID = "Invalid e-mail"
+export const ALERT_EMAIL_INVALID = "Invalid e-mail";
 export const ALERT_EMAIL_EXISTS =
   "This e-mail has already been registered. Please choose another one";
 export const ALERT_INVALID_PASSWORD = "Invalid password";
 export const ALERT_WEAK_PASSWORD =
   "Password must contain at least 6 characters";
 export const ALERT_USER_DISABLED = "This user has been disabled";
+export const ERROR_SERVINGS_LENGTH = "Servings cannot be greater than 9";
+export const ERROR_TIME_LENGTH = "Time cannot be greater than 999";
+export const ERROR_ING_LENGTH =
+  "An ingredient cannot have more than 15 characteres";
