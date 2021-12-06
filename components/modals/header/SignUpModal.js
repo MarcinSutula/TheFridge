@@ -3,8 +3,7 @@ import { fridgeActions } from "../../../store/index";
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { Modal, Fade } from "@material-ui/core";
 import Spinner from "../../utils/Spinner";
-import { AuthURL, db } from "../../control/initFirebase";
-import { doc, setDoc } from "firebase/firestore";
+import { AuthURL, fetchFirestoreData } from "../../control/initFirebase";
 import { useState } from "react";
 import {
   ALERT_AUTH_FAIL,
@@ -29,15 +28,6 @@ function SignUpModal(props) {
   const signUpHandler = async (data) => {
     setIsLoading(true);
 
-    const payload = {
-      username: data.username,
-      foodId: 0,
-      totalQuantity: 0,
-      totalWeight: 0,
-      food: [],
-      recipes: [],
-    };
-
     fetch(AuthURL("signUp"), {
       method: "POST",
       body: JSON.stringify({
@@ -50,9 +40,16 @@ function SignUpModal(props) {
       if (res.ok) {
         return res.json().then(async (resData) => {
           try {
-            const docRef = doc(db, "users", resData.localId);
-            await setDoc(docRef, payload);
+            const payload = {
+              username: data.username,
+              foodId: 0,
+              totalQuantity: 0,
+              totalWeight: 0,
+              food: [],
+              recipes: [],
+            };
 
+            await fetchFirestoreData(resData.localId, "set", payload);
             dispatch(
               fridgeActions.createUser({
                 username: data.username,

@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { Modal, Fade } from "@material-ui/core";
 import Spinner from "../../utils/Spinner";
-import { AuthURL, db } from "../../control/initFirebase";
-import { doc, getDoc } from "firebase/firestore";
+import { AuthURL, fetchFirestoreData } from "../../control/initFirebase";
 import { useState, Fragment } from "react";
 import {
   ALERT_AUTH_FAIL,
@@ -41,9 +40,7 @@ function SignInModal(props) {
       if (res.ok) {
         return res.json().then(async (resData) => {
           try {
-            const docRef = doc(db, "users", resData.localId);
-            const docSnap = await getDoc(docRef);
-            const userData = docSnap.data();
+            const userData = await fetchFirestoreData(resData.localId, "get");
             localStorage.setItem("userId", resData.localId);
             props.setStorageUserId(resData.localId);
 

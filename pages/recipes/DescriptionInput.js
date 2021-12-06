@@ -3,8 +3,7 @@ import { useRef, Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./recipeDetails.module.css";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../components/control/initFirebase";
+import { fetchFirestoreData } from "../../components/control/initFirebase";
 import {
   RECIPEDESCRIPTION_MAX_LENGTH,
   ALERT_OTHER,
@@ -23,10 +22,7 @@ function DescriptionInput(props) {
   const addDescriptionHandler = async (e) => {
     try {
       e.preventDefault();
-
-      const docRef = doc(db, "users", foundUser.id);
       const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
-
       const foundCopyRecipe = recipesCopy.find(
         (recipe) => recipe.id === +recipeId
       );
@@ -42,7 +38,7 @@ function DescriptionInput(props) {
         food: foundUser.food,
       };
 
-      await setDoc(docRef, payload);
+      await fetchFirestoreData(foundUser.id, "set", payload);
 
       dispatch(
         fridgeActions.addDescription({

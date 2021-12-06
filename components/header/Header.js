@@ -1,5 +1,4 @@
-import { db } from "../control/initFirebase";
-import { doc, getDoc } from "firebase/firestore";
+import { fetchFirestoreData } from "../control/initFirebase";
 import { Fragment, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
@@ -25,26 +24,23 @@ function Header() {
 
   useEffect(async () => {
     try {
-      const getUserId = localStorage.getItem("userId");
-      setStorageUserId(getUserId);
+      const userId = localStorage.getItem("userId");
+      setStorageUserId(userId);
 
-      if (getUserId) {
-        const docRef = doc(db, "users", getUserId);
-        const docSnap = await getDoc(docRef);
-        const getUser = docSnap.data();
-
-        if (!getUser || !docSnap) return;
+      if (userId) {
+        const userData = await fetchFirestoreData(userId, "get");
+        if (!userData) return;
 
         dispatch(
           fridgeActions.login({
-            username: getUser.username,
-            id: getUserId,
-            foodId: getUser.foodId,
-            recipesId: getUser.recipesId,
-            totalQuantity: getUser.totalQuantity,
-            totalWeight: getUser.totalWeight,
-            food: getUser.food,
-            recipes: getUser.recipes,
+            username: userData.username,
+            id: userId,
+            foodId: userData.foodId,
+            recipesId: userData.recipesId,
+            totalQuantity: userData.totalQuantity,
+            totalWeight: userData.totalWeight,
+            food: userData.food,
+            recipes: userData.recipes,
           })
         );
       }

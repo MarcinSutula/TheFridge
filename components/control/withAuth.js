@@ -1,35 +1,32 @@
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
-import { getDoc, doc } from "firebase/firestore";
-import { db } from "./initFirebase";
+import { fetchFirestoreData } from "./initFirebase";
 import { ALERT_OTHER } from "./config";
 
 function withAuth(WrappedComponent) {
-  return function Auth(props) {
+  return function checkAuth(props) {
     const router = useRouter();
     const dispatch = useDispatch();
 
     if (typeof window !== "undefined") {
-      const getUserId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId");
 
-      if (getUserId) {
+      if (userId) {
         try {
           async () => {
-            const docRef = doc(db, "users", getUserId);
-            const docSnap = await getDoc(docRef);
-            const getUser = docSnap.data();
+            const userData = await fetchFirestoreData(userId, "get");
 
             dispatch(
               fridgeActions.login({
-                username: getUser.username,
-                id: getUserId,
-                foodId: getUser.foodId,
-                recipesId: getUser.recipesId,
-                totalQuantity: getUser.totalQuantity,
-                totalWeight: getUser.totalWeight,
-                food: getUser.food,
-                recipes: getUser.recipes,
+                username: userData.username,
+                id: userId,
+                foodId: userData.foodId,
+                recipesId: userData.recipesId,
+                totalQuantity: userData.totalQuantity,
+                totalWeight: userData.totalWeight,
+                food: userData.food,
+                recipes: userData.recipes,
               })
             );
           };
@@ -39,7 +36,7 @@ function withAuth(WrappedComponent) {
         }
 
         return <WrappedComponent {...props} />;
-      } else if (!getUserId) {
+      } else if (!userId) {
         router.replace("/");
 
         //Difficulty connecting withAuth when !getUserId && router.asPath='/'

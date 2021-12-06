@@ -1,6 +1,5 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../control/initFirebase";
+import { fetchFirestoreData } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
@@ -22,8 +21,6 @@ function RemoveRecipeModal(props) {
     try {
       e.preventDefault();
 
-      const docRef = doc(db, "users", foundUser.id);
-
       const filteredRecipes = foundUser.recipes.filter(
         (recipe) => recipe.id !== foundRecipe.id
       );
@@ -37,7 +34,7 @@ function RemoveRecipeModal(props) {
         food: foundUser.food,
       };
 
-      await setDoc(docRef, payload);
+      await fetchFirestoreData(foundUser.id, "set", payload);
 
       dispatch(
         fridgeActions.removeRecipe({

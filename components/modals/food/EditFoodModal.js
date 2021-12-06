@@ -2,8 +2,7 @@ import modalClasses from "../../../styles/modalClasses.module.css";
 import { useEffect } from "react";
 import { getNumberFromStr, findUser } from "../../utils/helpers";
 import { TYPES, ALERT_OTHER } from "../../control/config";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../control/initFirebase";
+import { fetchFirestoreData } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
@@ -28,10 +27,10 @@ function EditFoodModal(props) {
   } = useForm({ resolver: yupResolver(foodValidationSchema), defaultValues });
   const dispatch = useDispatch();
   const foundUser = findUser();
-  const usersFood = foundUser.food;
+  const foodToEdit = props.row;
 
   useEffect(() => {
-    if (props.row) {
+    if (foodToEdit) {
       reset({
         foodName: props.row.name,
         foodType: props.row.type,
@@ -40,7 +39,7 @@ function EditFoodModal(props) {
         foodExpDate: props.row.expDate,
       });
     }
-  }, [props.row]);
+  }, [foodToEdit]);
 
   const editFoodModalOnCloseHandler = () => {
     props.setShowEditFoodModal(false);
@@ -90,8 +89,7 @@ function EditFoodModal(props) {
         recipes: foundUser.recipes,
       };
 
-      const docRef = doc(db, "users", foundUser.id);
-      await setDoc(docRef, payload);
+      await fetchFirestoreData(foundUser.id, "set", payload);
       dispatch(fridgeActions.editFood(foodObj));
       props.setShowEditFoodModal(false);
       reset();

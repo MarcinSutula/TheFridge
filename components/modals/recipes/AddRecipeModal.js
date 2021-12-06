@@ -1,8 +1,7 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { findUser } from "../../utils/helpers";
 import { ALERT_OTHER } from "../../control/config";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../control/initFirebase";
+import { fetchFirestoreData } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useEffect } from "react";
@@ -53,7 +52,6 @@ function AddRecipeModal(props) {
 
   const submitAddRecipeHandler = async (data) => {
     try {
-      const docRef = doc(db, "users", foundUser.id);
       const ingredientsArray = data.ingredients.map((ing) => ing.ingName);
 
       const recipeObj = {
@@ -77,7 +75,7 @@ function AddRecipeModal(props) {
         food: foundUser.food,
       };
 
-      await setDoc(docRef, payload);
+      await fetchFirestoreData(foundUser.id, "set", payload);
 
       dispatch(
         fridgeActions.addRecipe({ username: foundUser.username, ...recipeObj })

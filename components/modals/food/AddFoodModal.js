@@ -1,7 +1,6 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { fridgeActions } from "../../../store/index";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../control/initFirebase";
+import { fetchFirestoreData } from "../../control/initFirebase";
 import { getNumberFromStr, findUser } from "../../utils/helpers";
 import { Modal, Fade } from "@material-ui/core";
 import { TYPES, ALERT_OTHER } from "../../control/config";
@@ -28,7 +27,6 @@ function AddFoodModal(props) {
 
   const submitAddFoodHandler = async (data) => {
     try {
-      const docRef = doc(db, "users", foundUser.id);
       const foodObj = {
         id: foundUser.id,
         foodId: foundUser.foodId,
@@ -61,8 +59,7 @@ function AddFoodModal(props) {
           },
         ],
       };
-
-      await setDoc(docRef, payload);
+      await fetchFirestoreData(foundUser.id, "set", payload);
 
       dispatch(fridgeActions.addFood(foodObj));
       props.setShowAddFoodModal(false);

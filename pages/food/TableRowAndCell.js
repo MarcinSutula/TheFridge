@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./TableRowAndCell.module.css";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../components/control/initFirebase";
+import { fetchFirestoreData } from "../../components/control/initFirebase";
 import {
   COLOR_EXPIRED,
   COLOR_ABOUT_TO_EXPIRE,
@@ -73,8 +72,7 @@ function TableRowAndCell(props) {
         food: foodFiltered,
       };
 
-      const docRef = doc(db, "users", foundUser.id);
-      await setDoc(docRef, payload);
+      await fetchFirestoreData(foundUser.id, "set", payload);
 
       dispatch(
         fridgeActions.removeFood({

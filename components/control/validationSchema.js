@@ -12,47 +12,47 @@ import {
   QUANTITY_MAX_LENGTH,
   FOODNAME_MAX_LENGTH,
   WEIGHT_REGEX,
-  ERROR_FOOD_EMPTY,
+  ERROR_EMPTY,
   ERROR_WEIGHT_FORMAT,
   ERROR_QUANTITY_LENGTH,
   ERROR_FOODNAME_LENGTH,
-  ALERT_ING_FORMAT,
+  ERROR_ING_FORMAT,
 } from "./config";
 
 export const foodValidationSchema = Yup.object().shape({
   foodName: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
+    .required(ERROR_EMPTY)
     .max(FOODNAME_MAX_LENGTH, ERROR_FOODNAME_LENGTH),
   foodType: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
-    .notOneOf(["DEFAULT"], ERROR_FOOD_EMPTY),
+    .required(ERROR_EMPTY)
+    .notOneOf(["DEFAULT"], ERROR_EMPTY),
   foodQuantity: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
+    .required(ERROR_EMPTY)
     .max(QUANTITY_MAX_LENGTH, ERROR_QUANTITY_LENGTH),
   foodWeight: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
+    .required(ERROR_EMPTY)
     .matches(WEIGHT_REGEX, ERROR_WEIGHT_FORMAT),
 });
 
 export const recipeValidationSchema = Yup.object().shape({
   recipeName: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
+    .required(ERROR_EMPTY)
     .max(RECIPENAME_MAX_LENGTH, ERROR_RECIPENAME_LENGTH),
   recipeServings: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
+    .required(ERROR_EMPTY)
     .max(RECIPESERVINGS_MAX_LENGTH, ERROR_SERVINGS_LENGTH),
   recipeTime: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
+    .required(ERROR_EMPTY)
     .max(RECIPETIME_MAX_LENGTH, ERROR_TIME_LENGTH),
   recipeDifficulty: Yup.string()
-    .required(ERROR_FOOD_EMPTY)
-    .notOneOf(["DEFAULT"], ERROR_FOOD_EMPTY),
+    .required(ERROR_EMPTY)
+    .notOneOf(["DEFAULT"], ERROR_EMPTY),
   ingredients: Yup.array().of(
     Yup.object().shape({
       ingName: Yup.string()
         .max(RECIPEINGREDIENTS_MAX_LENGTH, ERROR_ING_LENGTH)
-        .matches(RECIPEINGREDIENTS_REGEX, ALERT_ING_FORMAT),
+        .matches(RECIPEINGREDIENTS_REGEX, ERROR_ING_FORMAT),
     })
   ),
-  numberOfIngredients: Yup.string().notOneOf(["DEFAULT"], ERROR_FOOD_EMPTY),
+  numberOfIngredients: Yup.string().notOneOf(["DEFAULT"], ERROR_EMPTY),
 });

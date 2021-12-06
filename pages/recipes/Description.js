@@ -1,7 +1,6 @@
 import classes from "./recipeDetails.module.css";
 import { Fragment } from "react";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../../components/control/initFirebase";
+import { db, fetchFirestoreData } from "../../components/control/initFirebase";
 import { findUser, findRecipe } from "../../components/utils/helpers";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
@@ -18,10 +17,7 @@ function Description(props) {
   const removeDescriptionHandler = async (e) => {
     try {
       e.preventDefault();
-
-      const docRef = doc(db, "users", foundUser.id);
       const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
-
       const foundCopyRecipe = recipesCopy.find(
         (recipe) => recipe.id === +recipeId
       );
@@ -37,7 +33,7 @@ function Description(props) {
         food: foundUser.food,
       };
 
-      await setDoc(docRef, payload);
+      await fetchFirestoreData(foundUser.id, "set", payload);
 
       props.setShowDescription(false);
 
