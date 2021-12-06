@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { Modal, Fade } from "@material-ui/core";
 import Spinner from "../../utils/Spinner";
-import { AuthURL, fetchFirestoreData } from "../../control/initFirebase";
+import { fetchFirestoreData, fetchAuthData } from "../../control/initFirebase";
 import { useState, Fragment } from "react";
 import {
   ALERT_AUTH_FAIL,
@@ -28,15 +28,7 @@ function SignInModal(props) {
   const signInHandler = async (data) => {
     setIsLoading(true);
 
-    fetch(AuthURL("signInWithPassword"), {
-      method: "POST",
-      body: JSON.stringify({
-        email: data.username,
-        password: data.password,
-        returnSecureToken: true,
-      }),
-      headers: { "Content-Type": "application/json" },
-    }).then((res) => {
+    fetchAuthData("signInWithPassword", data).then((res) => {
       if (res.ok) {
         return res.json().then(async (resData) => {
           try {
