@@ -2,7 +2,7 @@ import modalClasses from "../../../styles/modalClasses.module.css";
 import { useEffect } from "react";
 import { getNumberFromStr, findUser } from "../../utils/helpers";
 import { TYPES, ALERT_OTHER } from "../../control/config";
-import { fetchFirestoreData } from "../../control/initFirebase";
+import { fetchFirestoreData, getFoodPayload } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
@@ -60,36 +60,11 @@ function EditFoodModal(props) {
         key: props.row.key,
       };
 
-      const foodCopy = [...foundUser.food];
-      const foundUserFoodIndex = foodCopy.findIndex(
-        (ele) => +ele.id === +props.row.id
+      await fetchFirestoreData(
+        foundUser.id,
+        "set",
+        getFoodPayload("edit", foundUser, data, props.row)
       );
-
-      foodCopy[foundUserFoodIndex] = {
-        name: data.foodName,
-        type: data.foodType,
-        quantity: data.foodQuantity,
-        weight: data.foodWeight,
-        expDate: data.foodExpDate,
-        id: props.row.id,
-        key: props.row.key,
-      };
-
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId,
-        foodId: foundUser.foodId,
-        totalWeight:
-          foundUser.totalWeight -
-          getNumberFromStr(props.row.weight) +
-          getNumberFromStr(data.foodWeight),
-        totalQuantity:
-          foundUser.totalQuantity - props.row.quantity + +data.foodQuantity,
-        food: foodCopy,
-        recipes: foundUser.recipes,
-      };
-
-      await fetchFirestoreData(foundUser.id, "set", payload);
       dispatch(fridgeActions.editFood(foodObj));
       props.setShowEditFoodModal(false);
       reset();

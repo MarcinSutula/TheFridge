@@ -3,7 +3,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./TableRowAndCell.module.css";
-import { fetchFirestoreData } from "../../components/control/initFirebase";
+import {
+  fetchFirestoreData,
+  getFoodPayload,
+} from "../../components/control/initFirebase";
 import {
   COLOR_EXPIRED,
   COLOR_ABOUT_TO_EXPIRE,
@@ -57,22 +60,12 @@ function TableRowAndCell(props) {
 
   const removeFoodHandler = async (e) => {
     e.preventDefault();
-
     try {
-      const foodFiltered = foundUser.food.filter(
-        (ele) => ele.id !== props.row.id
+      await fetchFirestoreData(
+        foundUser.id,
+        "set",
+        getFoodPayload("remove", foundUser, props.row)
       );
-      const payload = {
-        username: foundUser.username,
-        foodId: foundUser.foodId,
-        recipesId: foundUser.recipesId,
-        recipes: foundUser.recipes,
-        totalWeight: foundUser.totalWeight - getNumberFromStr(props.row.weight),
-        totalQuantity: foundUser.totalQuantity - props.row.quantity,
-        food: foodFiltered,
-      };
-
-      await fetchFirestoreData(foundUser.id, "set", payload);
 
       dispatch(
         fridgeActions.removeFood({
