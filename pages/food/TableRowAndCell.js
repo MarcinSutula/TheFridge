@@ -4,21 +4,12 @@ import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./TableRowAndCell.module.css";
 import {
-  fetchFirestoreData,
-  getFoodPayload,
-} from "../../components/control/initFirebase";
-import {
   COLOR_EXPIRED,
   COLOR_ABOUT_TO_EXPIRE,
   COLOR_VALID,
   MINDAYS_TO_SHOW_RED_EXPDATE,
-  ALERT_OTHER,
 } from "../../components/control/config";
-import {
-  setBackgroundColor,
-  getNumberFromStr,
-  findUser,
-} from "../../components/utils/helpers";
+import { setBackgroundColor, findUser } from "../../components/utils/helpers";
 import {
   EditFoodIcon,
   AddtoListIcon,
@@ -60,23 +51,13 @@ function TableRowAndCell(props) {
 
   const removeFoodHandler = async (e) => {
     e.preventDefault();
-    try {
-      await fetchFirestoreData(
-        foundUser.id,
-        "set",
-        getFoodPayload("remove", foundUser, props.row)
-      );
 
-      dispatch(
-        fridgeActions.removeFood({
-          username: foundUser.username,
-          foodToRemove: props.row,
-        })
-      );
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
+    dispatch(
+      fridgeActions.removeFood({
+        user: foundUser,
+        food: props.row,
+      })
+    );
   };
 
   const tableRowStyleMUI = {

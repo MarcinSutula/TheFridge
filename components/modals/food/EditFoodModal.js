@@ -1,8 +1,7 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { useEffect } from "react";
-import { getNumberFromStr, findUser } from "../../utils/helpers";
-import { TYPES, ALERT_OTHER } from "../../control/config";
-import { fetchFirestoreData, getFoodPayload } from "../../control/initFirebase";
+import { findUser } from "../../utils/helpers";
+import { TYPES } from "../../control/config";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
@@ -47,31 +46,16 @@ function EditFoodModal(props) {
   };
 
   const submitEditFoodHandler = async (data) => {
-    try {
-      const foodObj = {
-        username: foundUser.username,
-        id: props.row.id,
-        foodId: foundUser.foodId,
-        name: data.foodName,
-        type: data.foodType,
-        quantity: data.foodQuantity,
-        weight: data.foodWeight,
-        expDate: data.foodExpDate,
-        key: props.row.key,
-      };
+    dispatch(
+      fridgeActions.editFood({
+        user: foundUser,
+        food: data,
+        prevFood: props.row,
+      })
+    );
 
-      await fetchFirestoreData(
-        foundUser.id,
-        "set",
-        getFoodPayload("edit", foundUser, data, props.row)
-      );
-      dispatch(fridgeActions.editFood(foodObj));
-      props.setShowEditFoodModal(false);
-      reset();
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
+    props.setShowEditFoodModal(false);
+    reset();
   };
   const editFoodModal = (
     <form

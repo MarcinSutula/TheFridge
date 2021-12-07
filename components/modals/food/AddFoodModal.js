@@ -1,9 +1,8 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { fridgeActions } from "../../../store/index";
-import { fetchFirestoreData, getFoodPayload } from "../../control/initFirebase";
-import { getNumberFromStr, findUser } from "../../utils/helpers";
+import { findUser } from "../../utils/helpers";
 import { Modal, Fade } from "@material-ui/core";
-import { TYPES, ALERT_OTHER } from "../../control/config";
+import { TYPES } from "../../control/config";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -25,63 +24,10 @@ function AddFoodModal(props) {
     reset();
   };
 
-  const submitAddFoodHandler = async (data) => {
-    try {
-      const foodObj = {
-        id: foundUser.id,
-        foodId: foundUser.foodId,
-        username: foundUser.username,
-        name: data.foodName,
-        type: data.foodType,
-        quantity: data.foodQuantity,
-        weight: data.foodWeight,
-        expDate: data.foodExpDate,
-        key: foundUser.foodId,
-      };
-
-      // const payload = {
-      //   username: foundUser.username,
-      //   recipesId: foundUser.recipesId,
-      //   foodId: foundUser.foodId + 1,
-      //   totalQuantity: foundUser.totalQuantity + +data.foodQuantity,
-      //   totalWeight: foundUser.totalWeight + getNumberFromStr(data.foodWeight),
-      //   recipes: foundUser.recipes,
-      //   food: [
-      //     ...foundUser.food,
-      //     {
-      //       name: data.foodName,
-      //       type: data.foodType,
-      //       quantity: data.foodQuantity,
-      //       weight: data.foodWeight,
-      //       expDate: data.foodExpDate,
-      //       key: foundUser.foodId,
-      //       id: foundUser.foodId,
-      //     },
-      //   ],
-      // };
-      // const payload = {
-      //   name: data.foodName,
-      //   type: data.foodType,
-      //   quantity: data.foodQuantity,
-      //   weight: data.foodWeight,
-      //   expDate: data.foodExpDate,
-      //   key: foundUser.foodId,
-      //   id: foundUser.foodId,
-      // };
-
-      await fetchFirestoreData(
-        foundUser.id,
-        "uptade",
-        getFoodPayload("add", foundUser, data)
-      );
-
-      dispatch(fridgeActions.addFood(foodObj));
-      props.setShowAddFoodModal(false);
-      reset();
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
+  const submitAddFoodHandler = (data) => {
+    dispatch(fridgeActions.addFood({ user: foundUser, food: data }));
+    props.setShowAddFoodModal(false);
+    reset();
   };
 
   const addFoodModal = (

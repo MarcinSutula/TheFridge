@@ -85,7 +85,9 @@ export function findRecipe(recipeId) {
 //For getting the user from store
 
 export function findUserRdx(state, action) {
-  return state.users.find((user) => user.username === action.payload.username);
+  return state.users.find(
+    (user) => user.username === action.payload.user.username
+  );
 }
 
 //For getting the recipe from store
@@ -95,5 +97,3 @@ export function findRecipeRdx(foundUser, action) {
 }
 
 //For getting food payload for fetching to Firestore
-
-

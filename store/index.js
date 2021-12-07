@@ -12,6 +12,8 @@ import { removeRecipe } from "./recipe actions/removeRecipe";
 import { addDescription } from "./recipe actions/addDescription";
 import { removeDescription } from "./recipe actions/removeDescription";
 import { authMiddleware } from "./authMiddleware";
+import { foodMiddleware } from "./foodMiddleware";
+
 const initialState = {
   sortedField: "",
   sortDirection: "desc",
@@ -40,7 +42,7 @@ const fridgeSlice = createSlice({
 const store = configureStore({
   reducer: fridgeSlice.reducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authMiddleware),
+    getDefaultMiddleware().concat(authMiddleware, foodMiddleware),
 });
 
 export const fridgeActions = fridgeSlice.actions;

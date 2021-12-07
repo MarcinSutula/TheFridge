@@ -6,15 +6,15 @@ export function addFood(state, action) {
 
   if (!foundUser) return;
   foundUser.food.push({
-    name: action.payload.name,
-    type: action.payload.type,
-    quantity: action.payload.quantity,
-    weight: action.payload.weight,
-    expDate: action.payload.expDate,
-    key: action.payload.key,
-    id: action.payload.key,
+    name: action.payload.food.foodName,
+    type: action.payload.food.foodType,
+    quantity: action.payload.food.foodQuantity,
+    weight: action.payload.food.foodWeight,
+    expDate: action.payload.food.foodExpDate,
+    key: action.payload.user.foodId,
+    id: action.payload.user.foodId,
   });
   foundUser.foodId++;
-  foundUser.totalQuantity += +action.payload.quantity;
-  foundUser.totalWeight += getNumberFromStr(action.payload.weight);
+  foundUser.totalQuantity += +action.payload.food.foodQuantity;
+  foundUser.totalWeight += getNumberFromStr(action.payload.food.foodWeight);
 }

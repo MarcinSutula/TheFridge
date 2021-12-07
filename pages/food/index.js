@@ -111,7 +111,7 @@ function MainTable() {
                         <TableRowAndCell
                           columns={COLUMNS}
                           row={row}
-                          key={row.key}
+                          key={row.id}
                         />
                       );
                     })}
