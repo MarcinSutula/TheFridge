@@ -25,7 +25,7 @@ function RecipeDetails() {
       setShowDescription(true);
     }
 
-    setMounted(true);
+    if (!mounted) setMounted(true);
   }, [recipeDescription]);
 
   if (!foundRecipe)

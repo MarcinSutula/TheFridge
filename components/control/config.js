@@ -41,6 +41,7 @@ export const INITIAL_ROWS_PER_PAGE = 10;
 export const SIGNUP_TIMEOUT_TIME = 1500;
 export const MINDAYS_TO_SHOW_RED_EXPDATE = 3;
 export const WEIGHT_REGEX = /^\d{1,4}[mlkgcstTq]{1,2}$/;
+
 // Add/edit recipe config
 
 export const RECIPENAME_MAX_LENGTH = 15;

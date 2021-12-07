@@ -3,45 +3,38 @@ import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import { fetchFirestoreData } from "./initFirebase";
 import { ALERT_OTHER } from "./config";
+import { findUser } from "../utils/helpers";
 
 function withAuth(WrappedComponent) {
   return function checkAuth(props) {
     const router = useRouter();
     const dispatch = useDispatch();
+    const foundUser = findUser();
 
     if (typeof window !== "undefined") {
       const userId = localStorage.getItem("userId");
 
       if (userId) {
-        try {
-          async () => {
-            const userData = await fetchFirestoreData(userId, "get");
+        if (!foundUser) {
+          try {
+            (async () => {
+              const userData = await fetchFirestoreData(userId, "get");
 
-            dispatch(
-              fridgeActions.login({
-                username: userData.username,
-                id: userId,
-                foodId: userData.foodId,
-                recipesId: userData.recipesId,
-                totalQuantity: userData.totalQuantity,
-                totalWeight: userData.totalWeight,
-                food: userData.food,
-                recipes: userData.recipes,
-              })
-            );
-          };
-        } catch (err) {
-          alert(ALERT_OTHER);
-          console.error(err);
+              dispatch(
+                fridgeActions.autoLogin({
+                  user: {...userData},
+                  id: userId,
+                })
+              );
+            })();
+          } catch (err) {
+            alert(ALERT_OTHER);
+            console.error(err);
+          }
         }
-
         return <WrappedComponent {...props} />;
       } else if (!userId) {
         router.replace("/");
-
-        //Difficulty connecting withAuth when !getUserId && router.asPath='/'
-        //Workaround in Header
-
         return null;
       }
     }

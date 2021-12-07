@@ -1,86 +1,50 @@
-import { useDispatch } from "react-redux";
-import { fridgeActions } from "../../../store/index";
+import { useDispatch, useSelector } from "react-redux";
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { Modal, Fade } from "@material-ui/core";
 import Spinner from "../../utils/Spinner";
-import { fetchAuthData, fetchFirestoreData } from "../../control/initFirebase";
-import { useState } from "react";
-import {
-  ALERT_AUTH_FAIL,
-  ALERT_EMAIL_EXISTS,
-  ALERT_EMAIL_INVALID,
-  ALERT_WEAK_PASSWORD,
-  SIGNUP_TIMEOUT_TIME,
-} from "../../control/config";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { signUpThunk } from "../../../store/thunks/signUpThunk";
+import { SIGNUP_TIMEOUT_TIME } from "../../control/config";
 
 function SignUpModal(props) {
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+  const signUpStatus = useSelector((state) => state.signUpStatus);
+
+  useEffect(() => {
+    if (signUpStatus) {
+      switch (signUpStatus) {
+        case "loading":
+          setIsLoading(true);
+          setShowSuccessMsg(false);
+          break;
+        case "success":
+          setIsLoading(false);
+          setShowSuccessMsg(true);
+          setTimeout(() => {
+            props.setShowSignUpModal(false);
+            setShowSuccessMsg(false);
+            reset();
+          }, SIGNUP_TIMEOUT_TIME);
+          break;
+        case "failed":
+          setIsLoading(false);
+          setShowSuccessMsg(false);
+          break;
+      }
+    }
+  }, [signUpStatus]);
 
   const signUpModalOnCloseHandler = () => {
     props.setShowSignUpModal(false);
     reset();
   };
 
-  const signUpHandler = async (data) => {
-    setIsLoading(true);
-
-    fetchAuthData("signUp", data).then((res) => {
-      if (res.ok) {
-        return res.json().then(async (resData) => {
-          try {
-            const payload = {
-              username: data.username,
-              foodId: 0,
-              recipesId: 0,
-              totalQuantity: 0,
-              totalWeight: 0,
-              food: [],
-              recipes: [],
-            };
-
-            await fetchFirestoreData(resData.localId, "set", payload);
-            dispatch(
-              fridgeActions.createUser({
-                username: data.username,
-              })
-            );
-
-            setIsLoading(false);
-            setShowSuccessMsg(true);
-            setTimeout(() => {
-              props.setShowSignUpModal(false);
-              setShowSuccessMsg(false);
-              reset();
-            }, SIGNUP_TIMEOUT_TIME);
-          } catch (err) {
-            alert(ALERT_AUTH_FAIL);
-            console.error(err);
-          }
-        });
-      } else {
-        return res.json().then((resData) => {
-          setIsLoading(false);
-          switch (resData.error.message) {
-            case "EMAIL_EXISTS":
-              alert(ALERT_EMAIL_EXISTS);
-              break;
-            case "WEAK_PASSWORD : Password should be at least 6 characters":
-              alert(ALERT_WEAK_PASSWORD);
-              break;
-            case "INVALID_EMAIL":
-              alert(ALERT_EMAIL_INVALID);
-              break;
-            default:
-              alert(ALERT_AUTH_FAIL);
-              break;
-          }
-        });
-      }
-    });
+  const signUpHandler = (data) => {
+    dispatch(signUpThunk(data));
   };
 
   const signUpModal = (

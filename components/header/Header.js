@@ -1,4 +1,3 @@
-import { fetchFirestoreData } from "../control/initFirebase";
 import { Fragment, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
@@ -11,50 +10,22 @@ import NavlinksLoggedIn from "./NavlinksLoggedIn";
 import SignInModal from "../modals/header/SignInModal";
 import SignUpModal from "../modals/header/SignUpModal";
 import { findUser } from "../utils/helpers";
-import { ALERT_OTHER } from "../control/config";
 
 function Header() {
   const [mounted, setMounted] = useState(false);
-  const [storageUserId, setStorageUserId] = useState();
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const foundUser = findUser();
 
-  useEffect(async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      setStorageUserId(userId);
-
-      if (userId) {
-        const userData = await fetchFirestoreData(userId, "get");
-        if (!userData) return;
-
-        dispatch(
-          fridgeActions.login({
-            username: userData.username,
-            id: userId,
-            foodId: userData.foodId,
-            recipesId: userData.recipesId,
-            totalQuantity: userData.totalQuantity,
-            totalWeight: userData.totalWeight,
-            food: userData.food,
-            recipes: userData.recipes,
-          })
-        );
-      }
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
-    setMounted(true);
-  }, [storageUserId, dispatch]);
+  useEffect(() => {
+     setMounted(true);
+  },[]);
 
   const logoutHandler = () => {
     dispatch(fridgeActions.logout());
     localStorage.removeItem("userId");
-    setStorageUserId("");
     router.replace("/");
   };
 
@@ -67,14 +38,14 @@ function Header() {
     <Fragment>
       <header className={classes.header}>
         <Logo />
-        {storageUserId && mounted && <WelcomeUser foundUser={foundUser} />}
-        {!storageUserId && mounted && (
+        {foundUser && mounted && <WelcomeUser foundUser={foundUser} />}
+        {!foundUser && mounted && (
           <NavlinksLoggedOff
             setShowSignInModal={setShowSignInModal}
             setShowSignUpModal={setShowSignUpModal}
           />
         )}
-        {storageUserId && mounted && (
+        {foundUser && mounted && (
           <NavlinksLoggedIn logoutHandler={logoutHandler} />
         )}
       </header>
@@ -82,7 +53,6 @@ function Header() {
         showSignInModal={showSignInModal}
         setShowSignInModal={setShowSignInModal}
         forwardToSignUpHandler={forwardToSignUpHandler}
-        setStorageUserId={setStorageUserId}
       />
       <SignUpModal
         showSignUpModal={showSignUpModal}

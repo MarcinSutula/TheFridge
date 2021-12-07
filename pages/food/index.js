@@ -31,12 +31,12 @@ function MainTable() {
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const dispatch = useDispatch();
   const foundUser = findUser();
+  let rows;
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  let rows;
   if (foundUser) {
     rows = foundUser.food;
     if (!mounted) return <Spinner big={true} />;
