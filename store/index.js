@@ -23,6 +23,7 @@ import {
   signUpFulfilledReducer,
   signUpRejectedReducer,
 } from "./thunks/signUpThunk";
+import { recipesMiddleware } from "./recipesMiddleware";
 
 const initialState = {
   sortedField: "",
@@ -61,7 +62,7 @@ const fridgeSlice = createSlice({
 const store = configureStore({
   reducer: fridgeSlice.reducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(foodMiddleware),
+    getDefaultMiddleware().concat(foodMiddleware, recipesMiddleware),
 });
 
 export const fridgeActions = fridgeSlice.actions;

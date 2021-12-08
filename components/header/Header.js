@@ -18,10 +18,11 @@ function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
   const foundUser = findUser();
+  const userId = foundUser?.id;
 
   useEffect(() => {
-     setMounted(true);
-  },[]);
+    setMounted(true);
+  }, []);
 
   const logoutHandler = () => {
     dispatch(fridgeActions.logout());
@@ -38,14 +39,14 @@ function Header() {
     <Fragment>
       <header className={classes.header}>
         <Logo />
-        {foundUser && mounted && <WelcomeUser foundUser={foundUser} />}
-        {!foundUser && mounted && (
+        {userId && mounted && <WelcomeUser foundUser={foundUser} />}
+        {!userId && mounted && (
           <NavlinksLoggedOff
             setShowSignInModal={setShowSignInModal}
             setShowSignUpModal={setShowSignUpModal}
           />
         )}
-        {foundUser && mounted && (
+        {userId && mounted && (
           <NavlinksLoggedIn logoutHandler={logoutHandler} />
         )}
       </header>

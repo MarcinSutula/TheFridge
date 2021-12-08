@@ -1,11 +1,10 @@
 import classes from "./recipeDetails.module.css";
 import { Fragment } from "react";
-import { db, fetchFirestoreData } from "../../components/control/initFirebase";
 import { findUser, findRecipe } from "../../components/utils/helpers";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
-import { ALERT_OTHER } from "../../components/control/config";
 import { useRouter } from "next/router";
+import Spinner from "../../components/utils/Spinner";
 
 function Description(props) {
   const dispatch = useDispatch();
@@ -15,38 +14,16 @@ function Description(props) {
   const foundRecipe = findRecipe(recipeId);
 
   const removeDescriptionHandler = async (e) => {
-    try {
-      e.preventDefault();
-      const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
-      const foundCopyRecipe = recipesCopy.find(
-        (recipe) => recipe.id === +recipeId
-      );
-      foundCopyRecipe.description = "";
+    e.preventDefault();
 
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId,
-        foodId: foundUser.foodId,
-        totalQuantity: foundUser.totalQuantity,
-        totalWeight: foundUser.totalWeight,
-        recipes: recipesCopy,
-        food: foundUser.food,
-      };
+    dispatch(
+      fridgeActions.removeDescription({
+        user: foundUser,
+        recipeId,
+      })
+    );
 
-      await fetchFirestoreData(foundUser.id, "set", payload);
-
-      props.setShowDescription(false);
-
-      dispatch(
-        fridgeActions.removeDescription({
-          username: foundUser.username,
-          id: foundRecipe.id,
-        })
-      );
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
+    props.setShowDescription(false);
   };
 
   const editDescriptionHandler = () => {
@@ -57,7 +34,8 @@ function Description(props) {
   return (
     <Fragment>
       <div className={classes.long_desc_text}>
-        <text>{foundRecipe.description}</text>
+        {foundRecipe.description && <text>{foundRecipe.description}</text>}
+        {!foundRecipe.description && <Spinner />}
       </div>
       <div className={classes.long_desc_text_btn}>
         <button onClick={editDescriptionHandler}>Edit</button>

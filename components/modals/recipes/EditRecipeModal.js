@@ -1,7 +1,5 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { findUser, findRecipe } from "../../utils/helpers";
-import { ALERT_OTHER } from "../../control/config";
-import { fetchFirestoreData } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useEffect } from "react";
@@ -80,44 +78,16 @@ function EditRecipeModal(props) {
   };
 
   const submitEditRecipeHandler = async (data) => {
-    try {
-      const recipesCopy = foundUser?.recipes.map((recipe) => ({ ...recipe }));
-      const foundCopyRecipe = recipesCopy.find(
-        (recipe) => recipe.id === +props.recipeId
-      );
-      const ingredientsArray = data.ingredients.map((ing) => ing.ingName);
+    dispatch(
+      fridgeActions.editRecipe({
+        user: foundUser,
+        recipe: data,
+        prevRecipe: foundRecipe,
+      })
+    );
 
-      foundCopyRecipe.name = data.recipeName;
-      foundCopyRecipe.servings = data.recipeServings;
-      foundCopyRecipe.time = data.recipeTime;
-      foundCopyRecipe.difficulty = data.recipeDifficulty;
-      foundCopyRecipe.url = data.recipeImgURL;
-      foundCopyRecipe.ingredients = ingredientsArray;
-
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId,
-        foodId: foundUser.foodId,
-        totalQuantity: foundUser.totalQuantity,
-        totalWeight: foundUser.totalWeight,
-        recipes: recipesCopy,
-        food: foundUser.food,
-      };
-
-      await fetchFirestoreData(foundUser.id, "set", payload);
-
-      dispatch(
-        fridgeActions.editRecipe({
-          username: foundUser.username,
-          ...foundCopyRecipe,
-        })
-      );
-      props.setShowEditRecipeModal(false);
-      reset();
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
+    props.setShowEditRecipeModal(false);
+    reset();
   };
 
   const editRecipeModal = (

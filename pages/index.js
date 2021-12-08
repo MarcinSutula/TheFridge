@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { ALERT_OTHER } from "../components/control/config";
 import { findUser } from "../components/utils/helpers";
 import { fridgeActions } from "../store/index";
-import { Spinner } from "../components/utils/Spinner";
+import Spinner from "../components/utils/Spinner";
 
 function Home() {
   const [mounted, setMounted] = useState(false);
@@ -37,17 +37,17 @@ function Home() {
       console.error(err);
     }
   }, []);
-  
-  return (
-    mounted && (
-      <Fragment>
-        <Body />
-        <BodyColumns />
-        <BodyFridgeDescription />
-        <BodyRecipesDescription />
-        <BodyShoppingListDescription />
-      </Fragment>
-    )
+
+  return mounted ? (
+    <Fragment>
+      <Body />
+      <BodyColumns />
+      <BodyFridgeDescription />
+      <BodyRecipesDescription />
+      <BodyShoppingListDescription />
+    </Fragment>
+  ) : (
+    <Spinner big={true} />
   );
 }
 

@@ -2,17 +2,15 @@ import { findUserRdx } from "../../components/utils/helpers";
 
 export function addRecipe(state, action) {
   const foundUser = findUserRdx(state, action);
-
-  if (!foundUser) return;
   foundUser.recipes.push({
-    name: action.payload.name,
-    servings: action.payload.servings,
-    time: action.payload.time,
-    difficulty: action.payload.difficulty,
-    url: action.payload.url,
-    ingredients: action.payload.ingredients,
+    name: action.payload.recipe.recipeName,
+    servings: action.payload.recipe.recipeServings,
+    time: action.payload.recipe.recipeTime,
+    difficulty: action.payload.recipe.recipeDifficulty,
+    url: action.payload.recipe.recipeImgURL,
+    ingredients: action.payload.recipe.ingredients.map((ing) => ing.ingName),
+    id: action.payload.user.recipesId,
     description: "",
-    id: action.payload.id,
   });
   foundUser.recipesId++;
 }

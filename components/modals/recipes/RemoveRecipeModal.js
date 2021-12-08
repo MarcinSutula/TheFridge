@@ -1,11 +1,9 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { fetchFirestoreData } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { findUser, findRecipe } from "../../utils/helpers";
-import { ALERT_OTHER } from "../../control/config";
 
 function RemoveRecipeModal(props) {
   const router = useRouter();
@@ -18,36 +16,16 @@ function RemoveRecipeModal(props) {
   };
 
   const removeRecipeHandler = async (e) => {
-    try {
-      e.preventDefault();
+    e.preventDefault();
 
-      const filteredRecipes = foundUser.recipes.filter(
-        (recipe) => recipe.id !== foundRecipe.id
-      );
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId,
-        foodId: foundUser.foodId,
-        totalQuantity: foundUser.totalQuantity,
-        totalWeight: foundUser.totalWeight,
-        recipes: filteredRecipes,
-        food: foundUser.food,
-      };
-
-      await fetchFirestoreData(foundUser.id, "set", payload);
-
-      dispatch(
-        fridgeActions.removeRecipe({
-          username: foundUser.username,
-          recipeId: foundRecipe.id,
-        })
-      );
-      router.replace("/recipes");
-      props.setShowRemoveRecipeModal(false);
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
+    dispatch(
+      fridgeActions.removeRecipe({
+        user: foundUser,
+        recipe: foundRecipe,
+      })
+    );
+    router.replace("/recipes");
+    props.setShowRemoveRecipeModal(false);
   };
   const removeRecipeModal = (
     <div className={modalClasses.main}>

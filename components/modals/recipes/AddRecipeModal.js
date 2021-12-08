@@ -1,7 +1,5 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { findUser } from "../../utils/helpers";
-import { ALERT_OTHER } from "../../control/config";
-import { fetchFirestoreData } from "../../control/initFirebase";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useEffect } from "react";
@@ -51,42 +49,15 @@ function AddRecipeModal(props) {
   };
 
   const submitAddRecipeHandler = async (data) => {
-    try {
-      const ingredientsArray = data.ingredients.map((ing) => ing.ingName);
+    dispatch(
+      fridgeActions.addRecipe({
+        user: foundUser,
+        recipe: data,
+      })
+    );
 
-      const recipeObj = {
-        name: data.recipeName,
-        servings: data.recipeServings,
-        time: data.recipeTime,
-        difficulty: data.recipeDifficulty,
-        url: data.recipeImgURL,
-        ingredients: ingredientsArray,
-        id: foundUser.recipesId,
-        description: "",
-      };
-
-      const payload = {
-        username: foundUser.username,
-        recipesId: foundUser.recipesId + 1,
-        foodId: foundUser.foodId,
-        totalQuantity: foundUser.totalQuantity,
-        totalWeight: foundUser.totalWeight,
-        recipes: [...foundUser.recipes, recipeObj],
-        food: foundUser.food,
-      };
-
-      await fetchFirestoreData(foundUser.id, "set", payload);
-
-      dispatch(
-        fridgeActions.addRecipe({ username: foundUser.username, ...recipeObj })
-      );
-
-      props.setShowAddRecipeModal(false);
-      reset();
-    } catch (err) {
-      alert(ALERT_OTHER);
-      console.error(err);
-    }
+    props.setShowAddRecipeModal(false);
+    reset();
   };
 
   const addRecipeModal = (

@@ -28,9 +28,7 @@ function ImgAndIngredients(props) {
         </div>
         <ul className={classes.ingredient_list}>
           {foundRecipe.ingredients.map((ing) => {
-            return (
-              <Ingredient key={Math.random()} ing={ing} />
-            );
+            return <Ingredient key={Math.random()} ing={ing} />;
           })}
         </ul>
         <div className={classes.short_desc_btn}>

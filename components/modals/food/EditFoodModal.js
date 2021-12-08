@@ -57,6 +57,7 @@ function EditFoodModal(props) {
     props.setShowEditFoodModal(false);
     reset();
   };
+
   const editFoodModal = (
     <form
       className={modalClasses.main}
