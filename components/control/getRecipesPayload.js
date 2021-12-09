@@ -1,12 +1,11 @@
 import { arrayUnion, increment } from "@firebase/firestore";
-import { getNumberFromStr } from "../utils/helpers";
 
 export function getRecipesPayload(action, user, recipe, prevRecipe) {
   //Increment works only on uptadeDoc
   //Impossible to uptade choosen object in array of objects in Firebase
   const ingredientsArray = recipe.ingredients.map((ing) => ing.ingName);
-
   let payload;
+
   switch (action) {
     case "add":
       payload = {

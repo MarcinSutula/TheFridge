@@ -1,0 +1,55 @@
+.desc_bq::-webkit-scrollbar {
+  display: none;
+}
+
+.desc_bq {
+  background-color: #ecebebc0;
+  width: 60%;
+  margin: auto;
+  justify-content: left;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  max-height: 350px;
+  border: 3px solid #388676e1;
+  border-top: none;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  word-break: break-all;
+  white-space: pre-line;
+}
+
+.desc_bq blockquote {
+  font-size: 22px;
+  margin: 15px;
+  max-width: 100%;
+  overflow-y: hidden;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.desc_btn {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 10px;
+}
+
+.desc_btn button {
+  background-color: #004d3e48;
+  border-radius: 15px;
+  border: 3px solid #388676e1;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  color: #ebf5fb;
+  padding: 8px 25px;
+  transition: all 0.5s;
+  transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
+}
+
+.desc_btn button:hover,
+.desc_btn button:active {
+  transform: scale(1.15, 1.15);
+}

@@ -1,4 +1,4 @@
-import classes from "./recipeDetails.module.css";
+import classes from "./Description.module.css";
 import { Fragment } from "react";
 import { findUser, findRecipe } from "../../components/utils/helpers";
 import { useDispatch } from "react-redux";
@@ -33,11 +33,11 @@ function Description(props) {
 
   return (
     <Fragment>
-      <div className={classes.long_desc_text}>
-        {foundRecipe.description && <text>{foundRecipe.description}</text>}
+      <div className={classes.desc_bq}>
+        {foundRecipe.description && <blockquote>{foundRecipe.description}</blockquote>}
         {!foundRecipe.description && <Spinner />}
       </div>
-      <div className={classes.long_desc_text_btn}>
+      <div className={classes.desc_btn}>
         <button onClick={editDescriptionHandler}>Edit</button>
         <button onClick={removeDescriptionHandler}>Remove</button>
       </div>

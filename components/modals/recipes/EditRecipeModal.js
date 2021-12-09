@@ -14,17 +14,17 @@ function EditRecipeModal(props) {
   const foundUser = findUser();
   const foundRecipe = findRecipe(props.recipeId);
   const dispatch = useDispatch();
-  const ingredients = foundRecipe.ingredients?.map((ing) => {
+  const ingredients = foundRecipe?.ingredients?.map((ing) => {
     return { ingName: ing };
   });
 
   const defaultValues = {
-    recipeName: foundRecipe.name,
-    recipeServings: foundRecipe.servings,
-    recipeTime: foundRecipe.time,
-    recipeDifficulty: foundRecipe.difficulty,
-    recipeImgURL: foundRecipe.url,
-    numberOfIngredients: foundRecipe.ingredients.length,
+    recipeName: foundRecipe?.name,
+    recipeServings: foundRecipe?.servings,
+    recipeTime: foundRecipe?.time,
+    recipeDifficulty: foundRecipe?.difficulty,
+    recipeImgURL: foundRecipe?.url,
+    numberOfIngredients: foundRecipe?.ingredients.length,
     ingredients,
   };
   const {

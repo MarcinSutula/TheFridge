@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
 import withAuth from "../../components/control/withAuth";
 import { useState, useEffect } from "react";
-import classes from "./recipeDetails.module.css";
+import classes from "./recipeId.module.css";
 import EditRecipeModal from "../../components/modals/recipes/EditRecipeModal";
 import RemoveRecipeModal from "../../components/modals/recipes/RemoveRecipeModal";
 import Description from "./Description";
 import { findRecipe } from "../../components/utils/helpers";
 import DescriptionInput from "./DescriptionInput";
 import ImgAndIngredients from "./ImgAndIngredients";
+import NoSuchRecipe from "./NoSuchRecipe";
 
 function RecipeDetails() {
   const [mounted, setMounted] = useState(false);
@@ -28,27 +29,19 @@ function RecipeDetails() {
     if (!mounted) setMounted(true);
   }, [recipeDescription]);
 
-  if (!foundRecipe)
-    return (
-      mounted && (
-        <div className={classes.background}>
-          <div className={classes.temporary}>
-            <p>No such Recipe</p>
-          </div>
-        </div>
-      )
-    );
+
+  if (!foundRecipe) return mounted && <NoSuchRecipe/>;
 
   return (
     mounted && (
       <div className={classes.background}>
-        <div className={classes.temporary}>
+        <div className={classes.container}>
           <ImgAndIngredients
             setShowEditRecipeModal={setShowEditRecipeModal}
             setShowRemoveRecipeModal={setShowRemoveRecipeModal}
           />
           {!showDescriptionInput && !showDescription && (
-            <div className={classes.add_desc}>
+            <div className={classes.add_desc_btn}>
               <button onClick={() => setShowDescriptionInput(true)}>
                 Add Description
               </button>

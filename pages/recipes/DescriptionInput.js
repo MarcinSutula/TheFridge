@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
-import classes from "./recipeDetails.module.css";
+import classes from "./DescriptionInput.module.css";
 import { RECIPEDESCRIPTION_MAX_LENGTH } from "../../components/control/config";
 import { findUser, findRecipe } from "../../components/utils/helpers";
 import { useForm } from "react-hook-form";
@@ -41,7 +41,7 @@ function DescriptionInput(props) {
   return (
     <form onSubmit={handleSubmit(addDescriptionHandler)}>
       <div
-        className={classes.long_desc_input}
+        className={classes.desc_input}
         key={recipeDescription ? recipeDescription : ""}
       >
         <textarea
@@ -50,7 +50,7 @@ function DescriptionInput(props) {
           defaultValue={recipeDescription ? recipeDescription : ""}
         />
       </div>
-      <div className={classes.long_desc_input_btn}>
+      <div className={classes.desc_input_btn}>
         <button>Confirm</button>
         <button type="button" onClick={cancelDescriptionHandler}>
           Cancel

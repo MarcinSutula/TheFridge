@@ -1,0 +1,103 @@
+.container {
+  background-color: transparent;
+  width: 60%;
+  margin: auto;
+  display: flex;
+  border: 3px solid #388676e1;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.fill_img {
+  width: 50%;
+  height: auto;
+  max-height: 378px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.fill_img img {
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.ing_name_container {
+  background-color: #fbfffeb4;
+  width: 50%;
+  max-height: 420px;
+  border-top-right-radius: 10px;
+  border-left: 3px solid #388676e1;
+}
+.name_container {
+  background-color: #004d3e8f;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-top-right-radius: 10px;
+}
+.name {
+  width: 80%;
+  text-align: right;
+  margin-left: 80px;
+  color: #f8f8f8;
+}
+.name h1 {
+  text-align: center;
+  font-size: 36px;
+  overflow-wrap: break-word;
+  margin: 20px;
+}
+
+.add_to_shoppinglist {
+  display: flex;
+  background-color: #004d3e8f transparent;
+  display: flex;
+  width: 20%;
+  justify-content: center;
+  align-items: center;
+}
+
+.ingredients {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  text-align: left;
+  margin-left: 60px;
+  min-height: 210px;
+  
+}
+
+.ingredients li {
+  list-style: none;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px;
+}
+
+.ingredients_btn {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  margin: 10px 40px;
+}
+
+.ingredients_btn button {
+  outline: none;
+  background-color: #c12b2c;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  color: #f8f8f8;
+  padding: 8px 25px;
+  transition: all 0.5s;
+  transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
+}
+
+.ingredients_btn button:hover,
+.ingredients_btn button:active {
+  transform: scale(1.15, 1.15);
+}

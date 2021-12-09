@@ -9,33 +9,26 @@
   padding-top: 130px;
 }
 
-.grid_container {
-  display: grid;
-  height: 75vh;
-  justify-content: center;
-  grid-template-columns: 25% 25% 25%;
-  grid-template-rows: 28% 28% 28%;
-  gap: 50px;
-  text-align: center;
-  overflow-y: auto;
+.add_desc_btn {
+  display: flex;
+  margin-top: 10px;
 }
 
-.grid_container button {
+.add_desc_btn button {
+  margin: auto;
   background-color: #004d3e48;
   border-radius: 15px;
-  border: 3px solid #01c09a;
+  border: 3px solid #388676e1;
   cursor: pointer;
   font-weight: 600;
   font-size: 18px;
   color: #ebf5fb;
   padding: 8px 25px;
   transition: all 0.5s;
+  transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
 }
 
-.grid_container button:hover,
-.grid_container button:active {
-  border: 3px solid #fbfffedc;
-  padding: 0;
-  font-size: 150%;
+.add_desc_btn button:hover,
+.add_desc_btn button:active {
+  transform: scale(1.15, 1.15);
 }
-

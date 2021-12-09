@@ -6,7 +6,6 @@ import Spinner from "../../utils/Spinner";
 import { useState, useEffect, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { signInThunk } from "../../../store/thunks/signInThunk";
-import { findUser } from "../../utils/helpers";
 
 function SignInModal(props) {
   const { register, handleSubmit, reset } = useForm();
@@ -42,6 +41,14 @@ function SignInModal(props) {
   const signInHandler = async (data) => {
     dispatch(signInThunk(data));
   };
+
+  //to test in production
+  useEffect(() => {
+    router.prefetch("/food")
+    router.prefetch("/recipes")
+    router.prefetch("/shoppinglist");
+  }, []);
+  //to test in production
 
   const signInModal = (
     <form onSubmit={handleSubmit(signInHandler)} className={modalClasses.main}>

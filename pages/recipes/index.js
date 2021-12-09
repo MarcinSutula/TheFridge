@@ -27,7 +27,7 @@ function Recipes() {
   return (
     mounted && (
       <div className={classes.background}>
-        <div className={classes.temporary}>
+        <div className={classes.container}>
           <div className={classes.grid_container}>
             {recipes.map((recipe) => {
               return (

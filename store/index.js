@@ -10,7 +10,7 @@ import { editRecipe } from "./recipe actions/editRecipe";
 import { removeRecipe } from "./recipe actions/removeRecipe";
 import { addDescription } from "./recipe actions/addDescription";
 import { removeDescription } from "./recipe actions/removeDescription";
-import { foodMiddleware } from "./foodMiddleware";
+import { foodMiddleware } from "./middlewares/foodMiddleware";
 import {
   signInThunk,
   signInPendingReducer,
@@ -23,7 +23,7 @@ import {
   signUpFulfilledReducer,
   signUpRejectedReducer,
 } from "./thunks/signUpThunk";
-import { recipesMiddleware } from "./recipesMiddleware";
+import { recipesMiddleware } from "./middlewares/recipesMiddleware";
 
 const initialState = {
   sortedField: "",

@@ -10,7 +10,6 @@ export const COLUMNS = [
   {
     id: "weight",
     label: "Weight",
-    numeric: "true",
   },
   {
     id: "expDate",
@@ -68,7 +67,7 @@ export const COLOR_EXPIRED = "#5e0087"; //dark violet
 export const COLOR_ABOUT_TO_EXPIRE = "#ff0000"; //red
 export const COLOR_VALID = "#050f16d8"; //standard black
 
-//Alerts & Errors
+//Errors
 
 export const ERROR_ING_FORMAT =
   "Ingredients must be kept in format: amount,name. Measure must be inserted next to amount.";
@@ -83,6 +82,9 @@ export const ERROR_SERVINGS_LENGTH = "Servings cannot be greater than 9";
 export const ERROR_TIME_LENGTH = "Time cannot be greater than 999";
 export const ERROR_ING_LENGTH =
   "An ingredient cannot have more than 15 characteres";
+
+//Alerts
+
 export const ALERT_OTHER = "Something went wrong ! Please try again";
 export const ALERT_AUTH_FAIL = "Authentication failed ! Please try again";
 export const ALERT_EMAIL_NOTFOUND = "E-mail not found";
