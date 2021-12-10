@@ -42,14 +42,6 @@ function SignInModal(props) {
     dispatch(signInThunk(data));
   };
 
-  //to test in production
-  useEffect(() => {
-    router.prefetch("/food")
-    router.prefetch("/recipes")
-    router.prefetch("/shoppinglist");
-  }, []);
-  //to test in production
-
   const signInModal = (
     <form onSubmit={handleSubmit(signInHandler)} className={modalClasses.main}>
       <div>

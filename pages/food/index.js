@@ -56,6 +56,14 @@ function MainTable() {
     );
   };
 
+  const addFoodBtnHandler = () => {
+    setShowAddFoodModal(true);
+  };
+
+  const summaryBtnHandler = () => {
+    setShowSummaryModal(true);
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -122,13 +130,13 @@ function MainTable() {
               <div>
                 <button
                   className={`${classes.food_btn}`}
-                  onClick={() => setShowAddFoodModal(true)}
+                  onClick={addFoodBtnHandler}
                 >
                   Add Food
                 </button>
                 <button
                   className={`${classes.food_btn}`}
-                  onClick={() => setShowSummaryModal(true)}
+                  onClick={summaryBtnHandler}
                 >
                   Summary
                 </button>

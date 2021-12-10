@@ -15,6 +15,18 @@ function BodySecond() {
     });
   };
 
+  const scrollToFridgeHandler = () => {
+    scrollToHandler("fridge_desc");
+  };
+
+  const scrollToRecipesHandler = () => {
+    scrollToHandler("recipes_desc");
+  };
+
+  const scrollToShoppinglistHandler = () => {
+    scrollToHandler("shopping_list_desc");
+  };
+
   return (
     <div id="body_columns" className={classes.section_container}>
       <h1>Digitalized Fridge</h1>
@@ -32,13 +44,7 @@ function BodySecond() {
             <div className={classes.option}>
               {tableIcon}
               <p>Easily manage your contents whenever, wherever you want.</p>
-              <button
-                onClick={() => {
-                  scrollToHandler("fridge_desc");
-                }}
-              >
-                Learn more
-              </button>
+              <button onClick={scrollToFridgeHandler}>Learn more</button>
             </div>
             <div className={classes.option}>
               {bookIcon}
@@ -46,13 +52,7 @@ function BodySecond() {
                 Add your recipes and check if you have all the required
                 ingredients.
               </p>
-              <button
-                onClick={() => {
-                  scrollToHandler("recipes_desc");
-                }}
-              >
-                Learn more
-              </button>
+              <button onClick={scrollToRecipesHandler}>Learn more</button>
             </div>
             <div className={classes.option}>
               {listIcon}
@@ -60,13 +60,7 @@ function BodySecond() {
                 Create your shopping list by adding items manually or
                 automatically.
               </p>
-              <button
-                onClick={() => {
-                  scrollToHandler("shopping_list_desc");
-                }}
-              >
-                Learn more
-              </button>
+              <button onClick={scrollToShoppinglistHandler}>Learn more</button>
             </div>
           </div>
         </Grow>

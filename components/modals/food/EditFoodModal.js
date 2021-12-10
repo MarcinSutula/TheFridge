@@ -7,7 +7,7 @@ import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { foodValidationSchema } from "../../control/validationSchema";
+import { foodValidationSchema } from "../../control/foodValidationSchema";
 import InputError from "../../InputError";
 
 function EditFoodModal(props) {

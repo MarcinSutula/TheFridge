@@ -9,6 +9,14 @@ function ImgAndIngredients(props) {
   const recipeId = router.query.recipeId;
   const foundRecipe = findRecipe(recipeId);
 
+  const editRecipeBtnHandler = () => {
+    props.setShowEditRecipeModal(true);
+  };
+
+  const removeRecipeBtnHandler = () => {
+    props.setShowRemoveRecipeModal(true);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.fill_img} key={foundRecipe.id}>
@@ -32,20 +40,8 @@ function ImgAndIngredients(props) {
           })}
         </ul>
         <div className={classes.ingredients_btn}>
-          <button
-            onClick={() => {
-              props.setShowEditRecipeModal(true);
-            }}
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => {
-              props.setShowRemoveRecipeModal(true);
-            }}
-          >
-            Remove
-          </button>
+          <button onClick={editRecipeBtnHandler}>Edit</button>
+          <button onClick={removeRecipeBtnHandler}>Remove</button>
         </div>
       </div>
     </div>

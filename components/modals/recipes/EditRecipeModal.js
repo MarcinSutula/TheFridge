@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { Modal, Fade } from "@material-ui/core";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { recipeValidationSchema } from "../../control/validationSchema";
+import { recipeValidationSchema } from "../../control/recipeValidationSchema";
 import InputError from "../../InputError";
 import IngredientInputs from "./IngredientInputs";
 

@@ -15,6 +15,10 @@ function Recipes() {
     setMounted(true);
   }, []);
 
+  const addRecipeBtnHandler = () => {
+    setShowAddRecipeModal(true);
+  };
+
   let recipes;
   if (foundUser) {
     recipes = foundUser.recipes;
@@ -36,9 +40,7 @@ function Recipes() {
                 </Fragment>
               );
             })}
-            <button onClick={() => setShowAddRecipeModal(true)}>
-              Add Recipe
-            </button>
+            <button onClick={addRecipeBtnHandler}>Add Recipe</button>
           </div>
         </div>
         <AddRecipeModal

@@ -5,10 +5,14 @@ import { useRouter } from "next/router";
 function Logo() {
   const router = useRouter();
 
+  const logoRedirectHandler = () => {
+    router.push("/");
+  };
+
   return (
     <div className={classes.logo}>
-      <LogoIcon logoRedirect={() => router.push("/")} />
-      <h2 onClick={() => router.push("/")}>The Fridge</h2>
+      <LogoIcon logoRedirect={logoRedirectHandler} />
+      <h2 onClick={logoRedirectHandler}>The Fridge</h2>
     </div>
   );
 }

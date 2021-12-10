@@ -29,8 +29,11 @@ function RecipeDetails() {
     if (!mounted) setMounted(true);
   }, [recipeDescription]);
 
+  const addDescriptionBtnHandler = () => {
+    setShowDescriptionInput(true);
+  };
 
-  if (!foundRecipe) return mounted && <NoSuchRecipe/>;
+  if (!foundRecipe) return mounted && <NoSuchRecipe />;
 
   return (
     mounted && (
@@ -42,7 +45,7 @@ function RecipeDetails() {
           />
           {!showDescriptionInput && !showDescription && (
             <div className={classes.add_desc_btn}>
-              <button onClick={() => setShowDescriptionInput(true)}>
+              <button onClick={addDescriptionBtnHandler}>
                 Add Description
               </button>
             </div>

@@ -60,6 +60,10 @@ function TableRowAndCell(props) {
     );
   };
 
+  const editFoodIconClickHandler = () => {
+    setShowEditFoodModal(true);
+  };
+
   const tableRowStyleMUI = {
     backgroundColor: setBackgroundColor(props?.row?.type),
   };
@@ -98,7 +102,7 @@ function TableRowAndCell(props) {
                     </div>
                     <div className={classes.icon}>
                       <EditFoodIcon
-                        editFoodModalOpen={() => setShowEditFoodModal(true)}
+                        editFoodModalOpen={editFoodIconClickHandler}
                       />
                     </div>
                     <div className={classes.icon}>
