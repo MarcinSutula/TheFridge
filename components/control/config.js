@@ -52,6 +52,10 @@ export const RECIPEDESCRIPTION_MAX_LENGTH = 5000;
 export const RECIPEINGREDIENTS_REGEX =
   /^\d{1,4}[mlkgpcstTq]{1,2}?,[a-zA-Z]{1}[a-zA-Z ]{1,25}[a-zA-Z]{1}$/;
 
+// Shopping List
+
+export const SHOPPINGLISTNAME_MAX_LENGTH = 35;
+
 //Row background colors
 
 export const PROTEIN_COLOR = "#e16464"; //red

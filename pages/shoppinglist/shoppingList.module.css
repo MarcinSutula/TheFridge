@@ -1,3 +1,7 @@
+.shopping_list ul::-webkit-scrollbar {
+  display: none;
+}
+
 .background {
   height: 100.4vh;
   margin-top: -77px;
@@ -5,7 +9,21 @@
     url(../../public/bodytlowarzywalarge333.jpg), transparent;
 }
 
-.temporary {
-  padding-top: 150px;
-  padding-left: 50px;
+.container {
+  padding-top: 130px;
+}
+
+.shopping_list {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.shopping_list ul {
+  padding: 0;
+  list-style-type: none;
+  overflow-y: auto;
+  max-height: 70vh;
+  box-shadow: 0 10px 15px 0 rgb(0, 0, 0, 0.35);
+  border-bottom: 1px solid black;
 }

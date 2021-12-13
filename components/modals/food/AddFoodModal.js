@@ -6,7 +6,7 @@ import { TYPES } from "../../control/config";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { foodValidationSchema } from "../../control/foodValidationSchema";
+import { foodValidationSchema } from "../../control/input validation/foodValidationSchema";
 import InputError from "../../InputError";
 
 function AddFoodModal(props) {

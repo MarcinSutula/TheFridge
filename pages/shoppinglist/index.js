@@ -1,29 +1,40 @@
 import withAuth from "../../components/control/withAuth";
 import classes from "./shoppingList.module.css";
 import { useEffect, useState } from "react";
+import ShoppingForm from "./ShoppingForm";
+import ShoppingListItem from "./ShoppingListItem";
+import { findUser } from "../../components/utils/helpers";
+import Spinner from "../../components/utils/Spinner";
 
 function ShoppingList() {
   const [mounted, setMounted] = useState(false);
+  const foundUser = findUser();
+  let shoppingList;
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  if (foundUser) {
+    shoppingList = foundUser.shoppingList;
+    if (!mounted) return <Spinner big={true} />;
+  } else {
+    shoppingList = [];
+    return <Spinner big={true} />;
+  }
+
   return (
-    mounted && (
+    mounted && foundUser &&(
       <div className={classes.background}>
-        <div className={classes.temporary}>
-          <h1>My Shopping List</h1>
-          <blockquote>
-            Aenean pretium libero id ipsum sollicitudin cursus. Mauris ac orci
-            pulvinar, blandit ligula sit amet, interdum sapien. Aenean consequat
-            hendrerit nulla. Suspendisse potenti. Fusce aliquam pulvinar
-            fringilla. Nunc vitae felis ornare, luctus mi id, laoreet nisi. Nunc
-            ut lacinia felis, et pretium augue. Suspendisse consequat, lectus
-            vel euismod tristique, odio justo rutrum leo, id sollicitudin dolor
-            ex vel nunc. Nulla lobortis accumsan tellus ac lacinia. Curabitur
-            nec efficitur enim. Cras suscipit sem non dictum auctor. Integer
-            mattis gravida enim.
-          </blockquote>
+        <div className={classes.container}>
+          <ShoppingForm />
+          <div className={classes.shopping_list}>
+            <ul>
+              {shoppingList.map((ele) => (
+                <ShoppingListItem item={ele} key={ele.id} />
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     )

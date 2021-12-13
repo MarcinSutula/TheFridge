@@ -13,9 +13,11 @@ export function getRecipeDescriptionPayload(
     username: user.username,
     recipesId: user.recipesId,
     foodId: user.foodId,
+    shoppingListId: user.shoppingListId,
     totalWeight: user.totalWeight,
     totalQuantity: user.totalQuantity,
     food: user.food,
+    shoppingList: user.shoppingList,
   };
 
   switch (action) {

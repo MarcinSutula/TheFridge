@@ -40,9 +40,11 @@ export function getRecipesPayload(action, user, recipe, prevRecipe) {
         username: user.username,
         recipesId: user.recipesId,
         foodId: user.foodId,
+        shoppingListId: user.shoppingListId,
         totalWeight: user.totalWeight,
         totalQuantity: user.totalQuantity,
         food: user.food,
+        shoppingList: user.shoppingList,
         recipes: recipesCopy,
       };
       return payload;
@@ -55,9 +57,11 @@ export function getRecipesPayload(action, user, recipe, prevRecipe) {
         username: user.username,
         foodId: user.foodId,
         recipesId: user.recipesId,
+        shoppingListId: user.shoppingListId,
         totalWeight: user.totalWeight,
         totalQuantity: user.totalQuantity,
         food: user.food,
+        shoppingList: user.shoppingList,
         recipes: recipesFiltered,
       };
       return payload;

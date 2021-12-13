@@ -19,7 +19,7 @@ export function sortByColumn(state, action) {
     return;
   }
   const foundUser = findUserRdx(state, action);
-  if (!foundUser) return;
+ 
 
   state.sortDirection =
     state.sortedField === clickedColumn.id

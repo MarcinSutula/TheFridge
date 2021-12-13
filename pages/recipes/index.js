@@ -10,6 +10,7 @@ function Recipes() {
   const [mounted, setMounted] = useState(false);
   const [showAddRecipeModal, setShowAddRecipeModal] = useState(false);
   const foundUser = findUser();
+  let recipes;
 
   useEffect(() => {
     setMounted(true);
@@ -19,7 +20,6 @@ function Recipes() {
     setShowAddRecipeModal(true);
   };
 
-  let recipes;
   if (foundUser) {
     recipes = foundUser.recipes;
     if (!mounted) return <Spinner big={true} />;

@@ -4,7 +4,6 @@ import { findUserRdx } from "../../components/utils/helpers";
 export function addFood(state, action) {
   const foundUser = findUserRdx(state, action);
 
-  if (!foundUser) return;
   foundUser.food.push({
     name: action.payload.food.foodName,
     type: action.payload.food.foodType,

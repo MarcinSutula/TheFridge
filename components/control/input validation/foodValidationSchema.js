@@ -7,7 +7,7 @@ import {
   ERROR_WEIGHT_FORMAT,
   ERROR_QUANTITY_LENGTH,
   ERROR_FOODNAME_LENGTH,
-} from "./config";
+} from "../config";
 
 export const foodValidationSchema = Yup.object().shape({
   foodName: Yup.string()

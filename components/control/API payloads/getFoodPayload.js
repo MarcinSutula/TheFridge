@@ -1,5 +1,5 @@
 import { arrayUnion, increment } from "@firebase/firestore";
-import { getNumberFromStr } from "../utils/helpers";
+import { getNumberFromStr } from "../../utils/helpers";
 
 export function getFoodPayload(action, user, food, prevFood) {
   //Increment works only on uptadeDoc
@@ -41,7 +41,9 @@ export function getFoodPayload(action, user, food, prevFood) {
         username: user.username,
         recipesId: user.recipesId,
         foodId: user.foodId,
+        shoppingListId: user.shoppingListId,
         recipes: user.recipes,
+        shoppingList: user.shoppingList,
         totalWeight:
           user.totalWeight -
           getNumberFromStr(prevFood.weight) +
@@ -59,7 +61,9 @@ export function getFoodPayload(action, user, food, prevFood) {
         username: user.username,
         foodId: user.foodId,
         recipesId: user.recipesId,
+        shoppingListId: user.shoppingListId,
         recipes: user.recipes,
+        shoppingList: user.shoppingList,
         totalWeight: user.totalWeight - getNumberFromStr(food.weight),
         totalQuantity: user.totalQuantity - +food.quantity,
         food: foodFiltered,

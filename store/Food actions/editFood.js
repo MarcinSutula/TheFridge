@@ -7,7 +7,6 @@ export function editFood(state, action) {
     (ele) => +ele.id === +action.payload.prevFood.id
   );
 
-  if (!foundUser) return;
   foundUser.totalQuantity =
     foundUser.totalQuantity -
     foundUserFood.quantity +

@@ -3,7 +3,7 @@ import { findUserRdx } from "../../components/utils/helpers";
 
 export function removeFood(state, action) {
   const foundUser = findUserRdx(state, action);
-  if (!foundUser) return;
+ 
   foundUser.food = foundUser.food.filter((item) => {
     return item.id !== action.payload.food.id;
   });

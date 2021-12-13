@@ -23,10 +23,12 @@ export const signUpThunk = createAsyncThunk(
                 username: thunkPayload.username,
                 foodId: 0,
                 recipesId: 0,
+                shoppingListId: 0,
                 totalQuantity: 0,
                 totalWeight: 0,
                 food: [],
                 recipes: [],
+                shoppingList: [],
               };
               await fetchFirestoreData(resData.localId, "set", payload);
               return payload;

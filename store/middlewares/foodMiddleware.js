@@ -1,7 +1,7 @@
 import { fridgeActions } from "../index";
 import { ALERT_OTHER } from "../../components/control/config";
 import { fetchFirestoreData } from "../../components/control/initFirebase";
-import { getFoodPayload } from "../../components/control/getFoodPayload";
+import { getFoodPayload } from "../../components/control/API payloads/getFoodPayload";
 
 export const foodMiddleware =
   ({ dispatch, store }) =>

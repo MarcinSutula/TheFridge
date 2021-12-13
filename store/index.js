@@ -10,6 +10,8 @@ import { editRecipe } from "./recipe actions/editRecipe";
 import { removeRecipe } from "./recipe actions/removeRecipe";
 import { addDescription } from "./recipe actions/addDescription";
 import { removeDescription } from "./recipe actions/removeDescription";
+import { addShoppingListItem } from "./shopping list actions/addShoppingListItem";
+import { removeShoppingListItem } from "./shopping list actions/removeShoppingListItem";
 import { foodMiddleware } from "./middlewares/foodMiddleware";
 import {
   signInThunk,
@@ -24,6 +26,7 @@ import {
   signUpRejectedReducer,
 } from "./thunks/signUpThunk";
 import { recipesMiddleware } from "./middlewares/recipesMiddleware";
+import { shoppingListMiddleware } from "./middlewares/shoppingListMiddleware";
 
 const initialState = {
   sortedField: "",
@@ -56,13 +59,19 @@ const fridgeSlice = createSlice({
     removeRecipe,
     addDescription,
     removeDescription,
+    addShoppingListItem,
+    removeShoppingListItem,
   },
 });
 
 const store = configureStore({
   reducer: fridgeSlice.reducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(foodMiddleware, recipesMiddleware),
+    getDefaultMiddleware().concat(
+      foodMiddleware,
+      recipesMiddleware,
+      shoppingListMiddleware
+    ),
 });
 
 export const fridgeActions = fridgeSlice.actions;

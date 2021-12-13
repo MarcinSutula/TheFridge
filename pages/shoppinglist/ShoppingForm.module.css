@@ -1,0 +1,40 @@
+.shopping_form {
+  display: flex;
+  justify-content: center;
+  height: 8vh;
+}
+
+.shopping_form form {
+    border: 3px solid #01c09af8;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #004d3e48;
+    box-shadow: 0 10px 15px 0 rgb(0, 0, 0, 0.25);
+}
+
+.shopping_form input {
+  outline: none;
+  border: none;
+  width: 65vh;
+  height: 100%;
+  font-size: 26px;
+  line-height: 5px;
+  box-sizing: border-box;
+  /* margin-right: 0px; */
+  padding-top: 5px ;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding-left: 5px;
+}
+
+.shopping_form button {
+  background-color: #1c7462fb;
+  cursor: pointer;
+  width: 6vh;
+  height: 100%;
+  font-size: 26px;
+  border: none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: #f8f8f8;
+}

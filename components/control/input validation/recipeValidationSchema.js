@@ -11,7 +11,7 @@ import {
   RECIPEINGREDIENTS_MAX_LENGTH,
   ERROR_EMPTY,
   ERROR_ING_FORMAT,
-} from "./config";
+} from "../config";
 
 
 export const recipeValidationSchema = Yup.object().shape({
