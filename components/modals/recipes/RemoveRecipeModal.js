@@ -15,7 +15,7 @@ function RemoveRecipeModal(props) {
     props.setShowRemoveRecipeModal(false);
   };
 
-  const removeRecipeHandler = async (e) => {
+  const removeRecipeHandler = (e) => {
     e.preventDefault();
 
     dispatch(

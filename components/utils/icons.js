@@ -70,12 +70,10 @@ export function PlusFoodIcon() {
   );
 }
 
-export function AddtoListIcon() {
+export function AddtoListIcon(props) {
   return (
     <svg
-      onClick={() => {
-        console.log("Add to shopping list");
-      }}
+      onClick={props.onClick}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"

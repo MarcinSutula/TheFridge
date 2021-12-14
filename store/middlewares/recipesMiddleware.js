@@ -3,6 +3,7 @@ import { ALERT_OTHER } from "../../components/control/config";
 import { fetchFirestoreData } from "../../components/control/initFirebase";
 import { getRecipesPayload } from "../../components/control/API payloads/getRecipesPayload";
 import { getRecipeDescriptionPayload } from "../../components/control/API payloads/getRecipeDescriptionPayload";
+import { getMissingIngsToShopListPayload } from "../../components/control/API payloads/getMissingIngsToShopListPayload";
 
 export const recipesMiddleware =
   ({ dispatch, store }) =>
@@ -55,6 +56,16 @@ export const recipesMiddleware =
             "remove",
             action.payload.user,
             action.payload.recipeId
+          )
+        );
+      } else if (fridgeActions.addMissingIngsToShopList.match(action)) {
+        await fetchFirestoreData(
+          action.payload.user.id,
+          "uptade",
+          getMissingIngsToShopListPayload(
+            "add",
+            action.payload.user,
+            action.payload.ingredients
           )
         );
       }

@@ -1,3 +1,7 @@
+import {
+  COLOR_ISINFRIDGE,
+  COLOR_ISNOTINFRIDGE,
+} from "../../components/control/config";
 import { getNumberFromStr, findUser } from "../../components/utils/helpers";
 
 function Ingredient(props) {
@@ -20,11 +24,9 @@ function Ingredient(props) {
       matchedFood &&
       getNumberFromStr(ingAmount) <= getNumberFromStr(matchedFood.weight)
     ) {
-      ingColor = "#050f16d8";
-      //black
+      ingColor = COLOR_ISINFRIDGE;
     } else {
-      ingColor = "#e16464";
-      //red
+      ingColor = COLOR_ISNOTINFRIDGE;
     }
 
     return { color: ingColor };

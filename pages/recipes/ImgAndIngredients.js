@@ -4,10 +4,14 @@ import { AddtoListIcon } from "../../components/utils/icons";
 import { findRecipe } from "../../components/utils/helpers";
 import { useRouter } from "next/router";
 
+import { useState } from "react";
+import AddIngsToShopListModal from "../../components/modals/recipes/AddIngsToShopListModal";
+
 function ImgAndIngredients(props) {
   const router = useRouter();
   const recipeId = router.query.recipeId;
   const foundRecipe = findRecipe(recipeId);
+  const [showIngToShopListModal, setShowIngToShopListModal] = useState(false);
 
   const editRecipeBtnHandler = () => {
     props.setShowEditRecipeModal(true);
@@ -15,6 +19,10 @@ function ImgAndIngredients(props) {
 
   const removeRecipeBtnHandler = () => {
     props.setShowRemoveRecipeModal(true);
+  };
+
+  const showAddIngsToShopListIconBtnHandler = () => {
+    setShowIngToShopListModal(true);
   };
 
   return (
@@ -31,12 +39,12 @@ function ImgAndIngredients(props) {
             <h1>{foundRecipe.name}</h1>
           </div>
           <div className={classes.add_to_shoppinglist}>
-            <AddtoListIcon />
+            <AddtoListIcon onClick={showAddIngsToShopListIconBtnHandler} />
           </div>
         </div>
         <ul className={classes.ingredients}>
-          {foundRecipe.ingredients.map((ing) => {
-            return <Ingredient key={Math.random()} ing={ing} />;
+          {foundRecipe.ingredients.map((ing, i) => {
+            return <Ingredient key={Math.random() * i} ing={ing} />;
           })}
         </ul>
         <div className={classes.ingredients_btn}>
@@ -44,6 +52,11 @@ function ImgAndIngredients(props) {
           <button onClick={removeRecipeBtnHandler}>Remove</button>
         </div>
       </div>
+      <AddIngsToShopListModal
+        showIngToShopListModal={showIngToShopListModal}
+        setShowIngToShopListModal={setShowIngToShopListModal}
+        ingredients={foundRecipe.ingredients}
+      />
     </div>
   );
 }

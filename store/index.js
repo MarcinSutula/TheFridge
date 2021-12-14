@@ -12,6 +12,7 @@ import { addDescription } from "./recipe actions/addDescription";
 import { removeDescription } from "./recipe actions/removeDescription";
 import { addShoppingListItem } from "./shopping list actions/addShoppingListItem";
 import { removeShoppingListItem } from "./shopping list actions/removeShoppingListItem";
+import { addMissingIngsToShopList } from "./recipe actions/addMissingIngsToShopList";
 import { foodMiddleware } from "./middlewares/foodMiddleware";
 import {
   signInThunk,
@@ -59,6 +60,7 @@ const fridgeSlice = createSlice({
     removeRecipe,
     addDescription,
     removeDescription,
+    addMissingIngsToShopList,
     addShoppingListItem,
     removeShoppingListItem,
   },

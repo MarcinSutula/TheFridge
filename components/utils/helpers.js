@@ -102,4 +102,28 @@ export function findRecipeRdx(foundUser, action) {
   );
 }
 
-//For getting food payload for fetching to Firestore
+export function strCorrector(str) {
+  const strCorrected = str.trim().toLowerCase();
+  return strCorrected;
+}
+
+//To filter ingredients we already have in food array
+
+export function filterIngsFromFood(ingredients, food) {
+  const filteredIngs = ingredients.filter((ing) => {
+    const [ingAmount, ingName] = ing.split(",");
+    const matchedFood = food.find(
+      (ele) => strCorrector(ele.name) === strCorrector(ingName)
+    );
+
+    if (matchedFood) {
+      const missingAmount =
+        getNumberFromStr(ingAmount) - getNumberFromStr(matchedFood.weight);
+      return missingAmount > 0 ? true : false;
+    } else {
+      return true;
+    }
+  });
+
+  return filteredIngs;
+}

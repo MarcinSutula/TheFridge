@@ -71,6 +71,11 @@ export const COLOR_EXPIRED = "#5e0087"; //dark violet
 export const COLOR_ABOUT_TO_EXPIRE = "#ff0000"; //red
 export const COLOR_VALID = "#050f16d8"; //standard black
 
+//Ingredients have/have not in fridge
+
+export const COLOR_ISINFRIDGE = "#050f16d8"; // black
+export const COLOR_ISNOTINFRIDGE = "#e16464"; // redish
+
 //Errors
 
 export const ERROR_ING_FORMAT =
