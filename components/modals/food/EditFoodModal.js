@@ -45,7 +45,7 @@ function EditFoodModal(props) {
     reset();
   };
 
-  const submitEditFoodHandler = async (data) => {
+  const submitEditFoodHandler = (data) => {
     dispatch(
       fridgeActions.editFood({
         user: foundUser,

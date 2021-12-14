@@ -38,7 +38,7 @@ function SignInModal(props) {
     reset();
   };
 
-  const signInHandler = async (data) => {
+  const signInHandler =  (data) => {
     dispatch(signInThunk(data));
   };
 

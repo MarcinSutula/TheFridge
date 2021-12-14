@@ -110,20 +110,37 @@ export function strCorrector(str) {
 //To filter ingredients we already have in food array
 
 export function filterIngsFromFood(ingredients, food) {
-  const filteredIngs = ingredients.filter((ing) => {
-    const [ingAmount, ingName] = ing.split(",");
-    const matchedFood = food.find(
-      (ele) => strCorrector(ele.name) === strCorrector(ingName)
-    );
+  const filteredIngs = ingredients
+    .map((ing) => {
+      const [ingAmount, ingName] = ing.split(",");
+      // to find ing name in food, if not found, push to shop list
+      const matchedFood = food.find(
+        (ele) => strCorrector(ele.name) === strCorrector(ingName)
+      );
 
-    if (matchedFood) {
-      const missingAmount =
-        getNumberFromStr(ingAmount) - getNumberFromStr(matchedFood.weight);
-      return missingAmount > 0 ? true : false;
-    } else {
-      return true;
-    }
-  });
+      if (matchedFood) {
+        const dayInMs = 86400000;
+        // if ing in food is expired, push whole ing
+        if (
+          matchedFood.expDate &&
+          (new Date(matchedFood.expDate) - new Date()) / dayInMs <= 0
+        ) {
+          return ing;
+        }
+        //count how much is missing 
+        const missingAmount =
+          getNumberFromStr(ingAmount) - getNumberFromStr(matchedFood.weight);
+        if (missingAmount > 0) {
+          const missingIng = `${missingAmount}${ingAmount.slice(
+            ("" + getNumberFromStr(ingAmount)).length - ingAmount.length
+          )},${ingName}`;
+          return missingIng;
+        } else return;
+      } else {
+        return ing;
+      }
+    })
+    .filter((ing) => ing !== undefined);
 
   return filteredIngs;
 }

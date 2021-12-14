@@ -149,6 +149,14 @@
   font-weight: 600;
   font-size: 14px;
   color: #c12b2c;
-  
-  
+}
+
+.edit_addtoshoplist_input {
+  padding: 30px 0;
+}
+
+.edit_addtoshoplist_input input {
+  width: 350px;
+  left: 5%;
+  height: 3vh;
 }

@@ -16,9 +16,12 @@ import {
   RemoveFoodIcon,
 } from "../../components/utils/icons";
 import EditFoodModal from "../../components/modals/food/EditFoodModal";
+import AddFoodToShopListModal from "../../components/modals/food/AddFoodToShopListModal";
 
 function TableRowAndCell(props) {
   const [showEditFoodModal, setShowEditFoodModal] = useState(false);
+  const [showAddFoodToShopListModal, setShowAddFoodToShopListModal] =
+    useState(false);
   const dispatch = useDispatch();
   const foundUser = findUser();
 
@@ -49,7 +52,7 @@ function TableRowAndCell(props) {
     return dateObj.toLocaleDateString();
   };
 
-  const removeFoodHandler = async (e) => {
+  const removeFoodHandler = (e) => {
     e.preventDefault();
 
     dispatch(
@@ -62,6 +65,10 @@ function TableRowAndCell(props) {
 
   const editFoodIconClickHandler = () => {
     setShowEditFoodModal(true);
+  };
+
+  const addFoodToShopListHandler = () => {
+    setShowAddFoodToShopListModal(true);
   };
 
   const tableRowStyleMUI = {
@@ -98,7 +105,7 @@ function TableRowAndCell(props) {
                 column.id === "action" ? (
                   <div className={classes.icon_container}>
                     <div className={classes.icon}>
-                      <AddtoListIcon />
+                      <AddtoListIcon onClick={addFoodToShopListHandler} />
                     </div>
                     <div className={classes.icon}>
                       <EditFoodIcon
@@ -120,6 +127,11 @@ function TableRowAndCell(props) {
         <EditFoodModal
           showEditFoodModal={showEditFoodModal}
           setShowEditFoodModal={setShowEditFoodModal}
+          row={props.row}
+        />
+        <AddFoodToShopListModal
+          showAddFoodToShopListModal={showAddFoodToShopListModal}
+          setShowAddFoodToShopListModal={setShowAddFoodToShopListModal}
           row={props.row}
         />
       </TableRow>

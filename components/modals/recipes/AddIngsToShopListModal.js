@@ -25,6 +25,7 @@ function AddIngsToShopListModal(props) {
   const addIngsToShopListModal = (
     <div className={modalClasses.main}>
       <h2>Do you want to add missing ingredients to the shopping list ?</h2>
+      <h6>If you already have some of the amount, it will be subsracted</h6>
       <div className={modalClasses.yesno_btn}>
         <button onClick={addIngsToShopListHandler}>Yes</button>
         <button onClick={showAddIngsToShopListModalOnCloseHandler}>No</button>

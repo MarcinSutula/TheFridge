@@ -48,7 +48,7 @@ function AddRecipeModal(props) {
     reset();
   };
 
-  const submitAddRecipeHandler = async (data) => {
+  const submitAddRecipeHandler = (data) => {
     dispatch(
       fridgeActions.addRecipe({
         user: foundUser,

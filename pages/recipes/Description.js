@@ -13,7 +13,7 @@ function Description(props) {
   const foundUser = findUser();
   const foundRecipe = findRecipe(recipeId);
 
-  const removeDescriptionHandler = async (e) => {
+  const removeDescriptionHandler = (e) => {
     e.preventDefault();
 
     dispatch(
