@@ -1,18 +1,16 @@
 import classes from "./BodyFridgeDescription.module.css";
 import { checkIcon } from "../components/utils/icons";
-//TO REWRITE
+import Image from "next/image";
+
 function BodyFridgeDescription() {
   return (
     <div id="fridge_desc" className={classes.container}>
-      <h1>Food description</h1>
-      {/* <div>
-        <ul className={classes.description_list}>
+      <div className={classes.description_list}>
+        <h1>Food</h1>
+        <ul>
           <li>
             {checkIcon}
-            <p>Add food</p>
-          </li>
-          <li>
-            {checkIcon} <p>Edit food</p>
+            <p>Add & Edit food</p>
           </li>
           <li>
             {checkIcon}
@@ -29,11 +27,20 @@ function BodyFridgeDescription() {
             {checkIcon}
             <p>See the summary</p>
           </li>
+          <li>
+            {checkIcon} <p>Easily check the table while shopping</p>
+          </li>
         </ul>
-      </div> */}
-      {/* <div className={classes.img_container}>
-        <img src="tablepage5.jpg" alt="An example of fridge in table" />
-      </div> */}
+      </div>
+      <div className={classes.img_container}>
+        <Image
+          className={classes.next_img}
+          src="/foodtableprintscreen.jpg"
+          alt="An example of fridge in table"
+          layout="fill"
+          priority="true"
+        />
+      </div>
     </div>
   );
 }

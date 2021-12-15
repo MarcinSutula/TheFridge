@@ -1,8 +1,6 @@
 .section_container {
   height: 92.2vh;
-  /* background-color: #004d3e4b; */
   background-color: #ecebeb;
-  /* border-top: 5px solid #1c7462fb; */
 }
 
 .section_container h1 {
@@ -23,7 +21,6 @@
   display: flex;
   justify-content: center;
   padding-bottom: 105px;
-  /* border-bottom: 5px solid #1c7462fb; */
 }
 
 .option {

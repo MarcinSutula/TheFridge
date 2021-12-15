@@ -50,7 +50,7 @@ function MainTable() {
 
     dispatch(
       fridgeActions.sortByColumn({
-        username: foundUser.username,
+        user: foundUser,
         columnId: clickedColumn,
       })
     );

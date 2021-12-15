@@ -47,7 +47,7 @@
 
 .desc_short h1 {
   text-align: center;
-  font-size: 24px;
+  font-size: 22px;
   background-color: #004d3e8f;
   overflow-wrap: break-word;
   color: #f8f8f8;
@@ -56,7 +56,7 @@
 .desc_short li {
   list-style: none;
   text-align: left;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 8px;
 }

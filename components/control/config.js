@@ -43,7 +43,7 @@ export const WEIGHT_REGEX = /^\d{1,4}[mlkgcstTq]{1,2}$/;
 
 // Add/edit recipe config
 
-export const RECIPENAME_MAX_LENGTH = 15;
+export const RECIPENAME_MAX_LENGTH = 25;
 export const RECIPESERVINGS_MAX_LENGTH = 1;
 export const RECIPETIME_MAX_LENGTH = 3;
 export const RECIPEINGREDIENTS_MAX_LENGTH = 15;
