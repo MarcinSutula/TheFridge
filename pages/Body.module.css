@@ -55,3 +55,66 @@
   border-radius: 15px;
   padding: 10px;
 }
+
+@media (max-width: 480px) {
+  .body_welcome {
+    height: 100.4vh;
+    margin-top: -77px;
+    background: linear-gradient(rgba(0, 0, 0, 0.397), rgba(0, 0, 0, 0.185)),
+      url(../public/bodytlowarzywalarge333.jpg), transparent;
+  }
+
+  .body_title {
+    width: 70%;
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    position: relative;
+    left: 15%;
+    top: 18%;
+    color: #f8f8f8;
+    font-weight: 700;
+    font-size: 28px;
+    background-color: #004d3e4b;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .body_welcome p {
+    width: 65%;
+    position: relative;
+    left: 20%;
+    top: 22.5%;
+
+    font-size: 20px;
+    font-weight: 500;
+    color: #f8f8f8;
+  }
+  .btn_container {
+    position: relative;
+    top: 30%;
+  }
+  .body_welcome_btn {
+    background: transparent;
+    position: relative;
+    /* left: 27.5%; */
+    left: 33%;
+    top: 49%;
+    font-size: 18px;
+    color: #f8f8f8;
+    border: none;
+    border-bottom: 3px solid #1c7462fb;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+
+  .body_welcome_btn:hover,
+  .body_welcome_btn:active {
+    background-color: transparent;
+    border-bottom: 3px solid #1c7462fb;
+    color: #f8f8f8;
+    border-radius: 0px;
+    padding: 10px;
+  }
+}

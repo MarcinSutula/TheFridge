@@ -4,3 +4,9 @@
   left: 10%;
   color: #ebf5fb;
 }
+
+@media (max-width:480px){
+  .welcome{
+    display: none;
+  }
+}

@@ -16,7 +16,7 @@ function Body() {
     const element = document.getElementById("body_columns");
     element.scrollIntoView({
       behavior: "smooth",
-      block: "center",
+      block: "start",
       inline: "start",
     });
   };

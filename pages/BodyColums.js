@@ -29,7 +29,9 @@ function BodySecond() {
 
   return (
     <div id="body_columns" className={classes.section_container}>
-      <h1>Digitalized Fridge</h1>
+      <div className={classes.title}>
+        <h1>Digitalized Fridge</h1>
+      </div>
       <VizSensor
         delayedCall={true}
         partialVisibility={true}
