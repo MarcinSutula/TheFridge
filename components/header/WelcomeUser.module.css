@@ -7,6 +7,6 @@
 
 @media (max-width:480px){
   .welcome{
-    display: none;
+   display:none;
   }
 }

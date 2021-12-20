@@ -22,7 +22,7 @@ function TableHeadRowCells(props) {
   const tableHeadCellStyleMUI = {
     userSelect: "none",
     backgroundColor: "#004d3e1f",
-    borderBottom: "4px solid #01c09af8",
+    borderBottom: "3px solid #01c09af8",
     fontSize: 22,
     fontWeight: 700,
     color: "#050f16d8",
@@ -37,6 +37,7 @@ function TableHeadRowCells(props) {
       onClick={props.sortByColumnHandler}
       key={props?.column?.id}
       style={tableHeadCellStyleMUI}
+      // className={classes.tablecell_headrow_mui}
     >
       <div className={classes.icon_container}>{sortIcon}</div>
       <div id={props?.column?.id}>{props?.column?.label}</div>

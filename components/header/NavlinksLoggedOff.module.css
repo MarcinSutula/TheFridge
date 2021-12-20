@@ -47,12 +47,13 @@
     display: flex;
     justify-content: right;
     align-items: center;
-    font-size: 14px;
-    gap: 5px;
-    padding-right: 5px;
-    height: 60px;
+    font-size: 12px;
+    gap: 6px;
+    padding-right: 2px;
+    /* height: 60px; */
     font-weight: 500;
-    margin-top: 11px;
+    margin-top: 12px;
+    margin-bottom: 14px;
   }
 
   .signup {
@@ -63,10 +64,10 @@
     cursor: pointer;
     font-weight: 600;
     font-size: 14px;
-    padding: 15px 10px;
+    padding: 15px 15px;
     color: #ebf5fb;
-    transition: all 0.5s;
-    transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
+    transition: none;
+    transition-timing-function: none
   }
 
   .signin {
@@ -78,9 +79,9 @@
     font-weight: 600;
     font-size: 14px;
     color: #ebf5fb;
-    padding: 15px 10px;
-    transition: all 0.5s;
-    transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
+    padding: 15px 15px;
+    transition: none;
+    transition-timing-function: none;
     margin-right: 10px;
   }
 
@@ -88,6 +89,6 @@
   .signup:active,
   .signin:hover,
   .signin:active {
-    transform: scale(1.15, 1.15);
+    transform: none;
   }
 }

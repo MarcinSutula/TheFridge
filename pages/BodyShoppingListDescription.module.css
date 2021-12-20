@@ -79,15 +79,15 @@
     /* height: 90vh; */
     padding-bottom: 40px;
     width: 100%;
-    /* background: linear-gradient(
-      97deg,
-      #f3f3f3f1 0%,
-      #f3f3f3f1 21%,
-      #388676e1 21.5%,
-      #388676e1 100%
-    ); */
-    background: none;
-    background-color: #388676e1;
+    background: linear-gradient(
+      180deg,
+      #388676e1 0%,
+      #388676e1 90%,
+      #f3f3f3f1 90%,
+      #f3f3f3f1 100%
+    );
+    /* background: none;
+    background-color: #388676e1; */
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 
@@ -105,7 +105,6 @@
     text-align: center;
     margin-left: auto;
     color: #f3f3f3f1;
-
   }
   .description_list li {
     margin: 0 10px 10px 0;
@@ -129,7 +128,8 @@
     position: relative;
     box-shadow: 0 0 -50px -50px #01c09afd inset;
     filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.55)); */
-    display:none;
+
+    display: none;
   }
 
   .img_container a {

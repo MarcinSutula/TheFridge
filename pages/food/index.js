@@ -73,29 +73,12 @@ function MainTable() {
     setPage(0);
   };
 
-  const paperStyleMUI = {
-    position: "absolute",
-    left: "2.5%",
-    top: "10%",
-    minWidth: "1000px",
-    width: "95%",
-
-    marginBotton: 0,
-    boxShadow: "0 40px 60px 0 rgb(0, 0, 0, 0.35)",
-    borderRadius: "15px",
-    overflow: "hidden",
-  };
-
-  const tableContainerStyleMUI = {
-    maxHeight: 760,
-  };
-
   return (
     mounted && (
       <div className={classes.background}>
         <div>
-          <Paper style={paperStyleMUI}>
-            <TableContainer style={tableContainerStyleMUI}>
+          <Paper className={classes.table_paper_mui}>
+            <TableContainer className={classes.table_container_mui}>
               <Table>
                 <TableHead>
                   <TableRow>
