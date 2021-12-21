@@ -5,6 +5,10 @@ import {
   FRUITS_COLOR,
   DRINKS_COLOR,
   OTHER_COLOR,
+  COLOR_EXPIRED,
+  MINDAYS_TO_SHOW_RED_EXPDATE,
+  COLOR_ABOUT_TO_EXPIRE,
+  COLOR_VALID,
 } from "../control/config";
 import { useSelector } from "react-redux";
 
@@ -127,7 +131,7 @@ export function filterIngsFromFood(ingredients, food) {
         ) {
           return ing;
         }
-        //count how much is missing 
+        //count how much is missing
         const missingAmount =
           getNumberFromStr(ingAmount) - getNumberFromStr(matchedFood.weight);
         if (missingAmount > 0) {
@@ -144,3 +148,31 @@ export function filterIngsFromFood(ingredients, food) {
 
   return filteredIngs;
 }
+
+// to set correct Expiration Date styling (if close to expiration or expired) and if its within phone width
+
+export const checkExpDateStyle = (date, phone = false) => {
+  const formattedDate = new Date(date);
+  const now = new Date();
+  const dayInMs = 86400000;
+  const daysToExpire = (formattedDate - now) / dayInMs;
+  let expDateStyle;
+
+  if (daysToExpire < 0) {
+    expDateStyle = [COLOR_EXPIRED, phone ? "600" : "700"];
+  } else if (daysToExpire >= 0 && daysToExpire <= MINDAYS_TO_SHOW_RED_EXPDATE) {
+    expDateStyle = [COLOR_ABOUT_TO_EXPIRE, phone ? "600" : "700"];
+  } else {
+    expDateStyle = [COLOR_VALID, "500"];
+  }
+
+  return expDateStyle;
+};
+
+// show correct date format
+
+export const showCorrectDate = (date) => {
+  if (!date) return "";
+  const dateObj = new Date(date);
+  return dateObj.toLocaleDateString();
+};

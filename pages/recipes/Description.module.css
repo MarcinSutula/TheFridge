@@ -62,7 +62,7 @@
     justify-content: left;
     overflow-y: auto;
     overflow-wrap: break-word;
-    max-height: 350px;
+    max-height: 320px;
     border: 2px solid #388676e1;
     border-top: none;
     border-bottom-right-radius: 15px;

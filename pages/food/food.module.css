@@ -32,7 +32,7 @@
   transform: scale(1.1, 1.1);
 }
 
-.table_paper_mui {
+/* .table_paper_mui {
   position: absolute;
   left: 2.5%;
   top: 10%;
@@ -47,8 +47,8 @@
 
 .table_container_mui {
   max-height: 760px;
-  border-radius: 15px;
-}
+  
+} */
 
 @media (max-width: 480px) {
   .background {
@@ -58,10 +58,13 @@
       url(../../public/bodytlowarzywalarge333.jpg), transparent;
   }
   .btn_container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 14px;
+    display: block;
+    width: 100%;
+
+    text-align: center;
+    /* justify-content: space-between;
+    align-items: center; */
+    margin: 5px auto;
   }
 
   .food_btn {
@@ -70,26 +73,26 @@
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 18px;
-    margin-left: 18px;
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 10px;
     margin-bottom: 10px;
-    padding: 7px 20px;
+    padding: 10px 10px;
     color: #f8f8f8;
-    transition: all 0.5s;
-    transition-timing-function: cubic-bezier(0.5, 3, 0, 1);
+    transition: none;
+    transition-timing-function: none;
   }
 
   .btn_container button:hover,
   .btn_container button:active {
-    transform: scale(1.1, 1.1);
+    transform: none;
   }
 
-  .table_paper_mui {
+  /* .table_paper_mui {
     position: absolute;
     left: 2.5%;
     top: 10%;
-    min-width: 320px;
+    min-width: 250px;
     width: 95%;
 
     margin-bottom: 0;
@@ -99,7 +102,7 @@
   }
 
   .table_container_mui {
-    max-height: 760px;
-    border-radius: 15px;
-  }
+    max-height: 640px;
+    
+  } */
 }

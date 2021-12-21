@@ -3,13 +3,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./TableRowAndCell.module.css";
+import { COLOR_ABOUT_TO_EXPIRE } from "../../components/control/config";
 import {
-  COLOR_EXPIRED,
-  COLOR_ABOUT_TO_EXPIRE,
-  COLOR_VALID,
-  MINDAYS_TO_SHOW_RED_EXPDATE,
-} from "../../components/control/config";
-import { setBackgroundColor, findUser } from "../../components/utils/helpers";
+  findUser,
+  checkExpDateStyle,
+  showCorrectDate,
+} from "../../components/utils/helpers";
 import {
   EditFoodIcon,
   AddtoListIcon,
@@ -17,6 +16,12 @@ import {
 } from "../../components/utils/icons";
 import EditFoodModal from "../../components/modals/food/EditFoodModal";
 import AddFoodToShopListModal from "../../components/modals/food/AddFoodToShopListModal";
+import useMatchMedia from "react-use-match-media";
+import {
+  table_row_mui,
+  table_cell_mui,
+  table_cell_mui_MQ,
+} from "../../styles/materialUI";
 
 function TableRowAndCell(props) {
   const [showEditFoodModal, setShowEditFoodModal] = useState(false);
@@ -24,33 +29,7 @@ function TableRowAndCell(props) {
     useState(false);
   const dispatch = useDispatch();
   const foundUser = findUser();
-
-  const checkExpDateStyle = (date) => {
-    const formattedDate = new Date(date);
-    const now = new Date();
-    const dayInMs = 86400000;
-    const daysToExpire = (formattedDate - now) / dayInMs;
-    let expDateStyle;
-
-    if (daysToExpire < 0) {
-      expDateStyle = [COLOR_EXPIRED, "700"];
-    } else if (
-      daysToExpire >= 0 &&
-      daysToExpire <= MINDAYS_TO_SHOW_RED_EXPDATE
-    ) {
-      expDateStyle = [COLOR_ABOUT_TO_EXPIRE, "700"];
-    } else {
-      expDateStyle = [COLOR_VALID, "500"];
-    }
-
-    return expDateStyle;
-  };
-
-  const showCorrectDate = (date) => {
-    if (!date) return "";
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString();
-  };
+  const phoneWidth = useMatchMedia("(max-width: 480px)");
 
   const removeFoodHandler = (e) => {
     e.preventDefault();
@@ -71,28 +50,21 @@ function TableRowAndCell(props) {
     setShowAddFoodToShopListModal(true);
   };
 
-  const tableRowStyleMUI = {
-    backgroundColor: setBackgroundColor(props?.row?.type),
-  };
-
-  const tableCellStyleMUI = (column, value) => {
-    return {
-      fontSize: column.id === "name" ? 22 : 20,
-      color:
-        column.id === "expDate" ? checkExpDateStyle(value)[0] : "#050f16d8",
-      fontFamily: "Open Sans",
-      fontWeight: column.id === "expDate" ? checkExpDateStyle(value)[1] : "500",
-    };
-  };
-
   return (
     <Fade in={!!foundUser}>
-      <TableRow tabIndex={-1} style={tableRowStyleMUI}>
+      <TableRow tabIndex={-1} style={table_row_mui(props?.row?.type)}>
         {props?.columns?.map((column) => {
           const value = props.row[column.id];
 
           return (
-            <TableCell key={column.id} style={tableCellStyleMUI(column, value)}>
+            <TableCell
+              key={column.id}
+              style={
+                phoneWidth
+                  ? table_cell_mui_MQ(column, value)
+                  : table_cell_mui(column, value)
+              }
+            >
               {
                 //IF ITS EXPIRATION DATE COLUMN, SHOW CORRECTED DATE WITH CORRECTED STYLE
                 column.id === "expDate" ? (

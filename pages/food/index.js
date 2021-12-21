@@ -22,6 +22,13 @@ import {
 } from "../../components/control/config";
 import AddFoodModal from "../../components/modals/food/addFoodModal";
 import SummaryModal from "../../components/modals/food/SummaryModal";
+import useMatchMedia from "react-use-match-media";
+import {
+  table_container_mui,
+  table_container_mui_MQ,
+  table_paper_mui,
+  table_paper_mui_MQ,
+} from "../../styles/materialUI";
 
 function MainTable() {
   const [mounted, setMounted] = useState(false);
@@ -31,6 +38,7 @@ function MainTable() {
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const dispatch = useDispatch();
   const foundUser = findUser();
+  const phoneWidth = useMatchMedia("(max-width: 480px)");
   let rows;
 
   useEffect(() => {
@@ -77,8 +85,10 @@ function MainTable() {
     mounted && (
       <div className={classes.background}>
         <div>
-          <Paper className={classes.table_paper_mui}>
-            <TableContainer className={classes.table_container_mui}>
+          <Paper style={phoneWidth ? table_paper_mui_MQ : table_paper_mui}>
+            <TableContainer
+              style={phoneWidth ? table_container_mui_MQ : table_container_mui}
+            >
               <Table>
                 <TableHead>
                   <TableRow>

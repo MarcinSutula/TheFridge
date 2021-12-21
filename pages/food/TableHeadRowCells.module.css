@@ -3,13 +3,3 @@
   height: 0px;
   pointer-events: none;
 }
-
-.tablecell_headrow_mui {
-  user-select: none;
-  background-color: #004d3e1f;
-  border-bottom: 3px solid #01c09af8;
-  font-size: 42px;
-  font-weight: 700;
-  color: #050f16d8;
-  font-family: "Open Sans";
-}
