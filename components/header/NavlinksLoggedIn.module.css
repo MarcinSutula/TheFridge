@@ -55,15 +55,9 @@
     font-size: 12px;
     margin-top: 12px;
     margin-bottom: 14px;
-    display: flex;
     justify-content: space-between;
     align-items: center;
   }
-
-  /* .navlinks {
-    
-    
-  } */
 
   .navlinks::after {
     content: "";
@@ -83,11 +77,7 @@
   }
 
   .logout {
-    background-color: #004d3e48;
-    border-radius: 15px;
     border: 2px solid #01c09a;
-    cursor: pointer;
-    font-weight: 600;
     font-size: 14px;
     color: #ebf5fb;
     padding: 15px 15px;

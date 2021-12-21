@@ -19,9 +19,6 @@
 
 @media (max-width: 480px) {
   .temporary p {
-    margin-top: 200px;
-    text-align: center;
-    color: #f8f8f8;
     font-weight: 600;
     font-size: 40px;
   }

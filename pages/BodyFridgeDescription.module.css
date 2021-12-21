@@ -58,11 +58,7 @@
 
 @media (max-width: 480px) {
   .container {
-    display: flex;
-    /* height: 90vh; */
     padding-bottom: 40px;
-    /* margin-top: 500px; */
-    width: 100%;
     background: linear-gradient(
       99deg,
       #388676e1 0%,
@@ -75,10 +71,6 @@
   .description_list {
     width: 100%;
     font-size: 16px;
-    list-style-type: none;
-    color: #050f16d8;
-    display: block;
-    font-weight: 600;
   }
   
   .description_list h1 {
@@ -88,26 +80,11 @@
   }
   .description_list li {
     margin: 0 10px 10px 0;
-    display: flex;
-  
     border-bottom: 2px solid #f3f3f3f1;
   }
   
-  .description_list li svg {
-    display: flex;
-    height: 24px;
-    width: 24px;
-    align-self: center;
-    margin-right: 10px;
-    flex-shrink: 0;
-  }
-  
+
   .img_container {
-    /* width: 68%;
-    margin: 100px 0 0 250px;
-    position: relative;
-    box-shadow: 0 0 -50px -50px #01c09afd inset;
-    filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.55)); */
     display:none;
   }
   

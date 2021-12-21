@@ -34,31 +34,20 @@
 }
 
 @media (max-width: 480px) {
-  .background {
-    height: 100.4vh;
-    margin-top: -77px;
-    background: linear-gradient(rgba(0, 0, 0, 0.397), rgba(0, 0, 0, 0.185)),
-      url(../../public/bodytlowarzywalarge333.jpg), transparent;
-  }
+ 
 
   .container {
     padding-top: 110px;
   }
 
   .add_desc_btn {
-    display: flex;
     margin-top: 5px;
   }
 
   .add_desc_btn button {
-    margin: auto;
-    background-color: #004d3e48;
-    border-radius: 15px;
     border: 2px solid #388676e1;
-    cursor: pointer;
     font-weight: 500;
     font-size: 14px;
-    color: #ebf5fb;
     padding: 15px 15px;
     transition: none;
     transition-timing-function: none;

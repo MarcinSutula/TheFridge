@@ -29,29 +29,12 @@
 }
 
 @media (max-width:480px) {
-  .background {
-    height: 100.4vh;
-    margin-top: -77px;
-    background: linear-gradient(rgba(0, 0, 0, 0.397), rgba(0, 0, 0, 0.185)),
-      url(../../public/bodytlowarzywalarge333.jpg), transparent;
-  }
-  
-  .container {
-    padding-top: 130px;
-  }
   
   .shopping_list {
-    display: flex;
-    justify-content: center;
     margin-top: 10px;
   }
   
   .shopping_list ul {
-    padding: 0;
-    list-style-type: none;
-    overflow-y: auto;
     max-height: 60vh;
-    box-shadow: 0 10px 15px 0 rgb(0, 0, 0, 0.35);
-    border-bottom: 1px solid black;
   }
 }

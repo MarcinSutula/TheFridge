@@ -42,35 +42,18 @@
 
 
 @media (max-width:480px) {
-  .background {
-    height: 100.4vh;
-    margin-top: -77px;
-    background: linear-gradient(rgba(0, 0, 0, 0.397), rgba(0, 0, 0, 0.185)),
-      url(../../public/bodytlowarzywalarge333.jpg), transparent;
-  }
-  
-  .container {
-    padding-top: 130px;
-  }
   
   .grid_container {
     display: block;
     height: 70vh;
-    justify-content: center;
     width: 90%;
     margin: auto;
-    text-align: center;
-    overflow-y: auto;
   }
   
   .grid_container button {
-    background-color: #004d3e48;
-    border-radius: 15px;
     border: 2px solid #01c09a;
-    cursor: pointer;
     font-weight: 500;
     font-size: 14px;
-    color: #ebf5fb;
     padding: 15px 15px;
     transition: none;
     margin-top: 15px;

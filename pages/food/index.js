@@ -19,6 +19,7 @@ import { findUser } from "../../components/utils/helpers";
 import {
   COLUMNS,
   INITIAL_ROWS_PER_PAGE,
+  INITIAL_ROWS_PER_PAGE_PHONE,
 } from "../../components/control/config";
 import AddFoodModal from "../../components/modals/food/addFoodModal";
 import SummaryModal from "../../components/modals/food/SummaryModal";
@@ -31,6 +32,7 @@ import {
 } from "../../styles/materialUI";
 
 function MainTable() {
+  const phoneWidth = useMatchMedia("(max-width: 480px)");
   const [mounted, setMounted] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(INITIAL_ROWS_PER_PAGE);
@@ -38,12 +40,17 @@ function MainTable() {
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const dispatch = useDispatch();
   const foundUser = findUser();
-  const phoneWidth = useMatchMedia("(max-width: 480px)");
   let rows;
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setRowsPerPage(
+      phoneWidth ? INITIAL_ROWS_PER_PAGE_PHONE : INITIAL_ROWS_PER_PAGE
+    );
+  }, [phoneWidth]);
 
   if (foundUser) {
     rows = foundUser.food;
@@ -119,23 +126,23 @@ function MainTable() {
                 </TableBody>
               </Table>
             </TableContainer>
-            <div className={`${classes.btn_container}`}>
+            <div className={classes.btn_container}>
               <div>
                 <button
-                  className={`${classes.food_btn}`}
+                  className={classes.food_btn}
                   onClick={addFoodBtnHandler}
                 >
                   Add Food
                 </button>
                 <button
-                  className={`${classes.food_btn}`}
+                  className={classes.food_btn}
                   onClick={summaryBtnHandler}
                 >
                   Summary
                 </button>
               </div>
               <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[5, 10, 25, 100]}
                 component="div"
                 count={rows ? rows.length : 0}
                 rowsPerPage={rowsPerPage}

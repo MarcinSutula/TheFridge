@@ -2,7 +2,11 @@ import {
   COLOR_ISINFRIDGE,
   COLOR_ISNOTINFRIDGE,
 } from "../../components/control/config";
-import { getNumberFromStr, findUser } from "../../components/utils/helpers";
+import {
+  getNumberFromStr,
+  findUser,
+  strCorrector,
+} from "../../components/utils/helpers";
 
 function Ingredient(props) {
   const foundUser = findUser();
@@ -10,11 +14,6 @@ function Ingredient(props) {
   const ingredientStyleHandler = () => {
     const [ingAmount, ingName] = props.ing.split(",");
     let ingColor;
-
-    const strCorrector = (str) => {
-      const strCorrected = str.trim().toLowerCase();
-      return strCorrected;
-    };
 
     const matchedFood = foundUser.food.find(
       (ele) => strCorrector(ele.name) === strCorrector(ingName)
