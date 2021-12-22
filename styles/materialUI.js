@@ -18,7 +18,7 @@ export const table_paper_mui = {
 };
 
 export const table_container_mui = {
-  maxHeight: "760px",
+  maxHeight: "800px",
 };
 
 export const table_paper_mui_MQ = {
