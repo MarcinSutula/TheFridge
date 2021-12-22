@@ -21,7 +21,7 @@ import {
   INITIAL_ROWS_PER_PAGE,
   INITIAL_ROWS_PER_PAGE_PHONE,
 } from "../../components/control/config";
-import AddFoodModal from "../../components/modals/food/addFoodModal";
+import AddFoodModal from "../../components/modals/food/AddFoodModal";
 import SummaryModal from "../../components/modals/food/SummaryModal";
 import useMatchMedia from "react-use-match-media";
 import {
