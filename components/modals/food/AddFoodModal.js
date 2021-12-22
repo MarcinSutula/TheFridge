@@ -1,6 +1,6 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { fridgeActions } from "../../../store/index";
-import { findUser } from "../../utils/helpers";
+import { FindUser } from "../../utils/helpers";
 import { Modal, Fade } from "@material-ui/core";
 import { TYPES } from "../../control/config";
 import { useDispatch } from "react-redux";
@@ -16,7 +16,7 @@ function AddFoodModal(props) {
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(foodValidationSchema) });
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const dispatch = useDispatch();
 
   const addFoodModalOnCloseHandler = () => {

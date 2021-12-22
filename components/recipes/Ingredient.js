@@ -4,18 +4,18 @@ import {
 } from "../../components/control/config";
 import {
   getNumberFromStr,
-  findUser,
+  FindUser,
   strCorrector,
 } from "../../components/utils/helpers";
 
 function Ingredient(props) {
-  const foundUser = findUser();
+  const foundUser = FindUser();
 
   const ingredientStyleHandler = () => {
-    const [ingAmount, ingName] = props.ing.split(",");
+    const [ingAmount, ingName] = props?.ing?.split(",");
     let ingColor;
 
-    const matchedFood = foundUser.food.find(
+    const matchedFood = foundUser?.food?.find(
       (ele) => strCorrector(ele.name) === strCorrector(ingName)
     );
 

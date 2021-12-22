@@ -11,11 +11,11 @@ import { useState, useEffect } from "react";
 import { fridgeActions } from "../../store/index";
 import { useDispatch } from "react-redux";
 import classes from "./food.module.css";
-import TableRowAndCell from "./TableRowAndCell";
-import TableHeadRowCells from "./TableHeadRowCells";
+import TableRowAndCell from "../../components/food/TableRowAndCell";
+import TableHeadRowCells from "../../components/food/TableHeadRowCells";
 import withAuth from "../../components/control/withAuth";
 import Spinner from "../../components/utils/Spinner";
-import { findUser } from "../../components/utils/helpers";
+import { FindUser } from "../../components/utils/helpers";
 import {
   COLUMNS,
   INITIAL_ROWS_PER_PAGE,
@@ -39,7 +39,7 @@ function MainTable() {
   const [showAddFoodModal, setShowAddFoodModal] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const dispatch = useDispatch();
-  const foundUser = findUser();
+  const foundUser = FindUser();
   let rows;
 
   useEffect(() => {

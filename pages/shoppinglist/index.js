@@ -1,14 +1,14 @@
 import withAuth from "../../components/control/withAuth";
 import classes from "./shoppingList.module.css";
 import { useEffect, useState } from "react";
-import ShoppingForm from "./ShoppingForm";
-import ShoppingListItem from "./ShoppingListItem";
-import { findUser } from "../../components/utils/helpers";
+import ShoppingForm from "../../components/shoppinglist/ShoppingForm";
+import ShoppingListItem from "../../components/shoppinglist/ShoppingListItem";
+import { FindUser } from "../../components/utils/helpers";
 import Spinner from "../../components/utils/Spinner";
 
 function ShoppingList() {
   const [mounted, setMounted] = useState(false);
-  const foundUser = findUser();
+  const foundUser = FindUser();
   let shoppingList;
 
   useEffect(() => {

@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { Modal, Fade } from "@material-ui/core";
 import { useRouter } from "next/router";
-import { findUser, findRecipe } from "../../utils/helpers";
+import { FindUser, findRecipe } from "../../utils/helpers";
 
 function RemoveRecipeModal(props) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const foundRecipe = findRecipe(props.recipeId);
 
   const removeRecipeModalOnCloseHandler = () => {

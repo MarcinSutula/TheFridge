@@ -1,16 +1,16 @@
 import classes from "./Description.module.css";
 import { Fragment } from "react";
-import { findUser, findRecipe } from "../../components/utils/helpers";
+import { FindUser, findRecipe } from "../utils/helpers";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import { useRouter } from "next/router";
-import Spinner from "../../components/utils/Spinner";
+import Spinner from "../utils/Spinner";
 
 function Description(props) {
   const dispatch = useDispatch();
   const router = useRouter();
   const recipeId = router.query.recipeId;
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const foundRecipe = findRecipe(recipeId);
 
   const removeDescriptionHandler = (e) => {
@@ -34,8 +34,8 @@ function Description(props) {
   return (
     <Fragment>
       <div className={classes.desc_bq}>
-        {foundRecipe.description && <blockquote>{foundRecipe.description}</blockquote>}
-        {!foundRecipe.description && <Spinner />}
+        {foundRecipe?.description && <blockquote>{foundRecipe?.description}</blockquote>}
+        {!foundRecipe?.description && <Spinner />}
       </div>
       <div className={classes.desc_btn}>
         <button onClick={editDescriptionHandler}>Edit</button>

@@ -1,6 +1,6 @@
 import classes from "./BodyShoppingListDescription.module.css";
 import Image from "next/image";
-import { checkIcon } from "../components/utils/icons";
+import { checkIcon } from "../utils/icons";
 
 
 function BodyShoppingListDescription() {

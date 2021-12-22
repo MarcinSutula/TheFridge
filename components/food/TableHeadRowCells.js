@@ -5,7 +5,7 @@ import {
   sortArrowDownIcon,
   sortArrowUpIcon,
 } from "../../components/utils/icons";
-import { findUser } from "../../components/utils/helpers";
+import { FindUser } from "../../components/utils/helpers";
 import useMatchMedia from "react-use-match-media";
 import {
   table_head_cell_mui,
@@ -15,7 +15,7 @@ import {
 function TableHeadRowCells(props) {
   const fridgeSortedField = useSelector((state) => state.sortedField);
   const fridgeSortDirection = useSelector((state) => state.sortDirection);
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const phoneWidth = useMatchMedia("(max-width: 480px)");
 
   const sortIcon =

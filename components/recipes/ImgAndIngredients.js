@@ -27,23 +27,23 @@ function ImgAndIngredients(props) {
 
   return (
     <div className={classes.container}>
-      <div className={classes.fill_img} key={foundRecipe.id}>
+      <div className={classes.fill_img} key={foundRecipe?.id}>
         <img
-          src={foundRecipe.url ? foundRecipe.url : "/altrecipeimg.jpg"}
+          src={foundRecipe?.url ? foundRecipe?.url : "/altrecipeimg.jpg"}
           alt="Recipe Details Image"
         />
       </div>
       <div className={classes.ing_name_container}>
         <div className={classes.name_container}>
           <div className={classes.name}>
-            <h1>{foundRecipe.name}</h1>
+            <h1>{foundRecipe?.name}</h1>
           </div>
           <div className={classes.add_to_shoppinglist}>
             <AddtoListIcon onClick={showAddIngsToShopListIconBtnHandler} />
           </div>
         </div>
         <ul className={classes.ingredients}>
-          {foundRecipe.ingredients.map((ing, i) => {
+          {foundRecipe?.ingredients.map((ing, i) => {
             return <Ingredient key={Math.random() * i} ing={ing} />;
           })}
         </ul>
@@ -55,7 +55,7 @@ function ImgAndIngredients(props) {
       <AddIngsToShopListModal
         showIngToShopListModal={showIngToShopListModal}
         setShowIngToShopListModal={setShowIngToShopListModal}
-        ingredients={foundRecipe.ingredients}
+        ingredients={foundRecipe?.ingredients}
       />
     </div>
   );

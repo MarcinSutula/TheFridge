@@ -2,11 +2,11 @@ import modalClasses from "../../../styles/modalClasses.module.css";
 import { Modal, Fade } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
-import { findUser } from "../../utils/helpers";
+import { FindUser } from "../../utils/helpers";
 
 function AddIngsToShopListModal(props) {
   const dispatch = useDispatch();
-  const foundUser = findUser();
+  const foundUser = FindUser();
 
   const showAddIngsToShopListModalOnCloseHandler = () => {
     props.setShowIngToShopListModal(false);

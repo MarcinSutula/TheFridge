@@ -2,8 +2,8 @@ import classes from "./ShoppingForm.module.css";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
-import { findUser } from "../../components/utils/helpers";
-import { SHOPPINGLISTNAME_MAX_LENGTH } from "../../components/control/config";
+import { FindUser } from "../utils/helpers";
+import { SHOPPINGLISTNAME_MAX_LENGTH } from "../control/config";
 
 function ShoppingForm() {
   const {
@@ -13,7 +13,7 @@ function ShoppingForm() {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
-  const foundUser = findUser();
+  const foundUser = FindUser();
 
   const submitAddShoppingListItemHandler = (data) => {
     dispatch(

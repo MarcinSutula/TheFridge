@@ -1,5 +1,5 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { findUser, findRecipe } from "../../utils/helpers";
+import { FindUser, findRecipe } from "../../utils/helpers";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useEffect } from "react";
@@ -11,7 +11,7 @@ import InputError from "../../InputError";
 import IngredientInputs from "./IngredientInputs";
 
 function EditRecipeModal(props) {
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const foundRecipe = findRecipe(props.recipeId);
   const dispatch = useDispatch();
   const ingredients = foundRecipe?.ingredients?.map((ing) => {

@@ -75,7 +75,7 @@ export const sortingReturn = (sortDirection, reverse = false) => {
 
 //For getting the logged in user
 
-export function findUser() {
+export function FindUser() {
   const users = useSelector((state) => state.users);
   return users?.find((user) => user.id !== "");
 }
@@ -83,7 +83,7 @@ export function findUser() {
 //For getting the matched recipe
 
 export function findRecipe(recipeId) {
-  return findUser()?.recipes.find((recipe) => recipe.id === +recipeId);
+  return FindUser()?.recipes.find((recipe) => recipe.id === +recipeId);
 }
 
 //For getting the user from store

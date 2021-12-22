@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import classes from "./recipeId.module.css";
 import EditRecipeModal from "../../components/modals/recipes/EditRecipeModal";
 import RemoveRecipeModal from "../../components/modals/recipes/RemoveRecipeModal";
-import Description from "./Description";
+import Description from "../../components/recipes/Description";
 import { findRecipe } from "../../components/utils/helpers";
-import DescriptionInput from "./DescriptionInput";
-import ImgAndIngredients from "./ImgAndIngredients";
-import NoSuchRecipe from "./NoSuchRecipe";
+import DescriptionInput from "../../components/recipes/DescriptionInput";
+import ImgAndIngredients from "../../components/recipes/ImgAndIngredients";
+import NoSuchRecipe from "../../components/recipes/NoSuchRecipe";
 
 function RecipeDetails() {
   const [mounted, setMounted] = useState(false);

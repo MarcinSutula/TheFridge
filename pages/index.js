@@ -1,21 +1,21 @@
 import { Fragment } from "react";
-import Body from "./Body";
-import BodyColumns from "./BodyColums";
-import BodyFridgeDescription from "./BodyFridgeDescription";
-import BodyRecipesDescription from "./BodyRecipesDescription";
-import BodyShoppingListDescription from "./BodyShoppingListDescription";
+import Body from "../components/home/Body";
+import BodyColumns from "../components/home/BodyColums";
+import BodyFridgeDescription from "../components/home/BodyFridgeDescription";
+import BodyRecipesDescription from "../components/home/BodyRecipesDescription";
+import BodyShoppingListDescription from "../components/home/BodyShoppingListDescription";
 import { useEffect, useState } from "react";
 import { fetchFirestoreData } from "../components/control/initFirebase";
 import { useDispatch } from "react-redux";
 import { ALERT_OTHER } from "../components/control/config";
-import { findUser } from "../components/utils/helpers";
+import { FindUser } from "../components/utils/helpers";
 import { fridgeActions } from "../store/index";
 import Spinner from "../components/utils/Spinner";
 
 function Home() {
   const [mounted, setMounted] = useState(false);
   const dispatch = useDispatch();
-  const foundUser = findUser();
+  const foundUser = FindUser();
 
   useEffect(() => {
     setMounted(true);

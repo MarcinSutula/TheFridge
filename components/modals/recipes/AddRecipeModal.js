@@ -1,5 +1,5 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import { findUser } from "../../utils/helpers";
+import { FindUser } from "../../utils/helpers";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
 import { useEffect } from "react";
@@ -26,7 +26,7 @@ function AddRecipeModal(props) {
     control,
   });
   const numberOfIngredients = watch("numberOfIngredients");
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const dispatch = useDispatch();
 
   useEffect(() => {

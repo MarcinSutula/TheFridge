@@ -1,5 +1,5 @@
 import classes from "./BodyFridgeDescription.module.css";
-import { checkIcon } from "../components/utils/icons";
+import { checkIcon } from "../utils/icons";
 import Image from "next/image";
 
 function BodyFridgeDescription() {

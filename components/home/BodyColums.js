@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classes from "./BodyColumns.module.css";
-import { tableIcon, bookIcon, listIcon } from "../components/utils/icons";
+import { tableIcon, bookIcon, listIcon } from "../utils/icons";
 import VizSensor from "react-visibility-sensor";
 import { Grow } from "@material-ui/core";
 

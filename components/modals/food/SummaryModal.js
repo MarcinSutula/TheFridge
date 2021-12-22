@@ -1,10 +1,10 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
-import SummaryModalValues from "../../../pages/food/SummaryModalValues";
+import SummaryModalValues from "../../food/SummaryModalValues";
 import { Modal, Fade } from "@material-ui/core";
-import { findUser } from "../../utils/helpers";
+import { FindUser } from "../../utils/helpers";
 
 function SummaryModal(props) {
-  const foundUser = findUser();
+  const foundUser = FindUser();
 
   const summaryModalOnCloseHandler = () => {
     props.setShowSummaryModal(false);

@@ -5,7 +5,7 @@ import { fridgeActions } from "../../store/index";
 import classes from "./TableRowAndCell.module.css";
 import { COLOR_ABOUT_TO_EXPIRE } from "../../components/control/config";
 import {
-  findUser,
+  FindUser,
   checkExpDateStyle,
   showCorrectDate,
 } from "../../components/utils/helpers";
@@ -28,7 +28,7 @@ function TableRowAndCell(props) {
   const [showAddFoodToShopListModal, setShowAddFoodToShopListModal] =
     useState(false);
   const dispatch = useDispatch();
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const phoneWidth = useMatchMedia("(max-width: 480px)");
 
   const removeFoodHandler = (e) => {

@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import classes from "./DescriptionInput.module.css";
 import { RECIPEDESCRIPTION_MAX_LENGTH } from "../../components/control/config";
-import { findUser, findRecipe } from "../../components/utils/helpers";
+import { FindUser, findRecipe } from "../../components/utils/helpers";
 import { useForm } from "react-hook-form";
 
 function DescriptionInput(props) {
   const dispatch = useDispatch();
   const router = useRouter();
   const recipeId = router.query.recipeId;
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const foundRecipe = findRecipe(recipeId);
   const recipeDescription = foundRecipe?.description;
   const { register, handleSubmit, reset } = useForm();

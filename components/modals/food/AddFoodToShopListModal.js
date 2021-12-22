@@ -2,7 +2,7 @@ import modalClasses from "../../../styles/modalClasses.module.css";
 import { Modal, Fade } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
-import { findUser } from "../../utils/helpers";
+import { FindUser } from "../../utils/helpers";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FOODNAME_MAX_LENGTH, WEIGHT_MAX_LENGTH } from "../../control/config";
@@ -11,13 +11,13 @@ function AddFoodToShopListModal(props) {
   const [showEditFoodToShopListItem, setShowEditFoodToShopListItem] =
     useState(false);
   const dispatch = useDispatch();
-  const foundUser = findUser();
-  const foodToShopListItem = props.row.weight + "," + props.row.name;
+  const foundUser = FindUser();
+  const foodToShopListItem = props?.row?.weight + "," + props?.row?.name;
   const defaultValues = { editAddToShopListItem: foodToShopListItem };
   const { register, handleSubmit, reset } = useForm({ defaultValues });
 
   const addFoodToShopListOnCloseHandler = () => {
-    props.setShowAddFoodToShopListModal(false);
+    props?.setShowAddFoodToShopListModal(false);
     setShowEditFoodToShopListItem(false);
     reset();
   };
@@ -32,7 +32,7 @@ function AddFoodToShopListModal(props) {
       })
     );
 
-    props.setShowAddFoodToShopListModal(false);
+    props?.setShowAddFoodToShopListModal(false);
     reset();
   };
 

@@ -1,6 +1,6 @@
 import modalClasses from "../../../styles/modalClasses.module.css";
 import { useEffect } from "react";
-import { findUser } from "../../utils/helpers";
+import { FindUser } from "../../utils/helpers";
 import { TYPES } from "../../control/config";
 import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../../store/index";
@@ -12,11 +12,11 @@ import InputError from "../../InputError";
 
 function EditFoodModal(props) {
   const defaultValues = {
-    foodName: props.row.name,
-    foodType: props.row.type,
-    foodQuantity: props.row.quantity,
-    foodWeight: props.row.weight,
-    foodExpDate: props.row.expDate,
+    foodName: props?.row?.name,
+    foodType: props?.row?.type,
+    foodQuantity: props?.row?.quantity,
+    foodWeight: props?.row?.weight,
+    foodExpDate: props?.row?.expDate,
   };
   const {
     register,
@@ -25,7 +25,7 @@ function EditFoodModal(props) {
     formState: { errors },
   } = useForm({ resolver: yupResolver(foodValidationSchema), defaultValues });
   const dispatch = useDispatch();
-  const foundUser = findUser();
+  const foundUser = FindUser();
   const foodToEdit = props.row;
 
   useEffect(() => {

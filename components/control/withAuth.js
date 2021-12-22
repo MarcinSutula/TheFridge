@@ -3,13 +3,13 @@ import { useDispatch } from "react-redux";
 import { fridgeActions } from "../../store/index";
 import { fetchFirestoreData } from "./initFirebase";
 import { ALERT_OTHER } from "./config";
-import { findUser } from "../utils/helpers";
+import { FindUser } from "../utils/helpers";
 
 function withAuth(WrappedComponent) {
-  return function checkAuth(props) {
+  return function CheckAuth(props) {
     const router = useRouter();
     const dispatch = useDispatch();
-    const foundUser = findUser();
+    const foundUser = FindUser();
 
     if (typeof window !== "undefined") {
       const userId = localStorage.getItem("userId");

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { TYPES } from "../../components/control/config";
+import { TYPES } from "../control/config";
 
 function SummaryModalValues(props) {
   const countTypeValues = (type) => {
