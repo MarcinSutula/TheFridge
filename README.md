@@ -53,7 +53,7 @@ It's my first project to help build my portfolio.
 
 ## Screenshots
 
-![Food example](https://github.com/MarcinSutula/thefridgepublic/blob/main/public/foodtableprintscreen.JPG)
+![Food example](https://github.com/MarcinSutula/TheFridge/blob/main/public/foodtableprintscreen.JPG)
 ![Recipes example](https://github.com/MarcinSutula/thefridgepublic/blob/main/public/recipiesprintscreen.JPG)
 ![Shopping list example](https://github.com/MarcinSutula/thefridgepublic/blob/main/public/shoppinglistprintscreen.JPG)
 
