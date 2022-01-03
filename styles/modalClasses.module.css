@@ -221,7 +221,7 @@
   }
 
   .summary {
-    top: -50px;
+    top: -70px;
   }
 
   .yesno_btn {
@@ -229,8 +229,8 @@
   }
 
   .error p {
-    font-weight: 500;
     font-size: 12px;
+    border: none;
   }
 
   .edit_addtoshoplist_input {

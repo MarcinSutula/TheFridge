@@ -5,11 +5,11 @@
 }
 
 .shopping_form form {
-    border: 2px solid #01c09af8;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #004d3e48;
-    box-shadow: 0 10px 15px 0 rgb(0, 0, 0, 0.25);
+  border: 2px solid #01c09af8;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #004d3e48;
+  box-shadow: 0 10px 15px 0 rgb(0, 0, 0, 0.25);
 }
 
 .shopping_form input {
@@ -38,17 +38,20 @@
   color: #f8f8f8;
 }
 
-@media (max-width:480px) {
+@media (max-width: 480px) {
   .shopping_form {
-    height: 8vh;
+    height: 4vh;
   }
-  
+
+  .shopping_form form {
+    padding: 5px;
+  }
+
   .shopping_form input {
     width: 29vh;
-    line-height: 3px;
   }
-  
+
   .shopping_form button {
-    width: 6vh;
+    width: 4vh;
   }
 }
