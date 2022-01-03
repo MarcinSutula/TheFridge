@@ -2,7 +2,7 @@
 # Project Name
 
 > The Fridge | 
-> Live demo []
+> Live demo [https://fridge2-marcinsutula.vercel.app/]
 
 ## Table of Contents
 
