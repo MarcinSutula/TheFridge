@@ -82,7 +82,7 @@ Redux middlewares are used for Firestore fetches
 
 ## Project Status
 
-Project is: in progress.
+Project is: suspended.
 
 ## Room for Improvement
 
