@@ -1,8 +1,7 @@
 
 # Project Name
 
-> The Fridge | 
-> Live demo [https://fridge2-marcinsutula.vercel.app/]
+> The Fridge
 
 ## Table of Contents
 
@@ -51,13 +50,6 @@ It's my first project to help build my portfolio.
 - Food
 - Recipes 
 - Shopping list
-
-## Screenshots
-
-![Food example](https://github.com/MarcinSutula/TheFridge/blob/main/public/foodtableprintscreen.jpg)
-![Recipes example](https://github.com/MarcinSutula/TheFridge/blob/main/public/recipiesprintscreen.JPG)
-![Recipes example2](https://github.com/MarcinSutula/TheFridge/blob/main/public/recipeexample.JPG)
-![Shopping list example](https://github.com/MarcinSutula/TheFridge/blob/main/public/shoppinglistprintscreen.jpg)
 
 ## Setup
 
